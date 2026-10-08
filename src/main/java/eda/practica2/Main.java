@@ -1,4 +1,4 @@
-package eda;
+package eda.practica2;
 
 public class Main {
 
