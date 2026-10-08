@@ -2,6 +2,19 @@ package eda.practica2;
 
 public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements UnorderedListADT<T> {
 
+/*
+IDEA:
+hacer un metodo addTo(T elem, boolean front){
+que haga todo lo que ambos metodos tienen en comun.
+y que simplemente use el booleano para saber cuando actualizar el first, que es lo unico que varia.
+asi el metodo addToFront solo tendria que llamar a addTo(T,true) el el metodo addToRear tendria que llamar al addTo(T,false).
+De esta manera no se duplica codigo.
+}
+
+*/
+
+
+
     //addToFront y addToRear, insertan en el mismo sitio, delante del First, luego ya uno actualiza el First y el otro no.
     @Override
     // añade un elemento al comienzo
