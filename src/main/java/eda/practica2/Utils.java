@@ -6,7 +6,7 @@ public class Utils {
         return System.currentTimeMillis();
     }
 
-    public static void mostrarCronocmetro(String mensaje, long tiempo) {
+    public static void mostrarCronometro(String mensaje, long tiempo) {
         System.out.println(mensaje + " " + (System.currentTimeMillis() - tiempo));
     }
 }
