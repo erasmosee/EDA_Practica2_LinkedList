@@ -2,7 +2,7 @@ package eda.practica2;
 
 import java.util.Iterator;
 
-public class PruebaDoubleLinkedList {
+public class PruebaUnorderedDoubleLinkedList {
 
     public static void visualizarNodos(UnorderedDoubleLinkedList<Integer> l) {
         Iterator<Integer> it = l.iterator();
