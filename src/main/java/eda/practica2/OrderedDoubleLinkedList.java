@@ -3,7 +3,7 @@ package eda.practica2;
 public class OrderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements OrderedListADT<T> {
 
     @Override
-    public void add(T elem) {//TODO
+    public void add(T elem) {//TODO Esto agrega elementos pero no en orden,
         Node<T> newNode = new Node<>(elem);
         if (isEmpty()) {
             newNode.next = newNode;
