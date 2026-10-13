@@ -86,8 +86,8 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         }
         return aux.data;
     }
-
-    public Node<T> locate(T elem) {
+//Esta funcion da una vuelta por la lista buscando que el elemento pasado sea igual a alguno existente y mirando no llegar al primero.
+    protected Node<T> locate(T elem) {
         Node<T> aux;
         aux = first;
         while (!Objects.equals(aux.data, elem) && !Objects.equals(aux.data, first)) {
@@ -141,16 +141,12 @@ public class DoubleLinkedList<T> implements ListADT<T> {
     @Override
     public boolean contains(T elem) {//TODO
         Node<T> aux;
-        int contador = 0;
         if (isEmpty()) {
             return false;
 
         } else {
-            aux = first;
-            while (!Objects.equals(aux.data, elem) && contador < size()) {
-                aux = aux.next;
-                contador++;
-            }
+            aux = locate(elem);
+            
             return Objects.equals(aux.data, elem);
         }
     }
@@ -160,16 +156,12 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 
         //Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no está
         Node<T> aux;
-        int contador = 0;
         if (isEmpty()) {
             throw new NoSuchElementException();
 
         } else {
-            aux = first;
-            while (contador < count && !Objects.equals(aux.data, elem)) {
-                aux = aux.next;
-                contador++;
-            }
+            aux = locate(elem);
+            
             if (Objects.equals(aux.data, elem)) {
                 return aux.data;
             } else {
