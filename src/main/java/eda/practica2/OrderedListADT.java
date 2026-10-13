@@ -5,6 +5,7 @@ public interface OrderedListADT<T> extends ListADT<T> {
     public void add(T elem);
     // añade un elemento a la lista (en el lugar de orden que le corresponde)
 
+    //Implementar comparable
     public void merge(DoubleLinkedList<T> zerrenda);
 
 }
