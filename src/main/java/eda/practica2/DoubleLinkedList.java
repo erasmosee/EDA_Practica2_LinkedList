@@ -24,7 +24,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
             next = null;
             prev = null;
         }
-        
+
     }
 
     // Atributos
@@ -87,19 +87,24 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         return aux.data;
     }
 
+    public Node<T> locate(T elem) {
+        Node<T> aux;
+        aux = first;
+        while (!Objects.equals(aux.data, elem) && !Objects.equals(aux.data, first)) {
+            aux = aux.next;
+        }
+        return aux;
+    }
+
     @Override
     public T remove(T elem) {
         Node<T> aux;
-        int contador = 0;
         if (isEmpty()) {
             throw new NoSuchElementException();
         } else {
-            aux = first;
-            while (!Objects.equals(aux.data, elem) && contador < size()) {
-                aux = aux.next;
-                contador++;
-            }
-            if (aux == first && Objects.equals(aux.data, elem)) {
+            aux = locate(elem);
+
+            if (aux == first) {
                 return removeFirst();
             }
             if (Objects.equals(aux.data, elem)) {
