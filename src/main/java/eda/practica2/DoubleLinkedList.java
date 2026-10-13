@@ -150,9 +150,9 @@ public class DoubleLinkedList<T> implements ListADT<T> {
                 contador++;
             }
             if (Objects.equals(aux.data, elem)) {
-                return null;
-            } else {
                 return aux.data;
+            } else {
+                return null;
             }
         }
     }
