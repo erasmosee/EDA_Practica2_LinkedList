@@ -15,25 +15,26 @@ public class PruebaUnorderedDoubleLinkedList {
 
     public static void main(String[] args) {
 
-        UnorderedDoubleLinkedList<Integer> l = new UnorderedDoubleLinkedList<>();
-        l.addToRear(1);
-        l.addToRear(3);
-        l.addToRear(6);
-        l.addToRear(7);
-        l.addToRear(9);
-        l.addToRear(0);
-        l.addToRear(20);
-        l.addToFront(8);
-        l.remove(7);
+        UnorderedDoubleLinkedList<Integer> udll = new UnorderedDoubleLinkedList<>();
+       
+       for (int i = 5; i < 10; i++) {
+            System.out.println("Agregamos elemento " + i);
+        udll.addToRear(i);
+       }
+       for (int i = 4; i > 0; i--) {
+            System.out.println("Agregamos elemento " + i);
+        udll.addToFront(i);
+       }
+        udll.remove(7);
 
         System.out.print(" Lista ...............");
-        visualizarNodos(l);
-        System.out.println(" Num elementos: " + l.size());
+        visualizarNodos(udll);
+        System.out.println(" Num elementos: " + udll.size());
 
         System.out.println("Prueba Find ...............");
-        System.out.println("9? " + l.find(9));
-        System.out.println("0? " + l.find(0));
-        System.out.println("7? " + l.find(7));
+        System.out.println("9? " + udll.find(9));
+        System.out.println("0? " + udll.find(0));
+        System.out.println("7? " + udll.find(7));
 
     }
 }
