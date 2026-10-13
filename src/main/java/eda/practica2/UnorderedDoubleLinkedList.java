@@ -52,6 +52,8 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
          * en dicha iteracion guardarnos el elemento Target, para cuando hayamos
          * comprobado toda la lista, insertar nuestro elemento detras de target,
          * actualizando los elementos Target, Target.next y Target.next.next.
+         * 
+         * He preguntado en clase y ha dicho que agregemos tras el primero que encuetre.
          */
     }
 }
