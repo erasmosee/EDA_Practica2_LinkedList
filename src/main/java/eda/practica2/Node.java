@@ -1,5 +1,6 @@
 package eda.practica2;
 
+@Deprecated 
 public class Node<T> {
 
     public T data; 			// dato del nodo
@@ -13,4 +14,5 @@ public class Node<T> {
         next = null;
         prev = null;
     }
+    
 }
