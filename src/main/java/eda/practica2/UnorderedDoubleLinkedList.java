@@ -2,28 +2,20 @@ package eda.practica2;
 
 public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements UnorderedListADT<T> {
 
-    /*
-     * IDEA:
-     * hacer un metodo addTo(T elem, boolean front){
-     * que haga todo lo que ambos metodos tienen en comun.
-     * y que simplemente use el booleano para saber cuando actualizar el first, que
-     * es lo unico que varia.
-     * asi el metodo addToFront solo tendria que llamar a addTo(T,true) el el metodo
-     * addToRear tendria que llamar al addTo(T,false).
-     * De esta manera no se duplica codigo.
-     * }
-     * 
+    /**
+     * Las funciones addToFront y addToRear, insertan en el mismo sitio, delante
+     * del First, la diferencia entre ellos es que uno actualiza a donde apunta
+     * el First y el otro no. Por ello usamos un booleano al llamar a addTo
+     * desde addToFront y desde addToRear.
+     * Dado que solo se le va a llamar desde addToFront y desde addToRear addTo es privado.
      */
-
-    public void addTo(T elem, boolean front) {
+    private void addTo(T elem, boolean front) {
         Node<T> newNode = new Node<>(elem);
         if (isEmpty()) {
             newNode.next = newNode;
             newNode.prev = newNode;
             first = newNode;
-        }
-
-        else {
+        } else {
             newNode.prev = first.prev;
             newNode.next = first;
             first.prev.next = newNode;
@@ -37,16 +29,14 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
 
     }
 
-    // addToFront y addToRear, insertan en el mismo sitio, delante del First, luego
-    // ya uno actualiza el First y el otro no.
     @Override
-    // añade un elemento al comienzo
+    // añade un elemento entre el first y el last y actualiza el first.
     public void addToFront(T elem) {
         addTo(elem, true);
     }
 
     @Override
-    // añade un elemento al final
+    // añade un elemento entre el first y el last pero no actualiza el first.
     public void addToRear(T elem) {
         addTo(elem, false);
     }
