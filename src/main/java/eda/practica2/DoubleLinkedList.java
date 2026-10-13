@@ -11,6 +11,22 @@ import java.util.Objects;
  */
 public class DoubleLinkedList<T> implements ListADT<T> {
 
+    protected class Node<T> {
+
+        protected T data; 			// dato del nodo
+        protected Node<T> prev; 	// puntero al anterior nodo de la lista
+        protected Node<T> next; 	// puntero al siguiente nodo de la lista
+        // -------------------------------------------------------------
+
+        protected Node(T dd) // constructor
+        {
+            data = dd;
+            next = null;
+            prev = null;
+        }
+        
+    }
+
     // Atributos
     protected Node<T> first;  // apuntador al primer elemento
     protected String descr;  // descripción
