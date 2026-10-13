@@ -6,8 +6,8 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
      * Las funciones addToFront y addToRear, insertan en el mismo sitio, delante
      * del First, la diferencia entre ellos es que uno actualiza a donde apunta
      * el First y el otro no. Por ello usamos un booleano al llamar a addTo
-     * desde addToFront y desde addToRear.
-     * Dado que solo se le va a llamar desde addToFront y desde addToRear addTo es privado.
+     * desde addToFront y desde addToRear. Dado que solo se le va a llamar desde
+     * addToFront y desde addToRear addTo es privado.
      */
     private void addTo(T elem, boolean front) {
         Node<T> newNode = new Node<>(elem);
@@ -43,7 +43,15 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
 
     @Override
     public void addAfter(T elem, T target) {// TODO
-        // añade elem detrás de otro elemento concreto, target, que ya se encuentra en
-        // la lista
+        /**
+         * Este metodo me plantea las siguientes dudas: Sobre el elemento que
+         * vamos a insertar. ¿se comprueba si ya existe? En caso de no
+         * comprobarlo, quiere decir que tendremos elementos repetidos, detras
+         * de cual de todos los repetidos queremos insertarlo. Creo conveniente
+         * revisar TODA la lista (una iteracion completa) para ver si existe, y
+         * en dicha iteracion guardarnos el elemento Target, para cuando hayamos
+         * comprobado toda la lista, insertar nuestro elemento detras de target,
+         * actualizando los elementos Target, Target.next y Target.next.next.
+         */
     }
 }
