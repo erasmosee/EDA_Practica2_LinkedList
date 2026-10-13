@@ -87,17 +87,28 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         return aux.data;
     }
 //Esta funcion da una vuelta por la lista buscando que el elemento pasado sea igual a alguno existente y mirando no llegar al primero.
+
     protected Node<T> locate(T elem) {
         Node<T> aux;
         aux = first;
-        while (!Objects.equals(aux.data, elem) && !Objects.equals(aux.data, first)) {
-            aux = aux.next;
+        int contador = 0;
+        if (!Objects.equals(elem, first)) {
+            // Elem no es igual que first
+            while (!Objects.equals(elem, aux.data) && contador < size()) {
+                //Miramos si elem es igual que el nodo actual hasta que lleguemos al ultimo que chocara con first
+                aux = aux.next;
+                contador++;
+            }
+            if (Objects.equals(aux.data, first)) { // Ha llegado al ultimo
+                aux = null;
+            }
         }
         return aux;
     }
 
     @Override
-    public T remove(T elem) {
+    public T remove(T elem
+    ) {
         Node<T> aux;
         if (isEmpty()) {
             throw new NoSuchElementException();
@@ -139,20 +150,22 @@ public class DoubleLinkedList<T> implements ListADT<T> {
     }
 
     @Override
-    public boolean contains(T elem) {//TODO
+    public boolean contains(T elem
+    ) {//TODO
         Node<T> aux;
         if (isEmpty()) {
             return false;
 
         } else {
             aux = locate(elem);
-            
+
             return Objects.equals(aux.data, elem);
         }
     }
 
     @Override
-    public T find(T elem) {//TODO
+    public T find(T elem
+    ) {//TODO
 
         //Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no está
         Node<T> aux;
@@ -161,7 +174,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 
         } else {
             aux = locate(elem);
-            
+
             if (Objects.equals(aux.data, elem)) {
                 return aux.data;
             } else {
