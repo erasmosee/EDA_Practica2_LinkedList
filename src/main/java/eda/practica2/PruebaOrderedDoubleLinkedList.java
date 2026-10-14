@@ -4,26 +4,28 @@ public class PruebaOrderedDoubleLinkedList {
 
     public static void main(String[] args) {
 
-        OrderedDoubleLinkedList<Integer> l = new OrderedDoubleLinkedList<>();
-        l.add(1);
-        l.add(3);
-        l.add(6);
-        l.add(7);
-        l.add(9);
-        l.add(0);
-        l.add(20);
-        l.remove(7);
+        OrderedDoubleLinkedList<Integer> odll = new OrderedDoubleLinkedList<>();
+  for (int i = 5; i < 10; i++) {
+            System.out.println("Agregamos elemento " + i);
+        odll.add(i);
+       }
+       for (int i = 4; i > 0; i--) {
+            System.out.println("Agregamos elemento " + i);
+        odll.add(i);
+       }
+        odll.remove(7);
+        odll.remove(7);
 
         System.out.print(" Lista ...............");
-        l.visualizarNodos();
-        System.out.println(" Num elementos: " + l.size());
+        odll.visualizarNodos();
+        System.out.println(" Num elementos: " + odll.size());
 
         System.out.println("Prueba Find ...............");
-        System.out.println("20? " + l.find(20));
-        System.out.println("9? " + l.find(9));
-        System.out.println("9? " + l.find(9));
-        System.out.println("0? " + l.find(0));
-        System.out.println("7? " + l.find(7));
+        System.out.println("20? " + odll.find(20));
+        System.out.println("9? " + odll.find(9));
+        System.out.println("9? " + odll.find(9));
+        System.out.println("0? " + odll.find(0));
+        System.out.println("7? " + odll.find(7));
 
         OrderedDoubleLinkedList<Persona> l2 = new OrderedDoubleLinkedList<>();
         l2.add(new Persona("jon", "1111"));

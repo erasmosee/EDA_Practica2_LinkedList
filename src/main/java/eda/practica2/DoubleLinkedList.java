@@ -11,6 +11,22 @@ import java.util.Objects;
  */
 public class DoubleLinkedList<T> implements ListADT<T> {
 
+    protected class Node<T> {
+
+        protected T data; 			// dato del nodo
+        protected Node<T> prev; 	// puntero al anterior nodo de la lista
+        protected Node<T> next; 	// puntero al siguiente nodo de la lista
+        // -------------------------------------------------------------
+
+        protected Node(T dd) // constructor
+        {
+            data = dd;
+            next = null;
+            prev = null;
+        }
+
+    }
+
     // Atributos
     protected Node<T> first;  // apuntador al primer elemento
     protected String descr;  // descripción
@@ -70,20 +86,36 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         }
         return aux.data;
     }
+//Esta funcion da una vuelta por la lista buscando que el elemento pasado sea igual a alguno existente y mirando no llegar al primero.
 
-    @Override
-    public T remove(T elem) {
+    protected Node<T> locate(T elem) {
         Node<T> aux;
+        aux = first;
         int contador = 0;
-        if (isEmpty()) {
-            throw new NoSuchElementException();
-        } else {
-            aux = first;
-            while (!Objects.equals(aux.data, elem) && contador < size()) {
+        if (!Objects.equals(elem, first)) {
+            // Elem no es igual que first
+            while (!Objects.equals(elem, aux.data) && contador < size()) {
+                //Miramos si elem es igual que el nodo actual hasta que lleguemos al ultimo que chocara con first
                 aux = aux.next;
                 contador++;
             }
-            if (aux == first && Objects.equals(aux.data, elem)) {
+            if (Objects.equals(aux.data, first)) { // Ha llegado al ultimo
+                aux = null;
+            }
+        }
+        return aux;
+    }
+
+    @Override
+    public T remove(T elem
+    ) {
+        Node<T> aux;
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        } else {
+            aux = locate(elem);
+
+            if (aux == first) {
                 return removeFirst();
             }
             if (Objects.equals(aux.data, elem)) {
@@ -118,41 +150,35 @@ public class DoubleLinkedList<T> implements ListADT<T> {
     }
 
     @Override
-    public boolean contains(T elem) {//TODO
+    public boolean contains(T elem
+    ) {//TODO
         Node<T> aux;
-        int contador = 0;
         if (isEmpty()) {
             return false;
 
         } else {
-            aux = first;
-            while (!Objects.equals(aux.data, elem) && contador < size()) {
-                aux = aux.next;
-                contador++;
-            }
+            aux = locate(elem);
+
             return Objects.equals(aux.data, elem);
         }
     }
 
     @Override
-    public T find(T elem) {//TODO
+    public T find(T elem
+    ) {//TODO
 
         //Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no está
         Node<T> aux;
-        int contador = 0;
         if (isEmpty()) {
             throw new NoSuchElementException();
 
         } else {
-            aux = first;
-            while (contador < count && !Objects.equals(aux.data, elem)) {
-                aux = aux.next;
-                contador++;
-            }
+            aux = locate(elem);
+
             if (Objects.equals(aux.data, elem)) {
-                return null;
-            } else {
                 return aux.data;
+            } else {
+                return null;
             }
         }
     }
