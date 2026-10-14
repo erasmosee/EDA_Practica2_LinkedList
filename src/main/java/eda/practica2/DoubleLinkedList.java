@@ -133,7 +133,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 
     @Override
     public boolean contains(T elem
-    ) {//TODO
+    ) {
         Node<T> aux;
         if (isEmpty()) {
             return false;
@@ -147,7 +147,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 
     @Override
     public T find(T elem
-    ) {//TODO
+    ) {
 
         //Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no está
         Node<T> aux;
@@ -204,7 +204,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         return new ListIterator();
     }
 
-    private class ListIterator implements Iterator<T> {//TODO
+    private class ListIterator implements Iterator<T> {
 
         private Node<T> aux = first;
         private int contador = count;
@@ -228,14 +228,14 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         }
     }
 
-    protected class Node<T> {
+    protected class Node<N> {
 
-        protected T data; 			// dato del nodo
-        protected Node<T> prev; 	// puntero al anterior nodo de la lista
-        protected Node<T> next; 	// puntero al siguiente nodo de la lista
+        protected N data; 			// dato del nodo
+        protected Node<N> prev; 	// puntero al anterior nodo de la lista
+        protected Node<N> next; 	// puntero al siguiente nodo de la lista
         // -------------------------------------------------------------
 
-        protected Node(T dd) // constructor
+        protected Node(N dd) // constructor
         {
             data = dd;
             next = null;
@@ -249,7 +249,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
          * @param prev
          * @param next
          */
-        public Node(T dd, Node<T> prev, Node<T> next) // constructor
+        public Node(N dd, Node<N> prev, Node<N> next) // constructor
         {
             data = dd;
             this.next = next;
