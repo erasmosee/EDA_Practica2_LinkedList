@@ -11,7 +11,7 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
 
         if (elem.compareTo(first.data) < 0) {
             insertAdd(elem, first.prev, first);
-            first = first.prev;
+            actualizarFirst(first.prev);
             return;
         }
 
