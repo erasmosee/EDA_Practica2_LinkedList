@@ -25,6 +25,13 @@ public class DoubleLinkedList<T> implements ListADT<T> {
             prev = null;
         }
 
+        //constructor que asigna previo y siguiente
+        public Node(T dd, Node<T> prev, Node<T> next) // constructor
+        {
+            data = dd;
+            this.next = next;
+            this.prev = prev;
+        }
     }
 
     // Atributos
