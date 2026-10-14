@@ -50,11 +50,20 @@ public class Persona implements Comparable<Persona> {
     }
 
     @Override
+    public int hashCode() {
+        if (dni == null) {
+            return 0;
+        }
+        return dni.hashCode();
+    }
+
+    @Override
     public int compareTo(Persona arg0) {
         //return name.compareToIgnoreCase(arg0.name);
         return dni.compareTo(arg0.dni);
     }
 
+    @Override
     public String toString() {
         return name + " " + dni;
     }
