@@ -16,13 +16,12 @@ public class PruebaOrderedDoubleLinkedList {
     public static void main(String[] args) {
 
         OrderedDoubleLinkedList<Integer> odll = new OrderedDoubleLinkedList<>();
-        for (int i = 5; i < 10; i++) {
-            System.out.println("Agregamos elemento " + i);
+
+        for (int i = 10; i > 0; i--) {
+        System.out.println("Agregamos elemento " + i);
+
             odll.add(i);
-        }
-        for (int i = 4; i > 0; i--) {
-            System.out.println("Agregamos elemento " + i);
-            odll.add(i);
+            
         }
         odll.remove(7);
         odll.remove(7);
