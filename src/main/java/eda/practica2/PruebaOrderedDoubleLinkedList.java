@@ -26,9 +26,9 @@ public class PruebaOrderedDoubleLinkedList {
         odll.remove(7);
         odll.remove(7);
 
-        System.out.println(" Lista ...............");
+        System.out.print(" Lista ...............");
         visualizarNodos(odll);
-        System.out.println(" Num elementos: " + odll.size());
+        System.out.println("Num elementos: " + odll.size());
 
         System.out.println("Prueba Find ...............");
         System.out.println("20? " + odll.find(20));
