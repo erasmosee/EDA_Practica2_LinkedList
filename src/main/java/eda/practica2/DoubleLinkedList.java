@@ -11,29 +11,6 @@ import java.util.Objects;
  */
 public class DoubleLinkedList<T> implements ListADT<T> {
 
-    protected class Node<T> {
-
-        protected T data; 			// dato del nodo
-        protected Node<T> prev; 	// puntero al anterior nodo de la lista
-        protected Node<T> next; 	// puntero al siguiente nodo de la lista
-        // -------------------------------------------------------------
-
-        protected Node(T dd) // constructor
-        {
-            data = dd;
-            next = null;
-            prev = null;
-        }
-
-        //constructor que asigna previo y siguiente
-        public Node(T dd, Node<T> prev, Node<T> next) // constructor
-        {
-            data = dd;
-            this.next = next;
-            this.prev = prev;
-        }
-    }
-
     // Atributos
     protected Node<T> first;  // apuntador al primer elemento
     protected String descr;  // descripción
@@ -190,6 +167,14 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         }
     }
 
+    // Funcion a la que le preguntas si esta vacio y si esta vacio inserta el elemento. devuelve si estaba o no vacia antes de insertar
+    public void addWhenEmpty(T elem) {
+        Node<T> newNode = new Node<>(elem);
+        newNode.next = newNode;
+        newNode.prev = newNode;
+        first = newNode;
+    }
+
     @Override
     public boolean isEmpty() //Determina si la lista está vacía
     {
@@ -199,6 +184,11 @@ public class DoubleLinkedList<T> implements ListADT<T> {
     public boolean isAlone() //Determina si la lista tiene un unico elemento
     {
         return first == first.next;
+    }
+
+    public void actualizarFirst(Node<T> node) //Determina si la lista tiene un unico elemento
+    {
+        first = node;
     }
 
     @Override
@@ -234,6 +224,50 @@ public class DoubleLinkedList<T> implements ListADT<T> {
             return data;
 
         }
+    }
+
+    protected class Node<T> {
+
+        protected T data; 			// dato del nodo
+        protected Node<T> prev; 	// puntero al anterior nodo de la lista
+        protected Node<T> next; 	// puntero al siguiente nodo de la lista
+        // -------------------------------------------------------------
+
+        protected Node(T dd) // constructor
+        {
+            data = dd;
+            next = null;
+            prev = null;
+        }
+
+        /**
+         * Constructor que asigna previo y siguiente.
+         *
+         * @param dd
+         * @param prev
+         * @param next
+         */
+        public Node(T dd, Node<T> prev, Node<T> next) // constructor
+        {
+            data = dd;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+
+    /**
+     * insertAdd inserta un elemento entre prev y next, actualizando prev.next y
+     * next.prev
+     *
+     * @param elem
+     * @param prev
+     * @param next
+     */
+    public void insertAdd(T elem, Node<T> prev, Node<T> next) {
+        Node<T> newNode = new Node<>(elem, prev, next);
+        prev.next = newNode;
+        next.prev = newNode;
+        count++;
     }
 
     public void visualizarNodos() {
