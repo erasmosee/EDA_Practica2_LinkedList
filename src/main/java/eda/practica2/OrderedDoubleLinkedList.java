@@ -1,19 +1,26 @@
 package eda.practica2;
 
-public class OrderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements OrderedListADT<T> {
+public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLinkedList<T> implements OrderedListADT<T> {
 
     @Override
-    public void add(T elem) {//TODO Esto agrega elementos pero no en orden, HAY QUE MIRAR COMO HACER QUE AGREGE EN ORDEN
-
+    public void add(T elem) {
         if (isEmpty()) {
             addWhenEmpty(elem);
-        } else {
-            Node<T> current = first;
-            while (current.next != null && current.next != first) {
-                current = current.next;
-            }
-            insertAdd(elem, current, current.next);
+            return;
         }
+
+        if (elem.compareTo(first.data) < 0) {
+            insertAdd(elem, first.prev, first);
+            first = first.prev;
+            return;
+        }
+
+        Node<T> current = first;
+        while (current.next != first && elem.compareTo(current.next.data) >= 0) {
+            current = current.next;
+        }
+
+        insertAdd(elem, current, current.next);
     }
 
 
