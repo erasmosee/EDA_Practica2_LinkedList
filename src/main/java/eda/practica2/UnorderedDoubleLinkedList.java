@@ -3,11 +3,11 @@ package eda.practica2;
 public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements UnorderedListADT<T> {
 
     /**
-     * Las funciones addToFront y addToRear, insertan en el mismo sitio, delante
-     * del First, la diferencia entre ellos es que uno actualiza a donde apunta
-     * el First y el otro no. Por ello usamos un booleano al llamar a addTo
-     * desde addToFront y desde addToRear. Dado que solo se le va a llamar desde
-     * addToFront y desde addToRear addTo es privado.
+     * Funcion para agregar elementos entre el ultimo y el primero actualizando
+     * o no el puntero first en base a un booleano
+     *
+     * @param elem
+     * @param front
      */
     private void addTo(T elem, boolean front) {
         Node<T> newNode = new Node<>(elem);
@@ -24,32 +24,47 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
 
     }
 
+    /**
+     * (non-Javadoc) Añade un elemento entre el first y el last y actualiza el
+     * first.
+     *
+     * @see eda.practica2.UnorderedListADT#addToFront(java.lang.Object)
+     */
     @Override
-    // añade un elemento entre el first y el last y actualiza el first.
     public void addToFront(T elem) {
         addTo(elem, true);
     }
 
+    /**
+     * (non-Javadoc) Añade un elemento entre el first y el last pero no
+     * actualiza el first.
+     *
+     * @see eda.practica2.UnorderedListADT#addToRear(java.lang.Object)
+     */
     @Override
-    // añade un elemento entre el first y el last pero no actualiza el first.
     public void addToRear(T elem) {
         addTo(elem, false);
     }
 
+    /**
+     * (non-Javadoc) Añade un elemento despues del target Si la lista esta
+     * vacia, el target no esta en la lista, por lo que insertamso target y
+     * luego elem.
+     *
+     * @see eda.practica2.UnorderedListADT#addAfter(java.lang.Object,
+     * java.lang.Object)
+     */
     @Override
     public void addAfter(T elem, T target) {// TODO
-        /**
-         * Este metodo me plantea las siguientes dudas: Sobre el elemento que
-         * vamos a insertar. ¿se comprueba si ya existe? En caso de no
-         * comprobarlo, quiere decir que tendremos elementos repetidos, detras
-         * de cual de todos los repetidos queremos insertarlo. Creo conveniente
-         * revisar TODA la lista (una iteracion completa) para ver si existe, y
-         * en dicha iteracion guardarnos el elemento Target, para cuando hayamos
-         * comprobado toda la lista, insertar nuestro elemento detras de target,
-         * actualizando los elementos Target, Target.next y Target.next.next.
-         *
-         * He preguntado en clase y ha dicho que agregemos tras el primero que
-         * encuentre.
-         */
+
+        if (isEmpty()) {
+            // Si la lista esta vacia, el target no esta en la lista, por lo que insertamso target y luego elem.
+            addWhenEmpty(target);
+            addAfter(elem, target);
+        } else {
+            Node<T> nodoTarget = locate(target);
+            insertAdd(elem, nodoTarget.prev, nodoTarget);
+        }
     }
+
 }
