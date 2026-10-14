@@ -53,7 +53,7 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
      * java.lang.Object)
      */
     @Override
-    public void addAfter(T elem, T target) {// TODO
+    public void addAfter(T elem, T target) {
 
         if (isEmpty()) {
             // Si la lista esta vacia, el target no esta en la lista, por lo que insertamso target y luego elem.
