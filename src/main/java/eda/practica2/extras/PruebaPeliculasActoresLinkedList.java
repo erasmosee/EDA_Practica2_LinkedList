@@ -1,50 +1,30 @@
 package eda.practica2.extras;
 
-import java.util.Iterator;
+import java.io.IOException;
 
 import eda.practica2.OrderedDoubleLinkedList;
 
 public class PruebaPeliculasActoresLinkedList {
 
-    public static void visualizarNodosActor(OrderedDoubleLinkedList<Actor> l) {
-        Iterator<Actor> it = l.iterator();
-        System.out.println();
-        while (it.hasNext()) {
-            Actor num = it.next();
-            System.out.println(num);
+    private static final String RUTA_DATOS =
+            "C:\\Workspace\\UPV\\EDA\\EDA_Practica1_Peliculas_Actores\\resources";
+
+    public static void main(String[] args) throws IOException {
+        String ruta = RUTA_DATOS;
+        if (args.length > 0) {
+            ruta = args[0];
         }
-    }
 
-    public static void visualizarNodosPelicula(OrderedDoubleLinkedList<Pelicula> l) {
-        Iterator<Pelicula> it = l.iterator();
-        System.out.println();
-        while (it.hasNext()) {
-            Pelicula num = it.next();
-            System.out.println(num);
-        }
-    }
+        OrderedDoubleLinkedList<Actor> actores = new OrderedDoubleLinkedList<>();
+        OrderedDoubleLinkedList<Pelicula> peliculas = new OrderedDoubleLinkedList<>();
 
-    public static void main(String[] args) {
+        LectorPeliculasActores lector = new LectorPeliculasActores();
+        int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas);
 
-        OrderedDoubleLinkedList<Pelicula> odll2 = new OrderedDoubleLinkedList<>();
-        odll2.add(new Pelicula("jon", "1111"));
-        odll2.add(new Pelicula("ana", "7777"));
-        odll2.add(new Pelicula("amaia", "3333"));
-        odll2.add(new Pelicula("unai", "8888"));
-        odll2.add(new Pelicula("pedro", "2222"));
-        odll2.add(new Pelicula("olatz", "5555"));
+        System.out.println("Registros leídos: " + registrosLeidos);
+        System.out.println("Actores: " + actores.size());
+        System.out.println("Películas: " + peliculas.size());
 
-        odll2.remove(new Pelicula("", "8888"));
-
-        System.out.print("Lista ...............");
-        visualizarNodosPelicula(odll2);
-        System.out.println(" Num elementos: " + odll2.size());
-
-        System.out.println("Prueba Find ...............");
-        System.out.println("2222? " + odll2.find(new Pelicula("", "2222")));
-        System.out.println("5555? " + odll2.find(new Pelicula("", "5555")));
-        System.out.println("7777? " + odll2.find(new Pelicula("", "7777")));
-        System.out.println("8888? " + odll2.find(new Pelicula("", "8888")));
-
+       
     }
 }
