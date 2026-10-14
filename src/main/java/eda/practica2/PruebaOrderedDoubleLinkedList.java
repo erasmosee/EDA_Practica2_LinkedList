@@ -1,28 +1,38 @@
 package eda.practica2;
 
+import java.util.Iterator;
+
 public class PruebaOrderedDoubleLinkedList {
+
+    public static void visualizarNodos(OrderedDoubleLinkedList<Integer> l) {
+        Iterator<Integer> it = l.iterator();
+        System.out.println();
+        while (it.hasNext()) {
+            Integer num = it.next();
+            System.out.println(num);
+        }
+    }
 
     public static void main(String[] args) {
 
         OrderedDoubleLinkedList<Integer> odll = new OrderedDoubleLinkedList<>();
-  for (int i = 5; i < 10; i++) {
+        for (int i = 5; i < 10; i++) {
             System.out.println("Agregamos elemento " + i);
-        odll.add(i);
-       }
-       for (int i = 4; i > 0; i--) {
+            odll.add(i);
+        }
+        for (int i = 4; i > 0; i--) {
             System.out.println("Agregamos elemento " + i);
-        odll.add(i);
-       }
+            odll.add(i);
+        }
         odll.remove(7);
         odll.remove(7);
 
-        System.out.print(" Lista ...............");
-        odll.visualizarNodos();
+        System.out.println(" Lista ...............");
+        visualizarNodos(odll);
         System.out.println(" Num elementos: " + odll.size());
 
         System.out.println("Prueba Find ...............");
         System.out.println("20? " + odll.find(20));
-        System.out.println("9? " + odll.find(9));
         System.out.println("9? " + odll.find(9));
         System.out.println("0? " + odll.find(0));
         System.out.println("7? " + odll.find(7));
