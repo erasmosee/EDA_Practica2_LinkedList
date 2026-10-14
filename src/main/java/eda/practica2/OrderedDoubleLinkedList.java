@@ -9,8 +9,14 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
             return;
         }
 
+        Node<T> last = first.prev;
+        if (elem.compareTo(last.data) >= 0) {
+            insertAdd(elem, last, first);
+            return;
+        }
+
         if (elem.compareTo(first.data) < 0) {
-            insertAdd(elem, first.prev, first);
+            insertAdd(elem, last, first);
             actualizarFirst(first.prev);
             return;
         }
