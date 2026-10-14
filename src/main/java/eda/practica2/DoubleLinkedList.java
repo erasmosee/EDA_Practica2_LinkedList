@@ -156,7 +156,10 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 
         } else {
             aux = locate(elem);
-
+            
+            if (aux == null) {
+                return null;
+            }
             if (Objects.equals(aux.data, elem)) {
                 return aux.data;
             } else {
