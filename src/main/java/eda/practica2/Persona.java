@@ -51,7 +51,8 @@ public class Persona implements Comparable<Persona> {
 
     @Override
     public int compareTo(Persona arg0) {
-        return name.compareToIgnoreCase(arg0.name);
+        //return name.compareToIgnoreCase(arg0.name);
+        return dni.compareTo(arg0.dni);
     }
 
     public String toString() {
