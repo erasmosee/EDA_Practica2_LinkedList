@@ -173,6 +173,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         newNode.next = newNode;
         newNode.prev = newNode;
         first = newNode;
+        count++;
     }
 
     @Override
