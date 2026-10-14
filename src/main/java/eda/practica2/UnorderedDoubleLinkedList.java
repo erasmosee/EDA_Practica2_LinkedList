@@ -12,16 +12,11 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
     private void addTo(T elem, boolean front) {
         Node<T> newNode = new Node<>(elem);
         if (isEmpty()) {
-            newNode.next = newNode;
-            newNode.prev = newNode;
-            first = newNode;
+            addWhenEmpty(elem);
         } else {
-            newNode.prev = first.prev;
-            newNode.next = first;
-            first.prev.next = newNode;
-            first.prev = newNode;
+            insertAdd(elem, first.prev, first);
             if (front) {
-                first = newNode;
+                actualizarFirst(newNode);
             }
         }
 
@@ -52,8 +47,9 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
          * en dicha iteracion guardarnos el elemento Target, para cuando hayamos
          * comprobado toda la lista, insertar nuestro elemento detras de target,
          * actualizando los elementos Target, Target.next y Target.next.next.
-         * 
-         * He preguntado en clase y ha dicho que agregemos tras el primero que encuetre.
+         *
+         * He preguntado en clase y ha dicho que agregemos tras el primero que
+         * encuentre.
          */
     }
 }
