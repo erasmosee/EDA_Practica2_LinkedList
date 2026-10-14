@@ -10,13 +10,12 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
      * @param front
      */
     private void addTo(T elem, boolean front) {
-        Node<T> newNode = new Node<>(elem);
         if (isEmpty()) {
             addWhenEmpty(elem);
         } else {
             insertAdd(elem, first.prev, first);
             if (front) {
-                actualizarFirst(newNode);
+                actualizarFirst(first.prev);
             }
         }
 
@@ -62,7 +61,7 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
             addAfter(elem, target);
         } else {
             Node<T> nodoTarget = locate(target);
-            insertAdd(elem, nodoTarget.prev, nodoTarget);
+            insertAdd(elem, nodoTarget, nodoTarget.next);
         }
     }
 
