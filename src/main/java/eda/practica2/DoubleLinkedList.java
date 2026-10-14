@@ -154,7 +154,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         //Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no está
         Node<T> aux;
         if (isEmpty()) {
-            throw new NoSuchElementException();
+            return null;
 
         } else {
             aux = locate(elem);
