@@ -41,7 +41,6 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         } else {
             aux = first;
             if (isAlone()) {
-
                 first = null;
             } else {
                 first.prev.next = first.next;
@@ -63,15 +62,21 @@ public class DoubleLinkedList<T> implements ListADT<T> {
             if (isAlone()) {
                 first = null;
             } else {
-                first.prev.prev.next = first.prev.next;
+                first.prev.prev.next = first;
                 first.prev = first.prev.prev;
             }
             count--;
         }
         return aux.data;
     }
-//Esta funcion da una vuelta por la lista buscando que el elemento pasado sea igual a alguno existente y mirando no llegar al primero.
 
+    /**
+     * Esta funcion da una vuelta por la lista buscando que el elemento pasado
+     * sea igual a alguno existente y mirando no llegar al primero.
+     *
+     * @param elem
+     * @return
+     */
     protected Node<T> locate(T elem) {
         if (isEmpty()) {
             return null;
@@ -83,23 +88,23 @@ public class DoubleLinkedList<T> implements ListADT<T> {
             }
             aux = aux.next;
         } while (aux != first);
+        //Si llega al aux = first de nuevo es que se ha pasado la lista entera y no lo ha encontrado, retorna null
 
         return null;
     }
 
     @Override
-    public T remove(T elem
-    ) {
-
+    public T remove(T elem) {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
 
         Node<T> aux = locate(elem);
-
+        // Si locate devuelve null es que no esta en la lista.
         if (aux == null) {
             return null;
         }
+        // si aux es first, lanzamos el removeFirst que ya tenemos.
         if (aux == first) {
             return removeFirst();
         }
@@ -112,8 +117,8 @@ public class DoubleLinkedList<T> implements ListADT<T> {
     }
 
     @Override
+    //Da acceso al primer elemento de la lista
     public T first() {
-        //Da acceso al primer elemento de la lista
         if (isEmpty()) {
             throw new NoSuchElementException();
         } else {
@@ -122,8 +127,8 @@ public class DoubleLinkedList<T> implements ListADT<T> {
     }
 
     @Override
+    //Da acceso al último elemento de la lista
     public T last() {
-        //Da acceso al último elemento de la lista
         if (isEmpty()) {
             throw new NoSuchElementException();
         } else {
@@ -132,31 +137,29 @@ public class DoubleLinkedList<T> implements ListADT<T> {
     }
 
     @Override
-    public boolean contains(T elem
-    ) {
+    //Determina si la lista contiene un elemento concreto, y develve su dato, null en caso de que no está
+    public boolean contains(T elem) {
         Node<T> aux;
         if (isEmpty()) {
             return false;
-
         } else {
             aux = locate(elem);
-
+            //Locate devuelve null si no lo encuentra, por eso comprobamos elem con lo del locate
             return Objects.equals(aux.data, elem);
         }
     }
 
     @Override
-    public T find(T elem
-    ) {
+    //Determina si la lista contiene un elemento concreto, y develve su dato, null en caso de que no está
+    public T find(T elem) {
 
-        //Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no está
         Node<T> aux;
         if (isEmpty()) {
             return null;
 
         } else {
             aux = locate(elem);
-            
+
             if (aux == null) {
                 return null;
             }
@@ -168,7 +171,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         }
     }
 
-    // Funcion a la que le preguntas si esta vacio y si esta vacio inserta el elemento. devuelve si estaba o no vacia antes de insertar
+    // Funcion a la que le preguntas si esta vacio y si esta vacio inserta el elemento.
     public void addWhenEmpty(T elem) {
         Node<T> newNode = new Node<>(elem);
         newNode.next = newNode;
@@ -178,24 +181,23 @@ public class DoubleLinkedList<T> implements ListADT<T> {
     }
 
     @Override
-    public boolean isEmpty() //Determina si la lista está vacía
-    {
+    //Determina si la lista está vacía
+    public boolean isEmpty() {
         return first == null;
     }
 
-    public boolean isAlone() //Determina si la lista tiene un unico elemento
-    {
+    //Determina si la lista tiene un unico elemento
+    public boolean isAlone() {
         return first == first.next;
     }
 
-    public void actualizarFirst(Node<T> node) //Determina si la lista tiene un unico elemento
-    {
+    public void actualizarFirst(Node<T> node) {
         first = node;
     }
 
     @Override
-    public int size() //Determina el número de elementos de la lista
-    {
+    //Determina el número de elementos de la lista
+    public int size() {
         return count;
     }
 
@@ -255,6 +257,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
             this.next = next;
             this.prev = prev;
         }
+
     }
 
     /**
