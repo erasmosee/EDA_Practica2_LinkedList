@@ -43,4 +43,10 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
             actual = actual.next; // actualizamos el indice
         }
     }
+    // add tira de insertAdd el cual al no saber donde insertar va a buscarlo cada vez en la lista, por eso nos queda cuadratico,
+    // el otro dia Eneko explico que para simplificar estos metodos necesitaremos punteros, muchos punteros.
+
+    //Para este caso en concreto necesitaremos minimo dos punteros, uno que avance por la lista pequeña y otro por la lista grande,
+    //Dado que los dos estan ordenados, un puntero que avanza por la lista grande y cuando detecta que su elemento es mayor que el primero de la lista pequeña, vuelve uno atras y hace un insertAdd.
+    //en ese momento se carga el elemento de la lista pequeña y compara con donde se habia quedado en la lista grande, si no es, avanza el de la lista grande desde donde se habia quedado, de esta forma solo recorremos la grande una vez y la pequeña una vez. n+m
 }
