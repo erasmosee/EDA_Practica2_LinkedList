@@ -180,6 +180,16 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         count++;
     }
 
+    public void insertFirst(T elem) {
+        if (isEmpty()) {
+            addWhenEmpty(elem);
+            return;
+        }
+
+        insertAdd(elem, first.prev, first);
+        first = first.prev;
+    }
+
     @Override
     //Determina si la lista está vacía
     public boolean isEmpty() {
