@@ -19,7 +19,6 @@ public class PruebaPeliculasActoresLinkedList {
 
         OrderedDoubleLinkedList<Actor> actores = new OrderedDoubleLinkedList<>();
         OrderedDoubleLinkedList<Pelicula> peliculas = new OrderedDoubleLinkedList<>();
-        long tiempoInicio = Utils.iniciarCronometro();
 
         LectorPeliculasActores lector = new LectorPeliculasActores();
         //LectorHashMapPeliculasActores lector = new LectorHashMapPeliculasActores();
@@ -27,12 +26,19 @@ public class PruebaPeliculasActoresLinkedList {
         for (int i = 1; i <= 2; i++) {
 
             for (int j = 1; j <= 2; j++) {
-                switch (Integer.parseInt(String.valueOf(i)+String.valueOf(j))) {
-                    case 11 -> Utils.traza("main", "1-1: HashMap - MergeEficaz");
-                    case 12 -> Utils.traza("main", "1-2: HashMap - MergePrueba");
-                    case 21 -> Utils.traza("main", "2-1: LinkedList - MergeEficaz");
-                    case 22 -> Utils.traza("main", "2-2: LinkedList - MergePrueba");
-                    default -> throw new AssertionError();
+                long tiempoInicio = Utils.iniciarCronometro();
+
+                switch (Integer.parseInt(String.valueOf(i) + String.valueOf(j))) {
+                    case 11 ->
+                        Utils.traza("main", "1-1: HashMap - MergeEficaz");
+                    case 12 ->
+                        Utils.traza("main", "1-2: HashMap - MergePrueba");
+                    case 21 ->
+                        Utils.traza("main", "2-1: LinkedList - MergeEficaz");
+                    case 22 ->
+                        Utils.traza("main", "2-2: LinkedList - MergePrueba");
+                    default ->
+                        throw new AssertionError();
                 }
                 int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas, i, j);
                 Utils.traza("estaOrdenada", "Actores supera prueba ordenados: " + estaOrdenada(actores));
