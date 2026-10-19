@@ -30,19 +30,26 @@ public class LectorHashMapPeliculasActores {
         }
         Collections.sort(ficherosTxt);
 
-       // Declaramso hashmaps tal y como lo haciamos en la practica 1, vamos a usarlos para leer, grabar en hasmaps y luego mostrar una lista ordeanda
+        // Declaramso hashmaps tal y como lo haciamos en la practica 1, vamos a usarlos para leer, grabar en hasmaps y luego mostrar una lista ordeanda
         HashMap<String, Actor> actoresPorId = new HashMap<>();
         HashMap<String, Pelicula> peliculasPorId = new HashMap<>();
         int registrosLeidos = 0;
+        int registrosAntLeidos;
 
         for (int i = 0; i < ficherosTxt.size(); i++) {
             File fichero = ficherosTxt.get(i);
             System.out.print("Leyendo fichero " + (i + 1) + " de "
-                    + ficherosTxt.size() + ": " + fichero.getName() +" ");
+                    + ficherosTxt.size() + ": " + fichero.getName() + " ");
 
             long tiempoInicio = Utils.iniciarCronometro();
+            registrosAntLeidos = registrosLeidos;
+
             registrosLeidos += leerFichero(fichero, actoresPorId, peliculasPorId);
 
+            System.out.println("    Tamaño fichero leido: " + fichero.length());
+            System.out.println("    Registros leidos: " + (registrosLeidos - registrosAntLeidos));
+            System.out.println("    Tamaño listaActores: " + actoresPorId.size());
+            System.out.println("    Tamaño listaPeliculas: " + peliculasPorId.size());
             Utils.mostrarCronometro("Tiempo (ms):", tiempoInicio);
         }
         // Usamos las listas ordenadas para guardar los datos en las likenList
