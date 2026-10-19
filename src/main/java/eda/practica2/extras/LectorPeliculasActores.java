@@ -29,6 +29,7 @@ public class LectorPeliculasActores {
 
         int registrosLeidos = 0;
         int registrosAntLeidos = 0;
+        // le pongo 10 porque no quiero recorrer los 54 ficheros a cada prueba
         // for (int i = 0; i < ficherosTxt.size(); i++) {
         for (int i = 0; i < 10; i++) {
             File fichero = ficherosTxt.get(i);
