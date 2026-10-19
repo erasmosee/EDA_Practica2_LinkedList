@@ -28,19 +28,29 @@ public class LectorPeliculasActores {
         Collections.sort(ficherosTxt);
 
         int registrosLeidos = 0;
-        for (int i = 0; i < ficherosTxt.size(); i++) {
+        int registrosAntLeidos = 0;
+        // for (int i = 0; i < ficherosTxt.size(); i++) {
+        for (int i = 0; i < 10; i++) {
             File fichero = ficherosTxt.get(i);
-            System.out.print("Leyendo fichero " + (i + 1) + " de " + ficherosTxt.size() + ": " + fichero.getName() + " ");
+            System.out.println("Leyendo fichero " + (i + 1) + " de " + ficherosTxt.size() + ": " + fichero.getName() + " ");
 
             OrderedDoubleLinkedList<Actor> actoresDelFichero = new OrderedDoubleLinkedList<>();
             OrderedDoubleLinkedList<Pelicula> peliculasDelFichero = new OrderedDoubleLinkedList<>();
 
             long tiempoInicio = Utils.iniciarCronometro();
+            registrosAntLeidos = registrosLeidos;
             registrosLeidos += leerFichero(fichero, listaActores, listaPeliculas, actoresDelFichero, peliculasDelFichero);
 
-            listaActores.merge(actoresDelFichero);
-            listaPeliculas.merge(peliculasDelFichero);
-            Utils.mostrarCronometro("Tiempo (s):", tiempoInicio);
+            listaActores.mergeEficaz(actoresDelFichero);
+            listaPeliculas.mergeEficaz(peliculasDelFichero);
+            System.out.println("    Tamaño fichero leido: " + fichero.length());
+            System.out.println("    Registros leidos: " + (registrosLeidos - registrosAntLeidos));
+            System.out.println("    Tamaño listaActoresDelFichero: " + actoresDelFichero.size());
+            System.out.println("    Tamaño listaPeliculassDelFichero: " + peliculasDelFichero.size());
+            System.out.println("    Tamaño listaActores: " + listaActores.size());
+            System.out.println("    Tamaño listaPeliculas: " + listaPeliculas.size());
+
+            Utils.mostrarCronometro("Tiempo (ms):", tiempoInicio);
         }
 
         System.out.println("Lectura de carpeta terminada.");
@@ -70,30 +80,32 @@ public class LectorPeliculasActores {
                 String idPelicula = extraerId(datos[2]);
                 String nombrePelicula = datos[3].trim();
 
-                Actor actor = actoresAcumulados.find(new Actor(idActor, ""));
-                if (actor == null) {
-                    actor = actoresDelFichero.find(new Actor(idActor, ""));
-                    if (actor == null) {
-                        actor = new Actor(idActor, nombreActor);
-                        actoresDelFichero.add(actor);
-                    }
-                }
+                //   Actor actor = actoresAcumulados.find(new Actor(idActor, ""));
+                //    if (actor == null) {
+                //Actor actor = actoresDelFichero.find(new Actor(idActor, ""));
+                //       if (actor == null) {
+                // Actor actor = new Actor(idActor, nombreActor);
+                // actoresDelFichero.add(actor);
+                //        }
+                //    }
+                Actor actor = actoresDelFichero.findOrAdd(new Actor(idActor, nombreActor));
 
-                Pelicula pelicula = peliculasAcumuladas.find(new Pelicula(idPelicula, ""));
-                if (pelicula == null) {
-                    pelicula = peliculasDelFichero.find(new Pelicula(idPelicula, ""));
-                    if (pelicula == null) {
-                        pelicula = new Pelicula(idPelicula, nombrePelicula);
-                        peliculasDelFichero.add(pelicula);
-                    }
-                }
+                //   Pelicula pelicula = peliculasAcumuladas.find(new Pelicula(idPelicula, ""));
+                //   if (pelicula == null) {
+                //   Pelicula    pelicula = peliculasDelFichero.find(new Pelicula(idPelicula, ""));
+                //       if (pelicula == null) {
+                // Pelicula pelicula = new Pelicula(idPelicula, nombrePelicula);
+                // peliculasDelFichero.add(pelicula);
+                //        }
+                //    }
+                Pelicula pelicula = peliculasDelFichero.findOrAdd(new Pelicula(idPelicula, nombrePelicula));
 
-                if (actor.getPeliculaLinkedList().find(pelicula) == null) {
-                    actor.getPeliculaLinkedList().add(pelicula);
-                }
-                if (pelicula.getActorLinkedList().find(actor) == null) {
-                    pelicula.getActorLinkedList().add(actor);
-                }
+                // if (actor.getPeliculaLinkedList().find(pelicula) == null) {
+                actor.getPeliculaLinkedList().add(pelicula);
+                // }
+                // if (pelicula.getActorLinkedList().find(actor) == null) {
+                pelicula.getActorLinkedList().add(actor);
+                //   }
 
                 registrosLeidos++;
             }
