@@ -20,7 +20,9 @@ public class PruebaPeliculasActoresLinkedList {
         OrderedDoubleLinkedList<Pelicula> peliculas = new OrderedDoubleLinkedList<>();
         long tiempoInicio = Utils.iniciarCronometro();
 
-        LectorPeliculasActores lector = new LectorPeliculasActores();
+       LectorPeliculasActores lector = new LectorPeliculasActores();
+         //LectorHashMapPeliculasActores lector = new LectorHashMapPeliculasActores();
+
         int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas);
         System.out.println("Actores ordenados: " + estaOrdenada(actores));
         System.out.println("Actores repetidos: " + tieneRepes(actores));
