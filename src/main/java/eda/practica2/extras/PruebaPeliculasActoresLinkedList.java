@@ -23,25 +23,16 @@ public class PruebaPeliculasActoresLinkedList {
 
         LectorPeliculasActores lector = new LectorPeliculasActores();
         //LectorHashMapPeliculasActores lector = new LectorHashMapPeliculasActores();
-        Utils.traza("main", "1-1: HashMap - MergeEficaz");
-        Utils.traza("main", "1-2: HashMap - MergePrueba");
-        Utils.traza("main", "2-1: LinkedList - MergeEficaz");
-        Utils.traza("main", "2-2: LinkedList - MergePrueba");
+
         for (int i = 1; i <= 2; i++) {
 
             for (int j = 1; j <= 2; j++) {
                 switch (Integer.parseInt(String.valueOf(i)+String.valueOf(j))) {
-                    case 11:
-                        Utils.traza("main", "1-1: HashMap - MergeEficaz");
-                    case 12:
-                        Utils.traza("main", "1-2: HashMap - MergePrueba");
-                    case 21:
-                        Utils.traza("main", "2-1: LinkedList - MergeEficaz");
-                    case 22:
-                        Utils.traza("main", "2-2: LinkedList - MergePrueba");
-                        break;
-                    default:
-                        throw new AssertionError();
+                    case 11 -> Utils.traza("main", "1-1: HashMap - MergeEficaz");
+                    case 12 -> Utils.traza("main", "1-2: HashMap - MergePrueba");
+                    case 21 -> Utils.traza("main", "2-1: LinkedList - MergeEficaz");
+                    case 22 -> Utils.traza("main", "2-2: LinkedList - MergePrueba");
+                    default -> throw new AssertionError();
                 }
                 int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas, i, j);
                 Utils.traza("estaOrdenada", "Actores supera prueba ordenados: " + estaOrdenada(actores));
