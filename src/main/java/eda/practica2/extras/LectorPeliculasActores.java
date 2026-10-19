@@ -13,7 +13,7 @@ import eda.practica2.Utils;
 
 public class LectorPeliculasActores {
 
-    public int leerCarpeta(String rutaCarpeta, OrderedDoubleLinkedList<Actor> listaActores, OrderedDoubleLinkedList<Pelicula> listaPeliculas) throws IOException {
+    public int leerCarpeta(String rutaCarpeta, OrderedDoubleLinkedList<Actor> listaActores, OrderedDoubleLinkedList<Pelicula> listaPeliculas, int metodoHash, int metodoMerge) throws IOException {
         File carpeta = new File(rutaCarpeta);
         File[] ficheros = carpeta.listFiles();
         if (ficheros == null) {
@@ -31,30 +31,54 @@ public class LectorPeliculasActores {
         int registrosLeidos = 0;
         int registrosAntLeidos;
         // le pongo 10 porque no quiero recorrer los 54 ficheros a cada prueba
-        // for (int i = 0; i < ficherosTxt.size(); i++) {
+        Utils.traza("leerCarpetaFin", "Lectura con metodo " + metodoHash + "-" + metodoMerge + " iniciada.");
+        long tiempoCarpeta = Utils.iniciarCronometro();
+
         for (int i = 0; i < ficherosTxt.size(); i++) {
             File fichero = ficherosTxt.get(i);
-            System.out.println("Leyendo fichero " + (i + 1) + " de " + ficherosTxt.size() + ": " + fichero.getName() + " ");
-
+            Utils.traza("leerCarpetaFichero", "Leyendo fichero " + (i + 1) + " de " + ficherosTxt.size() + ": " + fichero.getName() + " ");
             OrderedDoubleLinkedList<Actor> actoresDelFichero = new OrderedDoubleLinkedList<>();
             OrderedDoubleLinkedList<Pelicula> peliculasDelFichero = new OrderedDoubleLinkedList<>();
 
             long tiempoInicio = Utils.iniciarCronometro();
             registrosAntLeidos = registrosLeidos;
-            registrosLeidos += leerFicheroHashMap(fichero, actoresDelFichero, peliculasDelFichero);
 
-            listaActores.mergePruebas(actoresDelFichero);
-            listaPeliculas.mergePruebas(peliculasDelFichero);
+            switch (metodoHash) {
 
-            System.out.println("    Tamaño fichero leido: " + fichero.length());
-            System.out.println("    Registros leidos: " + (registrosLeidos - registrosAntLeidos));
-            System.out.println("    Tamaño listaActores: " + listaActores.size());
-            System.out.println("    Tamaño listaPeliculas: " + listaPeliculas.size());
+                case 1 -> {
+                    registrosLeidos += leerFicheroHashMap(fichero, actoresDelFichero, peliculasDelFichero);
+                }
+                case 2 -> {
+                    registrosLeidos += leerFichero(fichero, actoresDelFichero, peliculasDelFichero);
+                }
+                default ->
+                    throw new AssertionError();
+            }
+            switch (metodoMerge) {
 
-            Utils.mostrarCronometro("Tiempo (ms):", tiempoInicio);
+                case 1 -> {
+                    listaActores.mergeEficaz(actoresDelFichero);
+                    listaPeliculas.mergeEficaz(peliculasDelFichero);
+                }
+                case 2 -> {
+                    listaActores.mergePruebas(actoresDelFichero);
+                    listaPeliculas.mergePruebas(peliculasDelFichero);
+                }
+                default ->
+                    throw new AssertionError();
+            }
+
+            Utils.traza("leerCarpetaTamaño", "Tamaño fichero leido: " + fichero.length());
+            Utils.traza("leerCarpetaRegistros", "Registros leidos: " + (registrosLeidos - registrosAntLeidos));
+            Utils.traza("leerCarpetaListado", "Tamaño listaActores: " + listaActores.size());
+            Utils.traza("leerCarpetaListado", "Tamaño listaPeliculas: " + listaPeliculas.size());
+
+            Utils.mostrarCronometro("leerCarpeta",  tiempoInicio);
         }
+        Utils.mostrarCronometro("leerCarpetaFin",  tiempoCarpeta);
 
-        System.out.println("Lectura de carpeta terminada.");
+        Utils.traza("leerCarpetaFin", "Lectura de carpeta terminada.");
+
         return registrosLeidos;
     }
 
@@ -94,7 +118,7 @@ public class LectorPeliculasActores {
             }
 
         }
-        Utils.mostrarCronometro("leerFichero: Tiempo (ms):", tiempoInicio);
+        Utils.mostrarCronometro("leerFichero", tiempoInicio);
         return registrosLeidos;
 
     }
@@ -155,7 +179,7 @@ public class LectorPeliculasActores {
             peliculasDelFichero.add(pelicula);
         }
 
-        Utils.mostrarCronometro("leerFicheroHashMap: Tiempo (ms):", tiempoInicio);
+        Utils.mostrarCronometro("leerFicheroHashMap", tiempoInicio);
         return registrosLeidos;
     }
 

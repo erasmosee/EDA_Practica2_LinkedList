@@ -15,37 +15,61 @@ public class PruebaPeliculasActoresLinkedList {
         if (args.length > 0) {
             ruta = args[0];
         }
+        Utils.traza("inicio", "iniciando lectura");
 
         OrderedDoubleLinkedList<Actor> actores = new OrderedDoubleLinkedList<>();
         OrderedDoubleLinkedList<Pelicula> peliculas = new OrderedDoubleLinkedList<>();
         long tiempoInicio = Utils.iniciarCronometro();
 
-       LectorPeliculasActores lector = new LectorPeliculasActores();
-         //LectorHashMapPeliculasActores lector = new LectorHashMapPeliculasActores();
+        LectorPeliculasActores lector = new LectorPeliculasActores();
+        //LectorHashMapPeliculasActores lector = new LectorHashMapPeliculasActores();
+        Utils.traza("main", "1-1: HashMap - MergeEficaz");
+        Utils.traza("main", "1-2: HashMap - MergePrueba");
+        Utils.traza("main", "2-1: LinkedList - MergeEficaz");
+        Utils.traza("main", "2-2: LinkedList - MergePrueba");
+        for (int i = 1; i <= 2; i++) {
 
-        int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas);
-        System.out.println("Actores ordenados: " + estaOrdenada(actores));
-        System.out.println("Actores repetidos: " + tieneRepes(actores));
+            for (int j = 1; j <= 2; j++) {
+                switch (Integer.parseInt(String.valueOf(i)+String.valueOf(j))) {
+                    case 11:
+                        Utils.traza("main", "1-1: HashMap - MergeEficaz");
+                    case 12:
+                        Utils.traza("main", "1-2: HashMap - MergePrueba");
+                    case 21:
+                        Utils.traza("main", "2-1: LinkedList - MergeEficaz");
+                    case 22:
+                        Utils.traza("main", "2-2: LinkedList - MergePrueba");
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+                int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas, i, j);
+                Utils.traza("estaOrdenada", "Actores supera prueba ordenados: " + estaOrdenada(actores));
+                Utils.traza("tieneRepes", "Actores supera prueba repetidos: " + tieneRepes(actores));
 
-        System.out.println("Películas ordenadas: " + estaOrdenada(peliculas));
-        System.out.println("Películas repetidos: " + tieneRepes(peliculas));
-        System.out.println("Registros leídos: " + registrosLeidos);
-        System.out.println("Actores: " + actores.size());
-        System.out.println("Películas: " + peliculas.size());
-        Utils.mostrarCronometro("Tiempo (ms):", tiempoInicio);
+                Utils.traza("estaOrdenada", "Películas supera prueba ordenadas: " + estaOrdenada(peliculas));
+                Utils.traza("tieneRepes", "Películas supera prueba repetidos: " + tieneRepes(peliculas));
 
-        System.out.println();
-        System.out.println("Película - 3564299: " + peliculas.find(new Pelicula("Q3564299", "")));
+                Utils.traza("main", "Registros leídos: " + registrosLeidos);
+                Utils.traza("main", "Actores: " + actores.size());
+                Utils.traza("main", "Películas: " + peliculas.size());
+                Utils.mostrarCronometro("main", tiempoInicio);
+
+                System.out.println();
+            }
+        }
+
+        Utils.traza("metodofind", "Película - 3564299: " + peliculas.find(new Pelicula("Q3564299", "")));
         Pelicula pelicula = peliculas.find(new Pelicula("Q3564299", ""));
 
         System.out.println();
 
         if (pelicula != null) {
-            System.out.println("Actores de " + pelicula + ":");
+            Utils.traza("metodogetActor", "Actores de " + pelicula + ":");
 
             Iterator<Actor> it = pelicula.getActorLinkedList().iterator();
             while (it.hasNext()) {
-                System.out.println(it.next());
+                Utils.traza("metodogetActor", it.next().toString());
             }
         }
     }
@@ -62,7 +86,7 @@ public class PruebaPeliculasActoresLinkedList {
             T actual = it.next();
 
             if (anterior.compareTo(actual) > 0) {
-                System.out.println("Desorden detectado entre: " + anterior + " y " + actual);
+                Utils.traza("estaOrdenadaDetalle", "Desorden detectado entre: " + anterior + " y " + actual);
                 return false;
             }
 
@@ -84,7 +108,7 @@ public class PruebaPeliculasActoresLinkedList {
             T actual = it.next();
 
             if (anterior.compareTo(actual) == 0) {
-                System.out.println("Repetidos detectados entre: " + anterior + " y " + actual);
+                Utils.traza("tieneRepesDetalle", "Repetidos detectados entre: " + anterior + " y " + actual);
                 return false;
             }
 

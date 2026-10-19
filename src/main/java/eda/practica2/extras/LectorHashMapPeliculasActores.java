@@ -46,11 +46,11 @@ public class LectorHashMapPeliculasActores {
 
             registrosLeidos += leerFichero(fichero, actoresPorId, peliculasPorId);
 
-            System.out.println("    Tamaño fichero leido: " + fichero.length());
-            System.out.println("    Registros leidos: " + (registrosLeidos - registrosAntLeidos));
-            System.out.println("    Tamaño listaActores: " + actoresPorId.size());
-            System.out.println("    Tamaño listaPeliculas: " + peliculasPorId.size());
-            Utils.mostrarCronometro("Tiempo (ms):", tiempoInicio);
+            Utils.traza("leerCarpeta","Tamaño fichero leido: " + fichero.length());
+            Utils.traza("leerCarpeta","Registros leidos: " + (registrosLeidos - registrosAntLeidos));
+            Utils.traza("leerCarpeta","Tamaño listaActores: " + actoresPorId.size());
+            Utils.traza("leerCarpeta","Tamaño listaPeliculas: " + peliculasPorId.size());
+            Utils.mostrarCronometro("leerCarpeta", tiempoInicio);
         }
         // Usamos las listas ordenadas para guardar los datos en las likenList
         ArrayList<Actor> actoresOrdenados = new ArrayList<>(actoresPorId.values());

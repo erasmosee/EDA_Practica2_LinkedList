@@ -78,7 +78,7 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
      */
     @Override
     public void merge(DoubleLinkedList<T> lista) {
-                if (lista == null || lista.isEmpty()) {
+        if (lista == null || lista.isEmpty()) {
             return; // comprobamos si la lista que recibimos esta vacia o nula -> si es así, no hacemos nada
         }
         Node<T> actual = lista.first; // creamos un "indice" de la lista que recibimos 
@@ -94,6 +94,8 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
     //Dado que los dos estan ordenados, un puntero que avanza por la lista grande y cuando detecta que su elemento es mayor que el primero de la lista pequeña, vuelve uno atras y hace un insertAdd.
     //en ese momento se carga el elemento de la lista pequeña y compara con donde se habia quedado en la lista grande, si no es, avanza el de la lista grande desde donde se habia quedado, de esta forma solo recorremos la grande una vez y la pequeña una vez. n+m
     public void mergeEficaz(DoubleLinkedList<T> lista) {
+        long tiempoInicio = Utils.iniciarCronometro();
+
         if (lista == null || lista.first == null) {
             return;
         }
@@ -132,7 +134,8 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
             p2 = p2.next;
             cuantos2--;
         }
-        System.out.println("    mergueEficaz operaciones realizadas: " + contadorOperaciones);
+        Utils.traza("mergeEficaz", "operaciones realizadas: " + contadorOperaciones);
+        Utils.mostrarCronometro("mergeEficaz", tiempoInicio);
 
     }
     // add tira de insertAdd el cual al no saber donde insertar va a buscarlo cada vez en la lista, por eso nos queda cuadratico,
@@ -178,7 +181,7 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
                 lista.removeFirst();
             }
         }
-        Utils.mostrarCronometro("mergePruebas - Tiempo (ms):", tiempoInicio);
+        Utils.mostrarCronometro("mergePruebas", tiempoInicio);
 
     }
 }
