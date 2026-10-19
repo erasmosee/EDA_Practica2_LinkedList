@@ -34,7 +34,7 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
 
     }
 
-      public T findOrAdd(T elem) {
+    public T findOrAdd(T elem) {
         if (isEmpty()) {
             addWhenEmpty(elem);
             return elem;
@@ -78,7 +78,7 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
      */
     @Override
     public void merge(DoubleLinkedList<T> lista) {
-        if (lista == null || lista.isEmpty()) {
+                if (lista == null || lista.isEmpty()) {
             return; // comprobamos si la lista que recibimos esta vacia o nula -> si es así, no hacemos nada
         }
         Node<T> actual = lista.first; // creamos un "indice" de la lista que recibimos 
@@ -133,6 +133,52 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
             cuantos2--;
         }
         System.out.println("    mergueEficaz operaciones realizadas: " + contadorOperaciones);
+
+    }
+    // add tira de insertAdd el cual al no saber donde insertar va a buscarlo cada vez en la lista, por eso nos queda cuadratico,
+    // el otro dia Eneko explico que para simplificar estos metodos necesitaremos punteros, muchos punteros.
+
+    //Para este caso en concreto necesitaremos minimo dos punteros, uno que avance por la lista pequeña y otro por la lista grande,
+    //Dado que los dos estan ordenados, un puntero que avanza por la lista grande y cuando detecta que su elemento es mayor que el primero de la lista pequeña, vuelve uno atras y hace un insertAdd.
+    //en ese momento se carga el elemento de la lista pequeña y compara con donde se habia quedado en la lista grande, si no es, avanza el de la lista grande desde donde se habia quedado, de esta forma solo recorremos la grande una vez y la pequeña una vez. n+m
+    public void mergePruebas(DoubleLinkedList<T> lista) {
+        long tiempoInicio = Utils.iniciarCronometro();
+
+        if (lista == null || lista.first == null || lista == this) {
+            return;
+        }
+        if (isEmpty()) {
+            first = lista.first;
+            count = lista.count;
+            return;
+        }
+        Node<T> currentGrande = first;
+
+        while (lista.count > 0) {
+
+            if (lista.first.data.compareTo(first.data) < 0) {
+                insertFirst(lista.first.data);
+                lista.removeFirst();
+            }
+
+            if (lista.count > 0 && lista.first.data.compareTo(first.prev.data) > 0) {
+                insertAdd(lista.first.data, first.prev, first);
+                lista.removeFirst();
+
+            }
+            if (lista.count > 0) {
+                if (currentGrande.data.compareTo(lista.first.data) < 0) { // si esta ordenado, seguimos comprobando
+                    currentGrande = currentGrande.next;
+                } else if (currentGrande.data.compareTo(lista.first.data) > 0) {
+                    // si no reemplazamos
+                    insertAdd(lista.first.data, currentGrande.prev, currentGrande);
+                    // si esta desordenado, añadimos en nuestra lista el elemento anterior a p1.
+
+                }
+                lista.removeFirst();
+            }
+        }
+        Utils.mostrarCronometro("mergePruebas - Tiempo (ms):", tiempoInicio);
 
     }
 }
