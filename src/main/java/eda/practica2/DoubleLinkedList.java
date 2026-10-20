@@ -144,8 +144,13 @@ public class DoubleLinkedList<T> implements ListADT<T> {
             return false;
         } else {
             aux = locate(elem);
-            //Locate devuelve null si no lo encuentra, por eso comprobamos elem con lo del locate
-            return Objects.equals(aux.data, elem);
+            //Locate devuelve null si no lo encuentra, 
+            //Si aux es null devolvemos false
+            if (aux != null){
+                return Objects.equals(aux.data, elem);
+            }else {
+                return false;
+            }
         }
     }
 
