@@ -23,7 +23,9 @@ public class LectorPeliculasActores {
         ArrayList<File> ficherosTxt = new ArrayList<>();
         for (File fichero : ficheros) {
             if (fichero.isFile() && fichero.getName().endsWith(".txt")) {
+
                 ficherosTxt.add(fichero);
+
             }
         }
         Collections.sort(ficherosTxt);
@@ -73,9 +75,9 @@ public class LectorPeliculasActores {
             Utils.traza("leerCarpetaListado", "Tamaño listaActores: " + listaActores.size());
             Utils.traza("leerCarpetaListado", "Tamaño listaPeliculas: " + listaPeliculas.size());
 
-            Utils.mostrarCronometro("leerCarpeta",  tiempoInicio);
+            Utils.mostrarCronometro("leerCarpeta", tiempoInicio);
         }
-        Utils.mostrarCronometro("leerCarpetaFin",  tiempoCarpeta);
+        Utils.mostrarCronometro("leerCarpetaFin", tiempoCarpeta);
 
         Utils.traza("leerCarpetaFin", "Lectura de carpeta terminada.");
 

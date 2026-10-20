@@ -1,5 +1,7 @@
 package eda.practica2.extras;
 
+import java.util.Iterator;
+
 import eda.practica2.OrderedDoubleLinkedList;
 
 public class Actor implements Comparable<Actor> {
@@ -7,7 +9,7 @@ public class Actor implements Comparable<Actor> {
     // atributos
     private String id;
     private String name;
-    private OrderedDoubleLinkedList<Pelicula> PeliculaLinkedList = new OrderedDoubleLinkedList<>();
+    private OrderedDoubleLinkedList<Pelicula> peliculaLinkedList = new OrderedDoubleLinkedList<>();
 
     public Actor(String sId, String sName) { // Constructora
         id = sId;
@@ -72,11 +74,21 @@ public class Actor implements Comparable<Actor> {
     }
 
     public OrderedDoubleLinkedList<Pelicula> getPeliculaLinkedList() {
-        return PeliculaLinkedList;
+        return peliculaLinkedList;
     }
 
-    public void setPeliculaLinkedList(OrderedDoubleLinkedList<Pelicula> PeliculaLinkedList) {
-        this.PeliculaLinkedList = PeliculaLinkedList;
+    public void setPeliculaLinkedList(OrderedDoubleLinkedList<Pelicula> peliculaLinkedList) {
+        this.peliculaLinkedList = peliculaLinkedList;
+    }
+
+    public void combinarCon(Actor otro) {
+        Iterator<Pelicula> it = otro.getPeliculaLinkedList().iterator();
+
+        while (it.hasNext()) {
+            Pelicula pelicula = it.next();
+            Pelicula peliculaDelActor = peliculaLinkedList.findOrAdd(pelicula);
+            peliculaDelActor.getActorLinkedList().add(this);
+        }
     }
 
 } // end Actor

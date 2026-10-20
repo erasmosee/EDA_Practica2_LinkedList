@@ -1,5 +1,8 @@
 package eda.practica2;
 
+import eda.practica2.extras.Actor;
+import eda.practica2.extras.Pelicula;
+
 public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLinkedList<T> implements OrderedListADT<T> {
 
     @Override
@@ -160,22 +163,24 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
         while (lista.count > 0 && currentGrande != first.prev) {
             boolean seguir = true;
             Node<T> current = lista.first;
-            if (current.data.compareTo(first.data) < 0) {
+            if (seguir && current.data.compareTo(first.data) < 0) {
                 // Si current es menor que el primero de listaGrande entonces es el nuervo primero
                 insertFirst(current.data);
                 seguir = false;
             }
 
-            if (current.data.compareTo(first.prev.data) > 0) {
+            if (seguir && current.data.compareTo(first.prev.data) > 0) {
                 // Si current es mayor que el ultimo de listaGrande entonces es el nuervo ultimo
                 insertAdd(current.data, first.prev, first);
                 seguir = false;
             }
-            if (currentGrande.data.compareTo(current.data) == 0) { // Existe en la lista
+
+            if (seguir && currentGrande.data.compareTo(current.data) == 0) { // Existe en la lista
+                combinarIguales(currentGrande.data, current.data);
                 seguir = false;
-            } else if (currentGrande.data.compareTo(current.data) < 0) { // si esta ordenado, seguimos comprobando
+            } else if (seguir && currentGrande.data.compareTo(current.data) < 0) { // si esta ordenado, seguimos comprobando
                 currentGrande = currentGrande.next;
-            } else if (currentGrande.data.compareTo(current.data) > 0) { // si no reemplazamos
+            } else if (seguir && currentGrande.data.compareTo(current.data) > 0) { // si no reemplazamos
 
                 insertAdd(current.data, currentGrande.prev, currentGrande);
                 seguir = false;
@@ -188,5 +193,13 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
         }
         Utils.mostrarCronometro("mergePruebas", tiempoInicio);
 
+    }
+
+    private void combinarIguales(T actual, T entrante) {
+        if (actual instanceof Actor actor) {
+            actor.combinarCon((Actor) entrante);
+        } else if (actual instanceof Pelicula pelicula) {
+            pelicula.combinarCon((Pelicula) entrante);
+        }
     }
 }

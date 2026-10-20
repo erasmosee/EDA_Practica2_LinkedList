@@ -24,12 +24,12 @@ public class Utils {
         nivelesTags.put("leerFichero", 2);
         nivelesTags.put("main", 5);
 
-        nivelesTags.put("metodofind", 2);
-        nivelesTags.put("metodogetActor", 2);
+        nivelesTags.put("metodofind", 5);
+        nivelesTags.put("metodogetActor", 5);
         nivelesTags.put("tieneRepes", 8);
         nivelesTags.put("estaOrdenada", 8);
-        nivelesTags.put("tieneRepesDetalle", 3);
-        nivelesTags.put("estaOrdenadaDetalle", 3);
+        nivelesTags.put("tieneRepesDetalle", 5);
+        nivelesTags.put("estaOrdenadaDetalle", 5);
     }
 
     public static boolean debeMostrar(String tag) {
