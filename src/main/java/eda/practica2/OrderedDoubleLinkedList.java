@@ -157,28 +157,33 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
         }
         Node<T> currentGrande = first;
 
-        while (lista.count > 0) {
-
-            if (lista.first.data.compareTo(first.data) < 0) {
-                insertFirst(lista.first.data);
-                lista.removeFirst();
+        while (lista.count > 0 && currentGrande != first.prev) {
+            boolean seguir = true;
+            Node<T> current = lista.first;
+            if (current.data.compareTo(first.data) < 0) {
+                // Si current es menor que el primero de listaGrande entonces es el nuervo primero
+                insertFirst(current.data);
+                seguir = false;
             }
 
-            if (lista.count > 0 && lista.first.data.compareTo(first.prev.data) > 0) {
-                insertAdd(lista.first.data, first.prev, first);
-                lista.removeFirst();
+            if (current.data.compareTo(first.prev.data) > 0) {
+                // Si current es mayor que el ultimo de listaGrande entonces es el nuervo ultimo
+                insertAdd(current.data, first.prev, first);
+                seguir = false;
+            }
+            if (currentGrande.data.compareTo(current.data) == 0) { // Existe en la lista
+                seguir = false;
+            } else if (currentGrande.data.compareTo(current.data) < 0) { // si esta ordenado, seguimos comprobando
+                currentGrande = currentGrande.next;
+            } else if (currentGrande.data.compareTo(current.data) > 0) { // si no reemplazamos
+
+                insertAdd(current.data, currentGrande.prev, currentGrande);
+                seguir = false;
 
             }
-            if (lista.count > 0) {
-                if (currentGrande.data.compareTo(lista.first.data) < 0) { // si esta ordenado, seguimos comprobando
-                    currentGrande = currentGrande.next;
-                } else if (currentGrande.data.compareTo(lista.first.data) > 0) {
-                    // si no reemplazamos
-                    insertAdd(lista.first.data, currentGrande.prev, currentGrande);
-                    // si esta desordenado, añadimos en nuestra lista el elemento anterior a p1.
-
-                }
+            if (!seguir) {
                 lista.removeFirst();
+
             }
         }
         Utils.mostrarCronometro("mergePruebas", tiempoInicio);
