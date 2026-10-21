@@ -40,16 +40,17 @@ public class LectorHashMapPeliculasActores {
             File fichero = ficherosTxt.get(i);
             System.out.print("Leyendo fichero " + (i + 1) + " de "
                     + ficherosTxt.size() + ": " + fichero.getName() + " ");
+            int anioFichero = Integer.parseInt(fichero.getName().substring(fichero.getName().lastIndexOf('_') + 1, fichero.getName().lastIndexOf('.')));
 
             long tiempoInicio = Utils.iniciarCronometro();
             registrosAntLeidos = registrosLeidos;
 
-            registrosLeidos += leerFichero(fichero, actoresPorId, peliculasPorId);
+            registrosLeidos += leerFichero(fichero, actoresPorId, peliculasPorId,anioFichero);
 
-            Utils.traza("leerCarpeta","Tamaño fichero leido: " + fichero.length());
-            Utils.traza("leerCarpeta","Registros leidos: " + (registrosLeidos - registrosAntLeidos));
-            Utils.traza("leerCarpeta","Tamaño listaActores: " + actoresPorId.size());
-            Utils.traza("leerCarpeta","Tamaño listaPeliculas: " + peliculasPorId.size());
+            Utils.traza("leerCarpeta", "Tamaño fichero leido: " + fichero.length());
+            Utils.traza("leerCarpeta", "Registros leidos: " + (registrosLeidos - registrosAntLeidos));
+            Utils.traza("leerCarpeta", "Tamaño listaActores: " + actoresPorId.size());
+            Utils.traza("leerCarpeta", "Tamaño listaPeliculas: " + peliculasPorId.size());
             Utils.mostrarCronometro("leerCarpeta", tiempoInicio);
         }
         // Usamos las listas ordenadas para guardar los datos en las likenList
@@ -71,7 +72,7 @@ public class LectorHashMapPeliculasActores {
 
     private int leerFichero(File fichero,
             HashMap<String, Actor> actoresPorId,
-            HashMap<String, Pelicula> peliculasPorId) throws IOException {
+            HashMap<String, Pelicula> peliculasPorId,int anioFichero) throws IOException {
         int registrosLeidos = 0;
         int numeroLinea = 0;
 
@@ -97,13 +98,13 @@ public class LectorHashMapPeliculasActores {
 
                 Actor actor = actoresPorId.get(idActor);
                 if (actor == null) {
-                    actor = new Actor(idActor, nombreActor);
+                    actor = new Actor(idActor, nombreActor, anioFichero);
                     actoresPorId.put(idActor, actor);
                 }
 
                 Pelicula pelicula = peliculasPorId.get(idPelicula);
                 if (pelicula == null) {
-                    pelicula = new Pelicula(idPelicula, nombrePelicula);
+                    pelicula = new Pelicula(idPelicula, nombrePelicula, anioFichero);
                     peliculasPorId.put(idPelicula, pelicula);
                 }
 
