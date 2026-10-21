@@ -1,0 +1,87 @@
+\documentclass[a4paper,11pt]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-noquoting]{babel}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usetikzlibrary{positioning,arrows.meta}
+
+\geometry{margin=2.5cm}
+\setlength{\emergencystretch}{2em}
+\renewcommand{\chaptername}{Capítulo}
+\renewcommand{\contentsname}{Índice}
+\renewcommand{\listtablename}{Índice de tablas}
+\renewcommand{\lstlistingname}{Listado}
+
+\lstset{
+    basicstyle=\small\ttfamily,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    showstringspaces=false,
+    tabsize=4,
+    literate=
+        {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'{\i}}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+        {ñ}{{\~n}}1
+}
+
+\title{Práctica 2\\Listas doblemente enlazadas circulares}
+\author{Samuel Carrasco Santurde\\Alexander Tomás Echevarria Pizarro\\Erasmo Seebold Guadilla}
+\date{}
+
+\begin{document}
+\chapter{Aspectos pendientes para completar y mejorar el proyecto}
+
+
+\section{Corregir las operaciones con casos límite}
+\begin{enumerate}
+  \item \textcolor{blue}{Corregido} \textbf{Evitar el error de \texttt{contains}.} Comprobar si \texttt{locate (elem)} devuelve \texttt{null} antes de acceder al nodo. La operación debe devolver \texttt{false} cuando el elemento no existe, tanto si la lista está vacía como si contiene otros datos.
+  \item \textcolor{blue}{Corregido} \textbf{Definir qué ocurre si falta el objetivo de \texttt{addAfter}.} Si la lista no está vacía y \texttt{target} no está presente, no se inserta nada; el comportamiento está documentado y no se desreferencia un nodo nulo.
+  \item \textbf{Proteger \texttt{merge} de la auto-fusión.} Comprobar si el argumento es la misma lista antes de iterar, para evitar un recorrido que pueda no terminar.
+\end{enumerate}
+\section{Completar y validar los merges ordenados}
+
+\begin{enumerate}
+    \item \textbf{Resolver la igualdad en \texttt{mergeEficaz}.} Cuando los elementos de ambas listas comparan igual, conservar un único elemento, combinar los datos asociados cuando corresponda y avanzar los dos punteros. Así se evita que el elemento entrante quede pendiente y pueda insertarse después como duplicado.
+    \item \textbf{Procesar todos los elementos en \texttt{mergePruebas}.} Revisar la condición de fin para asegurar que también se comparan el último elemento destino y todos los elementos entrantes. Probar especialmente elementos menores que el primero, mayores que el último e iguales a elementos de ambos extremos.
+    \item \textbf{Acordar si el merge consume la lista recibida.} Actualmente \texttt{mergePruebas} elimina elementos de ella, mientras que otros caminos no la consumen. Elegir y documentar un comportamiento uniforme, o dejar explícita la diferencia si es intencionada.
+    \item \textbf{Evitar aliasing al fusionar con un destino vacío.} En vez de compartir los mismos nodos asignando directamente \texttt{first} y \texttt{count}, decidir si se copian los elementos o si el consumo/transferencia de la lista fuente es parte del contrato. Añadir una prueba que modifique después cada lista y compruebe que el resultado es el esperado.
+    \item \textbf{Verificar la combinación de actores y películas.} Para IDs repetidos, comprobar que se conserva una sola entidad y que las relaciones actor-película quedan consistentes en ambas direcciones. Repetir las pruebas con los dos métodos de merge.
+\end{enumerate}
+
+\section{Aumentar la cobertura de pruebas}
+
+Crear pruebas automatizadas para listas vacías, de un elemento y de varios elementos; extremos y posiciones interiores; elementos presentes y ausentes; inserciones repetidas; y eliminación del primero, del último y de un elemento intermedio. Para las listas ordenadas, comprobar después de cada operación el orden, el tamaño y la ausencia de duplicados según \texttt{compareTo}.
+
+Para cada merge, probar listas fuente y destino vacías, una sola lista con datos, elementos intercalados, rangos sin solapamiento, IDs iguales al principio, en medio y al final, listas de tamaños distintos y auto-fusión. Verificar además si la lista fuente debe conservarse o consumirse, de acuerdo con el contrato finalmente escogido.
+
+En el ejemplo de actores y películas, comprobar que las cantidades de entidades son las esperadas, que no se repite ningún ID y que cada relación que aparece en la lista de películas de un actor aparece también en la lista de actores de esa película, y viceversa.
+
+\section{Alinear el diseño con el enunciado}
+
+\begin{enumerate}
+    \item \textbf{Revisar el nodo centinela.} El enunciado describe una lista circular con centinela, pero nuestra implementación representa la lista vacía con \texttt{first == null}. Decidir con el profesorado si se debe cambiar la implementación para usar centinela o mantener esta variante y explicar claramente la diferencia.
+    \item \textbf{Revisar el carácter de \texttt{DoubleLinkedList}.} El enunciado la presenta como clase abstracta, mientras que en el proyecto es concreta. Si la abstracción es un requisito de evaluación, modificar la declaración y confirmar que las clases derivadas cubren el contrato.
+    \item \textbf{Separar, si se permite, el dominio de la lista genérica.} \texttt{OrderedDoubleLinkedList} conoce actualmente a \texttt{Actor} y \texttt{Pelicula} para combinar elementos iguales. Una mejora sería dejar que la lista gestione solo orden e inserción y que la lógica de combinación pertenezca a las clases de dominio o al lector, siempre respetando las herramientas permitidas en la práctica.
+\end{enumerate}
+
+\section{Mejorar las mediciones de eficiencia}
+
+Una comparación de tiempos solo es válida después de confirmar que ambos métodos producen resultados correctos y equivalentes. Para completar la evaluación proponemos ejecutar cada variante con los mismos ficheros y listas nuevas, repetir varias veces, registrar las duraciones con resolución suficiente y presentar los resultados en una tabla con tamaños de entrada, número de repeticiones y entorno de ejecución. También conviene distinguir el tiempo de lectura, el tiempo de fusión y cualquier procesamiento adicional.
+
+La salida actual de cronómetro en segundos puede mostrar cero para tareas inferiores a un segundo. Por ello, habría que registrar las duraciones en milisegundos (o con un reloj de mayor resolución), calcular medias o medianas y evitar concluir cuál merge es más rápido a partir de una sola ejecución.
+
+\section{Criterio para dar el trabajo por terminado}
+
+Consideraríamos el proyecto listo cuando todas las operaciones respeten sus contratos y los invariantes de la lista, los dos métodos de fusión procesen todos los elementos sin pérdidas ni duplicados, las relaciones del ejemplo estén sincronizadas, las pruebas automatizadas cubran los casos normales y límite, y las mediciones presenten resultados reproducibles. Cualquier diferencia intencionada respecto al enunciado debe quedar explicada en la memoria.
+
+\textcolor{blue}{Erasmo: Realmente no usaremos dos metodos de fusion, cuando Alex consiga que su metodo no duplique usaremos el suyo.}
+\end{document}
