@@ -8,7 +8,7 @@ import eda.practica2.Utils;
 
 public class PruebaPeliculasActoresLinkedList {
 
-    private static final String RUTA_DATOS = "C:\\Workspace\\UPV\\EDA\\EDA_Practica1_Peliculas_Actores\\resources";
+    private static final String RUTA_DATOS = "C:\\Users\\atep9390\\OneDrive - UPV EHU\\2º Carrera\\Estructuras de Datos y Algoritmos\\Laboratorios\\Practica1\\Notebooks\\movies-dir\\movies-dir";
 
     public static void main(String[] args) throws IOException {
         String ruta = RUTA_DATOS;

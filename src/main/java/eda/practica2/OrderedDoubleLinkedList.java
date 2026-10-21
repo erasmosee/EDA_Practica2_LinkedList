@@ -117,9 +117,15 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
         while (cuantos1 > 0 && cuantos2 > 0) { // fusionamos ambas listas
             contadorOperaciones++;
 
-            if (p1.data.compareTo(p2.data) <= 0) { // si esta ordenado, seguimos comprobando
+            if (p1.data.compareTo(p2.data) < 0) { // si esta ordenado, seguimos comprobando
                 p1 = p1.next;
                 cuantos1--;
+            } else if (p1.data.compareTo(p2.data) == 0){
+                combinarIguales(p1.data, p2.data);
+                p1 = p1.next;
+                p2 = p2.next;
+                cuantos1--;
+                cuantos2--;
             } else { // si no reemplazamos
                 insertAdd(p2.data, p1.prev, p1); // si esta desordenado, añadimos en nuestra lista el elemento anterior a p1.
                 if (p1 == first) { // comprobamos si hemos añadido un elemento antes del first
