@@ -61,7 +61,9 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
             addAfter(elem, target);
         } else {
             Node<T> nodoTarget = locate(target);
-            insertAdd(elem, nodoTarget, nodoTarget.next);
+            if (nodoTarget != null) {
+                insertAdd(elem, nodoTarget, nodoTarget.next);
+            }
         }
     }
 

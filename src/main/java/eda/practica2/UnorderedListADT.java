@@ -17,8 +17,9 @@ public interface UnorderedListADT<T> extends ListADT<T> {
     public void addToRear(T elem);
 
     /**
-     * Añade un elemento despues del target. Si la lista esta vacia, el
-     * target no esta en la lista, por lo que insertamso target y luego elem.
+     * Añade un elemento despues del target. Si la lista esta vacia, inserta
+     * primero target y luego elem. Si la lista no esta vacia y target no se
+     * encuentra, no inserta nada.
      *
      * @param elem
      * @param target
