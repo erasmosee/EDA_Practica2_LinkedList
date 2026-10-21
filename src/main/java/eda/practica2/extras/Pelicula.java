@@ -9,11 +9,13 @@ public class Pelicula implements Comparable<Pelicula> {
     // atributos
     private String id;
     private String name;
+    private int anio;
     private OrderedDoubleLinkedList<Actor> actorLinkedList = new OrderedDoubleLinkedList<>();
 
-    public Pelicula(String sId, String sName) { // Constructora
+    public Pelicula(String sId, String sName,int iAnio) { // Constructora
         id = sId;
         name = sName;
+        anio = iAnio;
     }
 
     public String getId() {
@@ -30,6 +32,14 @@ public class Pelicula implements Comparable<Pelicula> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+        public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
     }
 
     @Override

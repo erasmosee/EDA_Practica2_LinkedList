@@ -15,9 +15,11 @@ public class Utils {
     private static final Map<String, Integer> nivelesTags = new HashMap<>();
 
     static {
-        nivelesTags.put("inicio", 9);
-        nivelesTags.put("mergePruebas", 2);
-        nivelesTags.put("mergeEficaz", 2);
+        nivelesTags.put("inicio", 9); // Mensaje de inicio del programa
+        nivelesTags.put("tipoPrueba", 8); // Tipo de prueba a realizar
+
+        nivelesTags.put("mergePruebas", 7);
+        nivelesTags.put("mergeEficaz", 7);
 
         nivelesTags.put("leerCarpeta", 3);
         nivelesTags.put("leerCarpetaFichero", 3);
@@ -29,7 +31,7 @@ public class Utils {
         nivelesTags.put("leerFicheroHashMap", 2);
         nivelesTags.put("leerFichero", 2);
         nivelesTags.put("main", 9);
-        nivelesTags.put("datosLeidos", 9);
+        nivelesTags.put("datosLeidos", 7);
 
         nivelesTags.put("metodofind", 5);
         nivelesTags.put("metodogetActor", 5);

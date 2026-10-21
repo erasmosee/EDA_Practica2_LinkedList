@@ -27,7 +27,7 @@ public class PruebaPeliculasActoresLinkedList {
 
                 switch (Integer.parseInt(String.valueOf(i) + String.valueOf(j))) {
                     case 11 ->
-                        Utils.traza("main", "1-1: HashMap - MergeEficaz");
+                        Utils.traza("tipoPrueba", "1-1: HashMap - MergeEficaz");
                     case 12 ->
                         Utils.traza("main", "1-2: HashMap - MergePrueba");
                     case 21 ->
