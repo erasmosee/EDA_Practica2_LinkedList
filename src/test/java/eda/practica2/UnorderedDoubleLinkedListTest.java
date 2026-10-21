@@ -16,12 +16,12 @@ class UnorderedDoubleLinkedListTest {
     void addAfterNoInsertaSiTargetNoExiste() {
         UnorderedDoubleLinkedList<Actor> lista = new UnorderedDoubleLinkedList<>();
 
-        Actor actorA = new Actor("Q000000001", "Actor A");
-        Actor actorB = new Actor("Q000000002", "Actor B");
-        Actor actorC = new Actor("Q000000003", "Actor C");
+        Actor actorA = new Actor("Q000000001", "Actor A",2026);
+        Actor actorB = new Actor("Q000000002", "Actor B",2026);
+        Actor actorC = new Actor("Q000000003", "Actor C",2026);
 
-        Actor actorD = new Actor("Q000000004", "Actor D");
-        Actor actorE = new Actor("Q000000005", "Actor E");
+        Actor actorD = new Actor("Q000000004", "Actor D",2026);
+        Actor actorE = new Actor("Q000000005", "Actor E",2026);
 
         lista.addToRear(actorA);
         lista.addToRear(actorB);
@@ -37,9 +37,9 @@ class UnorderedDoubleLinkedListTest {
     void addAfterInsertaDetrasSiTargetExiste() {
         UnorderedDoubleLinkedList<Pelicula> lista = new UnorderedDoubleLinkedList<>();
 
-        Pelicula peliculaA = new Pelicula("Q000000001", "Pelicula A");
-        Pelicula peliculaB = new Pelicula("Q000000002", "Pelicula B");
-        Pelicula peliculaC = new Pelicula("Q000000003", "Pelicula C");
+        Pelicula peliculaA = new Pelicula("Q000000001", "Pelicula A",2026);
+        Pelicula peliculaB = new Pelicula("Q000000002", "Pelicula B",2026);
+        Pelicula peliculaC = new Pelicula("Q000000003", "Pelicula C",2026);
 
         lista.addToRear(peliculaA);
         lista.addToRear(peliculaB);
