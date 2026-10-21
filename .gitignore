@@ -1,3 +1,11 @@
 /target
-/documentacion
 EDA_Practica2_LinkedList.code-workspace
+documentacion/*.aux
+documentacion/*.fdb_latexmk
+documentacion/*.fls
+documentacion/*.log
+documentacion/*.out
+documentacion/*.synctex.gz
+documentacion/*.toc
+documentacion/*.lot
+documentacion/*.pdf
