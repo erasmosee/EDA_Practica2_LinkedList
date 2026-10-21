@@ -120,7 +120,7 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
             if (p1.data.compareTo(p2.data) < 0) { // si esta ordenado, seguimos comprobando
                 p1 = p1.next;
                 cuantos1--;
-            } else if (p1.data.compareTo(p2.data) == 0){
+            } else if (p1.data.compareTo(p2.data) == 0) {
                 combinarIguales(p1.data, p2.data);
                 p1 = p1.next;
                 p2 = p2.next;
@@ -154,6 +154,10 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
     //Dado que los dos estan ordenados, un puntero que avanza por la lista grande y cuando detecta que su elemento es mayor que el primero de la lista pequeña, vuelve uno atras y hace un insertAdd.
     //en ese momento se carga el elemento de la lista pequeña y compara con donde se habia quedado en la lista grande, si no es, avanza el de la lista grande desde donde se habia quedado, de esta forma solo recorremos la grande una vez y la pequeña una vez. n+m
     public void mergePruebas(DoubleLinkedList<T> lista) {
+        if (lista == this) {// Si la lista es identica a lo que esta, entonces no hace falta volcar nada.
+            return;
+        }
+
         long tiempoInicio = Utils.iniciarCronometro();
 
         if (lista == null || lista.first == null || lista == this) {

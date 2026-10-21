@@ -29,6 +29,7 @@ public class Utils {
         nivelesTags.put("leerFicheroHashMap", 2);
         nivelesTags.put("leerFichero", 2);
         nivelesTags.put("main", 9);
+        nivelesTags.put("datosLeidos", 9);
 
         nivelesTags.put("metodofind", 5);
         nivelesTags.put("metodogetActor", 5);
@@ -61,11 +62,11 @@ public class Utils {
 
     public static void mostrarCronometro(String tag, long tiempo) {
         if (debeMostrar(tag)) {
-            if (tiempo > 10000) {
-                System.out.println(tag + ": Tiempo (s): " + devolverCronometro(tag, tiempo) / 1000);
-            } else {
-                System.out.println(tag + ": Tiempo (ms): " + devolverCronometro(tag, tiempo));
-            }
+            // if (tiempo > 10000) {
+            //    System.out.println(tag + ": Tiempo (s): " + devolverCronometro(tag, tiempo) / 1000);
+            //  } else {
+            System.out.println(tag + ": Tiempo (ms): " + devolverCronometro(tag, tiempo));
+            // }
         }
     }
 

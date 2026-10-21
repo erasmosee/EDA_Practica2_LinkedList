@@ -44,9 +44,9 @@ public class PruebaPeliculasActoresLinkedList {
                 Utils.traza("estaOrdenada", "Películas supera prueba ordenadas: " + estaOrdenada(peliculas));
                 Utils.traza("tieneRepes", "Películas supera prueba repetidos: " + tieneRepes(peliculas));
 
-                Utils.traza("main", "Registros leídos: " + registrosLeidos);
-                Utils.traza("main", "Actores: " + actores.size());
-                Utils.traza("main", "Películas: " + peliculas.size());
+                Utils.traza("datosLeidos", "Registros leídos: " + registrosLeidos);
+                Utils.traza("datosLeidos", "Actores: " + actores.size());
+                Utils.traza("datosLeidos", "Películas: " + peliculas.size());
                 Utils.mostrarCronometro("main", tiempoInicio);
 
                 System.out.println();
