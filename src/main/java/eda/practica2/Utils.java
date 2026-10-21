@@ -1,11 +1,17 @@
 package eda.practica2;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class Utils {
 
-    private static final int NIVEL_INFO = 3;
+    private static final int NIVEL_INFO = 7;
     private static final Map<String, Integer> nivelesTags = new HashMap<>();
 
     static {
@@ -22,12 +28,12 @@ public class Utils {
 
         nivelesTags.put("leerFicheroHashMap", 2);
         nivelesTags.put("leerFichero", 2);
-        nivelesTags.put("main", 5);
+        nivelesTags.put("main", 9);
 
         nivelesTags.put("metodofind", 5);
         nivelesTags.put("metodogetActor", 5);
-        nivelesTags.put("tieneRepes", 8);
-        nivelesTags.put("estaOrdenada", 8);
+        nivelesTags.put("tieneRepes", 6);
+        nivelesTags.put("estaOrdenada", 6);
         nivelesTags.put("tieneRepesDetalle", 5);
         nivelesTags.put("estaOrdenadaDetalle", 5);
     }
@@ -68,4 +74,18 @@ public class Utils {
             System.out.println(tag + ": " + traza);
         }
     }
+
+    public static String cargarPropiedad(String inPropiedad) throws IOException {
+
+        Path rutaFichero = Path.of("config.properties");
+        Properties ficheroProperties = new Properties();
+
+        try (Reader reader = Files.newBufferedReader(rutaFichero, StandardCharsets.UTF_8)) {
+            ficheroProperties.load(reader);
+        }
+
+        String outPropiedad = ficheroProperties.getProperty(inPropiedad);
+        return outPropiedad.trim();
+    }
+
 }
