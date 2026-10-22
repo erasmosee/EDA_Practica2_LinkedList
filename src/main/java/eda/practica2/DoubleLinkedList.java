@@ -33,6 +33,13 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         return descr;
     }
 
+    /**
+     * <b>O(1)</b>: elimina el primer nodo, actualiza {@code first} y los enlaces
+     * entre el nuevo primero y el último.
+     *
+     * @return el elemento eliminado
+     * @throws NoSuchElementException si la lista está vacía
+     */
     @Override
     public T removeFirst() {
         Node<T> aux;
@@ -52,6 +59,13 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         return aux.data;
     }
 
+    /**
+     * <b>O(1)</b>: elimina el último nodo y actualiza los enlaces entre el
+     * nuevo último y {@code first}.
+     *
+     * @return el elemento eliminado
+     * @throws NoSuchElementException si la lista está vacía
+     */
     @Override
     public T removeLast() {
         Node<T> aux;
@@ -93,6 +107,14 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         return null;
     }
 
+    /**
+     * <b>O(n)</b>: busca y elimina el primer elemento igual a {@code elem},
+     * actualizando los enlaces de sus nodos vecinos.
+     *
+     * @param elem elemento que se quiere eliminar
+     * @return el elemento eliminado, o {@code null} si no se encuentra
+     * @throws NoSuchElementException si la lista está vacía
+     */
     @Override
     public T remove(T elem) {
         if (isEmpty()) {
@@ -146,9 +168,9 @@ public class DoubleLinkedList<T> implements ListADT<T> {
             aux = locate(elem);
             //Locate devuelve null si no lo encuentra, 
             //Si aux es null devolvemos false
-            if (aux != null){
+            if (aux != null) {
                 return Objects.equals(aux.data, elem);
-            }else {
+            } else {
                 return false;
             }
         }
@@ -176,7 +198,12 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         }
     }
 
-    // Funcion a la que le preguntas si esta vacio y si esta vacio inserta el elemento.
+    /**
+     * <b>O(1)</b>: crea el único nodo de la lista vacía y enlaza sus referencias
+     * {@code next} y {@code prev} consigo mismo.
+     *
+     * @param elem elemento que se va a insertar
+     */
     public void addWhenEmpty(T elem) {
         Node<T> newNode = new Node<>(elem);
         newNode.next = newNode;
@@ -185,6 +212,11 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         count++;
     }
 
+    /**
+     * <b>O(1)</b>: inserta {@code elem} al principio y actualiza {@code first}.
+     *
+     * @param elem elemento que se va a insertar
+     */
     public void insertFirst(T elem) {
         if (isEmpty()) {
             addWhenEmpty(elem);
@@ -206,6 +238,12 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         return first == first.next;
     }
 
+    /**
+     * <b>O(1)</b>: cambia la referencia al primer nodo; no modifica los enlaces
+     * ni el número de elementos.
+     *
+     * @param node nodo que pasará a ser el primero
+     */
     public void actualizarFirst(Node<T> node) {
         first = node;
     }
@@ -276,12 +314,12 @@ public class DoubleLinkedList<T> implements ListADT<T> {
     }
 
     /**
-     * insertAdd inserta un elemento entre prev y next, actualizando prev.next y
-     * next.prev
+     * <b>O(1)</b>: inserta un elemento entre los nodos {@code prev} y
+     * {@code next}, actualizando {@code prev.next} y {@code next.prev}.
      *
-     * @param elem
-     * @param prev
-     * @param next
+     * @param elem elemento que se va a insertar
+     * @param prev nodo previo al nuevo
+     * @param next nodo siguiente al nuevo
      */
     public void insertAdd(T elem, Node<T> prev, Node<T> next) {
         Node<T> newNode = new Node<>(elem, prev, next);

@@ -5,6 +5,13 @@ import eda.practica2.extras.Pelicula;
 
 public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLinkedList<T> implements OrderedListADT<T> {
 
+    /**
+     * <b>O(n)</b>: inserta {@code elem} en su posición ordenada y actualiza los
+     * enlaces de los nodos vecinos. Si ya existe un elemento igual, no modifica
+     * la lista.
+     *
+     * @param elem elemento que se va a insertar
+     */
     @Override
     public void add(T elem) {
         if (isEmpty()) {
@@ -37,6 +44,13 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
 
     }
 
+    /**
+     * <b>O(n)</b>: busca un elemento igual a {@code elem}; si no existe, lo
+     * inserta en su posición ordenada y actualiza {@code first} cuando procede.
+     *
+     * @param elem elemento que se busca o se va a insertar
+     * @return el elemento ya almacenado si es igual, o {@code elem} si se inserta
+     */
     public T findOrAdd(T elem) {
         if (isEmpty()) {
             addWhenEmpty(elem);
@@ -75,9 +89,12 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
         return elem;
     }
 
-    /*
-    * Método para fusionar dos listas y ordenarlas. Por ahorro de memoria se podria borrar la lista que se recibe de parametro pero se prefiere clonar elemento por elemento y fusionarlo dentro de la lista 
-    * Contras -> Complejidad O(n*m) (n -> this, m -> lista)
+    /**
+     * <b>O(m(n + m))</b> en el peor caso: añade ordenadamente los elementos de
+     * {@code lista} a esta lista, sin eliminar los nodos de la lista recibida.
+     * Los elementos repetidos no se insertan.
+     *
+     * @param lista lista ordenada cuyos elementos se incorporan
      */
     @Override
     public void merge(DoubleLinkedList<T> lista) {
@@ -90,14 +107,17 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
             actual = actual.next; // actualizamos el indice
         }
     }
-    // add tira de insertAdd el cual al no saber donde insertar va a buscarlo cada vez en la lista, por eso nos queda cuadratico,
-    // el otro dia Eneko explico que para simplificar estos metodos necesitaremos punteros, muchos punteros.
 
-    //Para este caso en concreto necesitaremos minimo dos punteros, uno que avance por la lista pequeña y otro por la lista grande,
-    //Dado que los dos estan ordenados, un puntero que avanza por la lista grande y cuando detecta que su elemento es mayor que el primero de la lista pequeña, vuelve uno atras y hace un insertAdd.
-    //en ese momento se carga el elemento de la lista pequeña y compara con donde se habia quedado en la lista grande, si no es, avanza el de la lista grande desde donde se habia quedado, de esta forma solo recorremos la grande una vez y la pequeña una vez. n+m
+    /**
+     * <b>O(n + m)</b>: fusiona en orden los elementos de {@code lista} en esta
+     * lista, recorriendo ambas listas y actualizando los enlaces necesarios.
+     * Si esta lista está vacía, adopta directamente los nodos de {@code lista}.
+     *
+     * @param lista lista ordenada que se incorpora a esta lista
+     */
     public void mergeEficaz(DoubleLinkedList<T> lista) {
         long tiempoInicio = Utils.iniciarCronometro();
+        int contadorOperaciones = 0;
 
         if (lista == null || lista.first == null) {
             return;
@@ -107,7 +127,6 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
             count = lista.count;
             return;
         }
-        int contadorOperaciones = 0;
         Node<T> p1 = first; // creamos los punteros para que recorran las listas
         Node<T> p2 = lista.first;
 
@@ -143,22 +162,21 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
             p2 = p2.next;
             cuantos2--;
         }
-        Utils.traza("mergeEficaz", "operaciones realizadas: " + contadorOperaciones);
-        Utils.mostrarCronometro("mergeEficaz", tiempoInicio);
+        Utils.traza("mergeDetalle", "operaciones realizadas: " + contadorOperaciones);
+        Utils.mostrarCronometro("mergeDetalle", tiempoInicio);
 
     }
-    // add tira de insertAdd el cual al no saber donde insertar va a buscarlo cada vez en la lista, por eso nos queda cuadratico,
-    // el otro dia Eneko explico que para simplificar estos metodos necesitaremos punteros, muchos punteros.
 
-    //Para este caso en concreto necesitaremos minimo dos punteros, uno que avance por la lista pequeña y otro por la lista grande,
-    //Dado que los dos estan ordenados, un puntero que avanza por la lista grande y cuando detecta que su elemento es mayor que el primero de la lista pequeña, vuelve uno atras y hace un insertAdd.
-    //en ese momento se carga el elemento de la lista pequeña y compara con donde se habia quedado en la lista grande, si no es, avanza el de la lista grande desde donde se habia quedado, de esta forma solo recorremos la grande una vez y la pequeña una vez. n+m
+    /**
+     * <b>O(n + m)</b>: procesa elementos de {@code lista} para insertarlos en
+     * orden o combinar los iguales. Cada elemento procesado se elimina de la
+     * lista recibida.
+     *
+     * @param lista lista ordenada de la que se toman los elementos
+     */
     public void mergePruebas(DoubleLinkedList<T> lista) {
-        if (lista == this) {// Si la lista es identica a lo que esta, entonces no hace falta volcar nada.
-            return;
-        }
-
         long tiempoInicio = Utils.iniciarCronometro();
+        int contadorOperaciones = 0;
 
         if (lista == null || lista.first == null || lista == this) {
             return;
@@ -171,6 +189,8 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
         Node<T> currentGrande = first;
 
         while (lista.count > 0 && currentGrande != first.prev) {
+            contadorOperaciones++;
+
             boolean seguir = true;
             Node<T> current = lista.first;
             if (seguir && current.data.compareTo(first.data) < 0) {
@@ -201,7 +221,8 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
 
             }
         }
-        Utils.mostrarCronometro("mergePruebas", tiempoInicio);
+        Utils.traza("mergeDetalle", "operaciones realizadas: " + contadorOperaciones);
+        Utils.mostrarCronometro("mergeDetalle", tiempoInicio);
 
     }
 

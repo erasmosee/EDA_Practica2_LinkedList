@@ -23,10 +23,10 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
     }
 
     /**
-     * (non-Javadoc) Añade un elemento entre el first y el last y actualiza el
-     * first.
+     * <b>O(1)</b>: inserta {@code elem} al principio y actualiza {@code first}
+     * y los enlaces entre el nuevo nodo y los extremos de la lista.
      *
-     * @see eda.practica2.UnorderedListADT#addToFront(java.lang.Object)
+     * @param elem elemento que se va a insertar
      */
     @Override
     public void addToFront(T elem) {
@@ -34,10 +34,10 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
     }
 
     /**
-     * (non-Javadoc) Añade un elemento entre el first y el last pero no
-     * actualiza el first.
+     * <b>O(1)</b>: inserta {@code elem} al final, actualizando los enlaces entre
+     * el nuevo nodo y los extremos de la lista.
      *
-     * @see eda.practica2.UnorderedListADT#addToRear(java.lang.Object)
+     * @param elem elemento que se va a insertar
      */
     @Override
     public void addToRear(T elem) {
@@ -45,12 +45,13 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
     }
 
     /**
-     * (non-Javadoc) Añade un elemento despues del target Si la lista esta
-     * vacia, el target no esta en la lista, por lo que insertamso target y
-     * luego elem.
+     * <b>O(n)</b>: busca {@code target} e inserta {@code elem} a continuación,
+     * actualizando los enlaces de los nodos vecinos. Si la lista está vacía,
+     * inserta primero {@code target} y después {@code elem}; si no está vacía
+     * y no encuentra {@code target}, no modifica la lista.
      *
-     * @see eda.practica2.UnorderedListADT#addAfter(java.lang.Object,
-     * java.lang.Object)
+     * @param elem elemento que se va a insertar
+     * @param target elemento después del cual se insertará {@code elem}
      */
     @Override
     public void addAfter(T elem, T target) {

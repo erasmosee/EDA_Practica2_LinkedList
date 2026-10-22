@@ -17,9 +17,9 @@ public class Utils {
     static {
         nivelesTags.put("inicio", 9); // Mensaje de inicio del programa
         nivelesTags.put("tipoPrueba", 8); // Tipo de prueba a realizar
+        nivelesTags.put("tiempo", 8); // Tiempo que dura la prueba
 
-        nivelesTags.put("mergePruebas", 7);
-        nivelesTags.put("mergeEficaz", 7);
+        nivelesTags.put("mergeDetalle", 7);
 
         nivelesTags.put("leerCarpeta", 3);
         nivelesTags.put("leerCarpetaFichero", 3);

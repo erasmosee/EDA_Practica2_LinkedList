@@ -16,7 +16,7 @@ public class PruebaPeliculasActoresLinkedList {
         Utils.traza("inicio", "iniciando lectura");
 
         //LectorHashMapPeliculasActores lector = new LectorHashMapPeliculasActores();
-        for (int i = 1; i <= 1; i++) {
+        for (int i = 1; i <= 2; i++) {
 
             for (int j = 1; j <= 2; j++) {
                 OrderedDoubleLinkedList<Actor> actores = new OrderedDoubleLinkedList<>();
@@ -29,11 +29,11 @@ public class PruebaPeliculasActoresLinkedList {
                     case 11 ->
                         Utils.traza("tipoPrueba", "1-1: HashMap - MergeEficaz");
                     case 12 ->
-                        Utils.traza("main", "1-2: HashMap - MergePrueba");
+                        Utils.traza("tipoPrueba", "1-2: HashMap - MergePrueba");
                     case 21 ->
-                        Utils.traza("main", "2-1: LinkedList - MergeEficaz");
+                        Utils.traza("tipoPrueba", "2-1: LinkedList - MergeEficaz");
                     case 22 ->
-                        Utils.traza("main", "2-2: LinkedList - MergePrueba");
+                        Utils.traza("tipoPrueba", "2-2: LinkedList - MergePrueba");
                     default ->
                         throw new AssertionError();
                 }
@@ -47,7 +47,7 @@ public class PruebaPeliculasActoresLinkedList {
                 Utils.traza("datosLeidos", "Registros leídos: " + registrosLeidos);
                 Utils.traza("datosLeidos", "Actores: " + actores.size());
                 Utils.traza("datosLeidos", "Películas: " + peliculas.size());
-                Utils.mostrarCronometro("main", tiempoInicio);
+                Utils.mostrarCronometro("tiempo", tiempoInicio);
 
                 System.out.println();
             }
