@@ -9,11 +9,13 @@ import eda.practica2.Utils;
 public class PruebaPeliculasActoresLinkedList {
 
     public static void main(String[] args) throws IOException {
+        Utils.traza("programa", "iniciando programa");
+        long tiempoPrograma = Utils.iniciarCronometro();
+
         String ruta = Utils.cargarPropiedad("datos.ruta");
         if (args.length > 0) {
             ruta = args[0];
         }
-        Utils.traza("inicio", "iniciando lectura");
 
         int[] metodosMerge = {1};
         int tamanioLote = 127;
@@ -26,6 +28,9 @@ public class PruebaPeliculasActoresLinkedList {
             //}
 
         }
+        Utils.mostrarCronometro("programa", tiempoPrograma);
+        Utils.traza("programa", "fin programa");
+
     }
 
     private static void ejecutarPrueba(String ruta, int metodoHash, int metodoMerge, int tamanioLote) throws IOException {
@@ -33,36 +38,14 @@ public class PruebaPeliculasActoresLinkedList {
         OrderedDoubleLinkedList<Pelicula> peliculas = new OrderedDoubleLinkedList<>();
         LectorPeliculasActores lector = new LectorPeliculasActores();
 
-        String nombreMetodo;
-        nombreMetodo = switch (metodoHash) {
-            case 1 ->
-                "HashMap";
-            case 2 ->
-                "LinkedList";
-            default ->
-                "Error, incorpora nombre en el switch";
-        };
-
-        String nombreMerge;
-        nombreMerge = switch (metodoMerge) {
-            case 1 ->
-                "Merge eficaz";
-            case 2 ->
-                "Merge pruebas";
-            default ->
-                "Error, incorpora nombre en el switch";
-        };
-
-        Utils.traza("tipoPrueba", nombreMetodo + " - " + nombreMerge + " " + tamanioLote, false);
-
         Utils.iniciarContadorcomparaciones();
-        long tiempoInicio = Utils.iniciarCronometro();
+        long tiempoLeerCarpeta = Utils.iniciarCronometro();
 
         int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas, metodoHash, metodoMerge, tamanioLote);
 
-        Utils.mostrarCronometro("tiempo", tiempoInicio, false);
+        Utils.mostrarCronometro("tiempo", tiempoLeerCarpeta);
 
-        Utils.traza("mergeDetalleComplejidad", "nº comparaciones del metodo: " + Utils.consultarContadorcomparaciones(), false);
+        Utils.traza("detalleComplejidad", "nº comparaciones del metodo: " + Utils.consultarContadorcomparaciones());
         Utils.traza("estaOrdenada", "Actores supera prueba ordenados: " + estaOrdenada(actores));
         Utils.traza("tieneRepes", "Actores supera prueba repetidos: " + tieneRepes(actores));
 
