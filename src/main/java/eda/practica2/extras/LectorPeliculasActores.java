@@ -13,7 +13,7 @@ import eda.practica2.Utils;
 
 public class LectorPeliculasActores {
 
-    public int leerCarpeta(String rutaCarpeta, OrderedDoubleLinkedList<Actor> listaActores, OrderedDoubleLinkedList<Pelicula> listaPeliculas, int metodoHash, int metodoMerge) throws IOException {
+    public int leerCarpeta(String rutaCarpeta, OrderedDoubleLinkedList<Actor> listaActores, OrderedDoubleLinkedList<Pelicula> listaPeliculas, int metodoHash, int metodoMerge, int tamanioLote) throws IOException {
         File carpeta = new File(rutaCarpeta);
         File[] ficheros = carpeta.listFiles();
         if (ficheros == null) {
@@ -50,7 +50,7 @@ public class LectorPeliculasActores {
                     registrosLeidos += leerFicheroHashMap(fichero, actoresDelFichero, peliculasDelFichero, anioFichero);
                 }
                 case 2 -> {
-                    registrosLeidos += leerFichero(fichero, actoresDelFichero, peliculasDelFichero, anioFichero);
+                    registrosLeidos += leerFichero(fichero, actoresDelFichero, peliculasDelFichero, anioFichero, metodoMerge, tamanioLote);
                 }
                 default ->
                     throw new AssertionError();
@@ -85,9 +85,11 @@ public class LectorPeliculasActores {
         return registrosLeidos;
     }
 
-    private int leerFichero(File fichero, OrderedDoubleLinkedList<Actor> actoresDelFichero, OrderedDoubleLinkedList<Pelicula> peliculasDelFichero, int anioFichero) throws IOException {
+    private int leerFichero(File fichero, OrderedDoubleLinkedList<Actor> actoresDelFichero, OrderedDoubleLinkedList<Pelicula> peliculasDelFichero, int anioFichero, int metodoMerge, int tamanioLote) throws IOException {
         long tiempoInicio = Utils.iniciarCronometro();
-
+        OrderedDoubleLinkedList<Actor> actoresLote = new OrderedDoubleLinkedList<>();
+        OrderedDoubleLinkedList<Pelicula> peliculasLote = new OrderedDoubleLinkedList<>();
+        int registrosEnLote = 0;
         int registrosLeidos = 0;
         int numeroLinea = 0;
 
@@ -111,13 +113,57 @@ public class LectorPeliculasActores {
                 String idPelicula = extraerId(datos[2]);
                 String nombrePelicula = datos[3].trim();
 
-                Actor actor = actoresDelFichero.findOrAdd(new Actor(idActor, nombreActor, anioFichero));
-                Pelicula pelicula = peliculasDelFichero.findOrAdd(new Pelicula(idPelicula, nombrePelicula, anioFichero));
+                Actor actor;
+                Pelicula pelicula;
+
+                if (tamanioLote == 0) {
+                    actor = actoresDelFichero.findOrAdd(new Actor(idActor, nombreActor, anioFichero));
+                    pelicula = peliculasDelFichero.findOrAdd(new Pelicula(idPelicula, nombrePelicula, anioFichero));
+                } else {
+                    actor = actoresLote.findOrAdd(new Actor(idActor, nombreActor, anioFichero));
+                    pelicula = peliculasLote.findOrAdd(new Pelicula(idPelicula, nombrePelicula, anioFichero));
+                }
+
                 actor.getPeliculaLinkedList().add(pelicula);
                 pelicula.getActorLinkedList().add(actor);
-
                 registrosLeidos++;
+                registrosEnLote++;
+                if (tamanioLote != 0 && registrosEnLote == tamanioLote) {
 
+                    switch (metodoMerge) {
+
+                        case 1 -> {
+                            actoresDelFichero.mergeEficaz(actoresLote);
+                            peliculasDelFichero.mergeEficaz(peliculasLote);
+                        }
+                        case 2 -> {
+                            actoresDelFichero.mergePruebas(actoresLote);
+                            peliculasDelFichero.mergePruebas(peliculasLote);
+                        }
+                        default ->
+                            throw new AssertionError();
+                    }
+
+                    actoresLote = new OrderedDoubleLinkedList<>();
+                    peliculasLote = new OrderedDoubleLinkedList<>();
+                    registrosEnLote = 0;
+                }
+
+            }
+            if (tamanioLote != 0 && registrosEnLote > 0) {
+                switch (metodoMerge) {
+
+                    case 1 -> {
+                        actoresDelFichero.mergeEficaz(actoresLote);
+                        peliculasDelFichero.mergeEficaz(peliculasLote);
+                    }
+                    case 2 -> {
+                        actoresDelFichero.mergePruebas(actoresLote);
+                        peliculasDelFichero.mergePruebas(peliculasLote);
+                    }
+                    default ->
+                        throw new AssertionError();
+                }
             }
 
         }

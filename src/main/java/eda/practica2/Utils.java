@@ -33,14 +33,14 @@ public class Utils {
         nivelesTags.put("leerFicheroHashMap", 2);
         nivelesTags.put("leerFichero", 2);
         nivelesTags.put("main", 9);
-        nivelesTags.put("datosLeidos", 7);
+        nivelesTags.put("datosLeidos", 4);
 
         nivelesTags.put("metodofind", 5);
         nivelesTags.put("metodogetActor", 5);
-        nivelesTags.put("tieneRepes", 6);
-        nivelesTags.put("estaOrdenada", 6);
-        nivelesTags.put("tieneRepesDetalle", 5);
-        nivelesTags.put("estaOrdenadaDetalle", 5);
+        nivelesTags.put("tieneRepes", 5);
+        nivelesTags.put("estaOrdenada", 5);
+        nivelesTags.put("tieneRepesDetalle", 4);
+        nivelesTags.put("estaOrdenadaDetalle", 4);
     }
 
     public static boolean debeMostrar(String tag) {
@@ -65,19 +65,34 @@ public class Utils {
     }
 
     public static void mostrarCronometro(String tag, long tiempo) {
+        Utils.mostrarCronometro(tag, tiempo, true);
+    }
+
+    public static void mostrarCronometro(String tag, long tiempo, boolean salto) {
         if (debeMostrar(tag)) {
-            // if (tiempo > 10000) {
-            //    System.out.println(tag + ": Tiempo (s): " + devolverCronometro(tag, tiempo) / 1000);
-            //  } else {
-            System.out.println(tag + ": Tiempo (ms): " + devolverCronometro(tag, tiempo));
-            // }
+            if (salto) {
+                System.out.println(tag + ": Tiempo (ms): " + devolverCronometro(tag, tiempo));
+
+            } else {
+                System.out.print(" - Tiempo (ms): " + devolverCronometro(tag, tiempo));
+            }
+        }
+    }
+
+    public static void traza(String tag, String traza, boolean salto) {
+        if (debeMostrar(tag)) {
+            if (salto) {
+                System.out.println(tag + ": " + traza);
+
+            } else {
+                System.out.print(" - " + traza);
+
+            }
         }
     }
 
     public static void traza(String tag, String traza) {
-        if (debeMostrar(tag)) {
-            System.out.println(tag + ": " + traza);
-        }
+        traza(tag, traza, true);
     }
 
     public static String cargarPropiedad(String inPropiedad) throws IOException {

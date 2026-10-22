@@ -15,46 +15,65 @@ public class PruebaPeliculasActoresLinkedList {
         }
         Utils.traza("inicio", "iniciando lectura");
 
+        int[] metodosMerge = {1};
+        int tamanioLote = 127;
+
         //LectorHashMapPeliculasActores lector = new LectorHashMapPeliculasActores();
-        for (int i = 1; i <= 2; i++) {
+        for (int metodoMerge : metodosMerge) {
+            //      ejecutarPrueba(ruta, 1, metodoMerge, 0);
+            // for (int i = 0; i < 10; i++) {
+            ejecutarPrueba(ruta, 2, metodoMerge, tamanioLote);
+            //}
 
-            for (int j = 1; j <= 2; j++) {
-                OrderedDoubleLinkedList<Actor> actores = new OrderedDoubleLinkedList<>();
-                OrderedDoubleLinkedList<Pelicula> peliculas = new OrderedDoubleLinkedList<>();
-                LectorPeliculasActores lector = new LectorPeliculasActores();
-
-                long tiempoInicio = Utils.iniciarCronometro();
-
-                switch (Integer.parseInt(String.valueOf(i) + String.valueOf(j))) {
-                    case 11 ->
-                        Utils.traza("tipoPrueba", "1-1: HashMap - MergeEficaz");
-                    case 12 ->
-                        Utils.traza("tipoPrueba", "1-2: HashMap - MergePrueba");
-                    case 21 ->
-                        Utils.traza("tipoPrueba", "2-1: LinkedList - MergeEficaz");
-                    case 22 ->
-                        Utils.traza("tipoPrueba", "2-2: LinkedList - MergePrueba");
-                    default ->
-                        throw new AssertionError();
-                }
-                Utils.iniciarContadorcomparaciones();
-                int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas, i, j);
-                Utils.traza("mergeDetalleComplejidad", "nº comparaciones del metodo: " + Utils.consultarContadorcomparaciones());
-                Utils.traza("estaOrdenada", "Actores supera prueba ordenados: " + estaOrdenada(actores));
-                Utils.traza("tieneRepes", "Actores supera prueba repetidos: " + tieneRepes(actores));
-
-                Utils.traza("estaOrdenada", "Películas supera prueba ordenadas: " + estaOrdenada(peliculas));
-                Utils.traza("tieneRepes", "Películas supera prueba repetidos: " + tieneRepes(peliculas));
-
-                Utils.traza("datosLeidos", "Registros leídos: " + registrosLeidos);
-                Utils.traza("datosLeidos", "Actores: " + actores.size());
-                Utils.traza("datosLeidos", "Películas: " + peliculas.size());
-                Utils.mostrarCronometro("tiempo", tiempoInicio);
-
-                System.out.println();
-            }
         }
+    }
 
+    private static void ejecutarPrueba(String ruta, int metodoHash, int metodoMerge, int tamanioLote) throws IOException {
+        OrderedDoubleLinkedList<Actor> actores = new OrderedDoubleLinkedList<>();
+        OrderedDoubleLinkedList<Pelicula> peliculas = new OrderedDoubleLinkedList<>();
+        LectorPeliculasActores lector = new LectorPeliculasActores();
+
+        String nombreMetodo;
+        nombreMetodo = switch (metodoHash) {
+            case 1 ->
+                "HashMap";
+            case 2 ->
+                "LinkedList";
+            default ->
+                "Error, incorpora nombre en el switch";
+        };
+
+        String nombreMerge;
+        nombreMerge = switch (metodoMerge) {
+            case 1 ->
+                "Merge eficaz";
+            case 2 ->
+                "Merge pruebas";
+            default ->
+                "Error, incorpora nombre en el switch";
+        };
+
+        Utils.traza("tipoPrueba", nombreMetodo + " - " + nombreMerge + " " + tamanioLote, false);
+
+        Utils.iniciarContadorcomparaciones();
+        long tiempoInicio = Utils.iniciarCronometro();
+
+        int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas, metodoHash, metodoMerge, tamanioLote);
+
+        Utils.mostrarCronometro("tiempo", tiempoInicio, false);
+
+        Utils.traza("mergeDetalleComplejidad", "nº comparaciones del metodo: " + Utils.consultarContadorcomparaciones(), false);
+        Utils.traza("estaOrdenada", "Actores supera prueba ordenados: " + estaOrdenada(actores));
+        Utils.traza("tieneRepes", "Actores supera prueba repetidos: " + tieneRepes(actores));
+
+        Utils.traza("estaOrdenada", "Películas supera prueba ordenadas: " + estaOrdenada(peliculas));
+        Utils.traza("tieneRepes", "Películas supera prueba repetidos: " + tieneRepes(peliculas));
+
+        Utils.traza("datosLeidos", "Registros leídos: " + registrosLeidos);
+        Utils.traza("datosLeidos", "Actores: " + actores.size());
+        Utils.traza("datosLeidos", "Películas: " + peliculas.size());
+
+        System.out.println();
     }
 
     private static <T extends Comparable<T>> boolean estaOrdenada(OrderedDoubleLinkedList<T> lista) {
