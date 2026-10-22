@@ -12,7 +12,7 @@ import java.util.Properties;
 public class Utils {
 
     private static final int NIVEL_INFO = 5;
-    private static int contadorComplejidad;
+    private static long contadorComplejidad;
     private static final Map<String, Integer> nivelesTags = new HashMap<>();
 
     static {
@@ -109,7 +109,7 @@ public class Utils {
         contadorComplejidad++;
     }
 
-    public static int consultarMedicionComplejidad() {
+    public static long consultarMedicionComplejidad() {
         return contadorComplejidad;
     }
 
