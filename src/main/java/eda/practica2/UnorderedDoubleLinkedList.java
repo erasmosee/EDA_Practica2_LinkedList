@@ -3,11 +3,10 @@ package eda.practica2;
 public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements UnorderedListADT<T> {
 
     /**
-     * Funcion para agregar elementos entre el ultimo y el primero actualizando
-     * o no el puntero first en base a un booleano
+     * <b>O(1)</b>: inserta un elemento al principio o al final.
      *
-     * @param elem
-     * @param front
+     * @param elem elemento que se va a insertar
+     * @param front {@code true} para insertar al principio
      */
     private void addTo(T elem, boolean front) {
         if (isEmpty()) {

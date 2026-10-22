@@ -85,11 +85,10 @@ public class DoubleLinkedList<T> implements ListADT<T> {
     }
 
     /**
-     * Esta funcion da una vuelta por la lista buscando que el elemento pasado
-     * sea igual a alguno existente y mirando no llegar al primero.
+     * <b>O(n)</b>: busca el nodo cuyo dato es igual a {@code elem}.
      *
-     * @param elem
-     * @return
+     * @param elem elemento que se busca
+     * @return el nodo encontrado o {@code null} si no existe
      */
     protected Node<T> locate(T elem) {
         if (isEmpty()) {
@@ -138,8 +137,13 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         return aux.data;
     }
 
+    /**
+     * <b>O(1)</b>: devuelve el primer elemento.
+     *
+     * @return el primer elemento
+     * @throws NoSuchElementException si la lista está vacía
+     */
     @Override
-    //Da acceso al primer elemento de la lista
     public T first() {
         if (isEmpty()) {
             throw new NoSuchElementException();
@@ -148,8 +152,13 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         }
     }
 
+    /**
+     * <b>O(1)</b>: devuelve el último elemento.
+     *
+     * @return el último elemento
+     * @throws NoSuchElementException si la lista está vacía
+     */
     @Override
-    //Da acceso al último elemento de la lista
     public T last() {
         if (isEmpty()) {
             throw new NoSuchElementException();
@@ -158,8 +167,14 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         }
     }
 
+    /**
+     * <b>O(n)</b>: comprueba si la lista contiene un elemento igual a
+     * {@code elem}.
+     *
+     * @param elem elemento que se busca
+     * @return {@code true} si está en la lista
+     */
     @Override
-    //Determina si la lista contiene un elemento concreto, y develve su dato, null en caso de que no está
     public boolean contains(T elem) {
         Node<T> aux;
         if (isEmpty()) {
@@ -176,8 +191,13 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         }
     }
 
+    /**
+     * <b>O(n)</b>: busca y devuelve un elemento igual a {@code elem}.
+     *
+     * @param elem elemento que se busca
+     * @return el elemento encontrado o {@code null} si no existe
+     */
     @Override
-    //Determina si la lista contiene un elemento concreto, y develve su dato, null en caso de que no está
     public T find(T elem) {
 
         Node<T> aux;
@@ -227,13 +247,21 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         first = first.prev;
     }
 
+    /**
+     * <b>O(1)</b>: comprueba si la lista está vacía.
+     *
+     * @return {@code true} si no contiene elementos
+     */
     @Override
-    //Determina si la lista está vacía
     public boolean isEmpty() {
         return first == null;
     }
 
-    //Determina si la lista tiene un unico elemento
+    /**
+     * <b>O(1)</b>: comprueba si la lista contiene un único nodo.
+     *
+     * @return {@code true} si contiene un único nodo
+     */
     public boolean isAlone() {
         return first == first.next;
     }
@@ -248,12 +276,22 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         first = node;
     }
 
+    /**
+     * <b>O(1)</b>: devuelve el número de elementos de la lista.
+     *
+     * @return número de elementos
+     */
     @Override
     //Determina el número de elementos de la lista
     public int size() {
         return count;
     }
 
+    /**
+     * <b>O(1)</b>: crea un iterador para recorrer la lista.
+     *
+     * @return iterador de la lista
+     */
     @Override
     public Iterator<T> iterator() {
         return new ListIterator();
@@ -332,6 +370,11 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         System.out.println(this.toString());
     }
 
+    /**
+     * <b>O(n^2)</b>: concatena la representación de todos los elementos.
+     *
+     * @return representación textual de la lista
+     */
     @Override
     public String toString() {
         String result = new String();

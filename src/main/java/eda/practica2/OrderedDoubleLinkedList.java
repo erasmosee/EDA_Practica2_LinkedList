@@ -6,9 +6,8 @@ import eda.practica2.extras.Pelicula;
 public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLinkedList<T> implements OrderedListADT<T> {
 
     /**
-     * <b>O(n)</b>: inserta {@code elem} en su posición ordenada y actualiza los
-     * enlaces de los nodos vecinos. Si ya existe un elemento igual, no modifica
-     * la lista.
+     * <b>O(n)</b>: inserta {@code elem} en orden si no existe. {@code n} es el
+     * tamaño de la lista.
      *
      * @param elem elemento que se va a insertar
      */
@@ -45,11 +44,12 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
     }
 
     /**
-     * <b>O(n)</b>: busca un elemento igual a {@code elem}; si no existe, lo
-     * inserta en su posición ordenada y actualiza {@code first} cuando procede.
+     * <b>O(n)</b>: busca un elemento igual a {@code elem} o lo inserta en
+     * orden. {@code n} es el tamaño de la lista.
      *
      * @param elem elemento que se busca o se va a insertar
-     * @return el elemento ya almacenado si es igual, o {@code elem} si se inserta
+     * @return el elemento ya almacenado si es igual, o {@code elem} si se
+     * inserta
      */
     public T findOrAdd(T elem) {
         if (isEmpty()) {
@@ -90,9 +90,9 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
     }
 
     /**
-     * <b>O(m(n + m))</b> en el peor caso: añade ordenadamente los elementos de
-     * {@code lista} a esta lista, sin eliminar los nodos de la lista recibida.
-     * Los elementos repetidos no se insertan.
+     * <b>O(m(n + m))</b> en el peor caso: añade a esta lista los elementos de
+     * {@code lista}. {@code n} y {@code m} son los tamaños iniciales de ambas
+     * listas, respectivamente. No elimina elementos de {@code lista}.
      *
      * @param lista lista ordenada cuyos elementos se incorporan
      */
@@ -109,9 +109,9 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
     }
 
     /**
-     * <b>O(n + m)</b>: fusiona en orden los elementos de {@code lista} en esta
-     * lista, recorriendo ambas listas y actualizando los enlaces necesarios.
-     * Si esta lista está vacía, adopta directamente los nodos de {@code lista}.
+     * <b>O(n + m)</b> en recorridos e inserciones: fusiona ambas listas en
+     * orden. {@code n} y {@code m} son sus tamaños iniciales; combinar
+     * elementos iguales añade el coste de {@code combinarCon}.
      *
      * @param lista lista ordenada que se incorpora a esta lista
      */
@@ -168,9 +168,9 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
     }
 
     /**
-     * <b>O(n + m)</b>: procesa elementos de {@code lista} para insertarlos en
-     * orden o combinar los iguales. Cada elemento procesado se elimina de la
-     * lista recibida.
+     * <b>O(n + m)</b> en recorridos e inserciones: fusiona ambas listas en
+     * orden y elimina de {@code lista} cada elemento procesado. {@code n} y
+     * {@code m} son sus tamaños iniciales; combinar iguales añade su coste.
      *
      * @param lista lista ordenada de la que se toman los elementos
      */
@@ -226,6 +226,16 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
 
     }
 
+    /**
+     * <b>O(n(m + n + k))</b>: combina las X de {@code otro} con las de
+     * este Y. {@code n} es el número de X de {@code otro},
+     * {@code m} el número inicial de X de este Y y {@code k} el
+     * máximo de Y asociados a una X.
+     * 
+     * Siendo X Actor o Pelicula e Y el que no sea X
+     *
+     * @param otro Y cuyas X se incorporan a este Y
+     */
     private void combinarIguales(T actual, T entrante) {
         if (actual instanceof Actor actor) {
             actor.combinarCon((Actor) entrante);

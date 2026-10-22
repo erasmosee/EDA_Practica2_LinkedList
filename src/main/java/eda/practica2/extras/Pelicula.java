@@ -91,6 +91,14 @@ public class Pelicula implements Comparable<Pelicula> {
         this.actorLinkedList = actorLinkedList;
     }
 
+    /**
+     * <b>O(n(m + n + k))</b>: combina los actores de {@code otra} con los de
+     * esta película. {@code n} es el número de actores de {@code otra},
+     * {@code m} el número inicial de actores de esta película y {@code k} el
+     * máximo de películas asociadas a un actor.
+     *
+     * @param otra película cuyos actores se incorporan
+     */
     public void combinarCon(Pelicula otra) {
         Iterator<Actor> it = otra.getActorLinkedList().iterator();
 
