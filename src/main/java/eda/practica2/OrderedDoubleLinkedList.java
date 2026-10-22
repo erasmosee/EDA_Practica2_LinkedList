@@ -162,12 +162,14 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
     }
 
     /**
+     *
      * <b>O(n + m)</b> en recorridos e inserciones: fusiona ambas listas en
      * orden y elimina de {@code lista} cada elemento procesado. {@code n} y
      * {@code m} son sus tamaños iniciales; combinar iguales añade su coste.
      *
      * @param lista lista ordenada de la que se toman los elementos
      */
+    @Deprecated
     public void mergePruebas(DoubleLinkedList<T> lista) {
         if (lista == null || lista.first == null || lista == this) {
             return;
@@ -179,7 +181,7 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
         }
         Node<T> currentGrande = first;
 
-        while (lista.count > 0 && currentGrande != first.prev) {
+        while (lista.count > 0) {
 
             boolean seguir = true;
             Node<T> current = lista.first;
@@ -194,7 +196,7 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
                 insertAdd(current.data, first.prev, first);
                 seguir = false;
             }
-            
+
             int resultado = currentGrande.data.compareTo(current.data);
             if (seguir && resultado == 0) { // Existe en la lista
                 combinarIguales(currentGrande.data, current.data);

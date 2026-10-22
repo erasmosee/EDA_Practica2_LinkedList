@@ -172,6 +172,15 @@ public class LectorPeliculasActores {
 
     }
 
+    /**
+     * @param fichero
+     * @param actoresDelFichero
+     * @param peliculasDelFichero
+     * @param anioFichero
+     * @return
+     * @throws IOException
+     */
+    @Deprecated
     private int leerFicheroHashMap(File fichero, OrderedDoubleLinkedList<Actor> actoresDelFichero, OrderedDoubleLinkedList<Pelicula> peliculasDelFichero, int anioFichero) throws IOException {
         long tiempoInicio = Utils.iniciarCronometro();
         HashMap<String, Actor> actoresPorId = new HashMap<>();
