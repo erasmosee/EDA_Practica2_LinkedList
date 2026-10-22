@@ -37,9 +37,9 @@ public class PruebaPeliculasActoresLinkedList {
                     default ->
                         throw new AssertionError();
                 }
-                Utils.iniciarMedicionComplejidad();
+                Utils.iniciarContadorcomparaciones();
                 int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas, i, j);
-                Utils.traza("mergeDetalleComplejidad", "complejidad del metodo: " + Utils.consultarMedicionComplejidad());
+                Utils.traza("mergeDetalleComplejidad", "nº comparaciones del metodo: " + Utils.consultarContadorcomparaciones());
                 Utils.traza("estaOrdenada", "Actores supera prueba ordenados: " + estaOrdenada(actores));
                 Utils.traza("tieneRepes", "Actores supera prueba repetidos: " + tieneRepes(actores));
 

@@ -101,15 +101,15 @@ public class Utils {
         return outPropiedad.trim();
     }
 
-    public static void iniciarMedicionComplejidad() {
+    public static void iniciarContadorcomparaciones() {
         contadorComplejidad = 0;
     }
 
-    public static void incrementarMedicionComplejidad() {
+    public static void incrementarContadorcomparaciones() {
         contadorComplejidad++;
     }
 
-    public static long consultarMedicionComplejidad() {
+    public static long consultarContadorcomparaciones() {
         return contadorComplejidad;
     }
 

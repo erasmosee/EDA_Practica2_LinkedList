@@ -76,7 +76,7 @@ public class Pelicula implements Comparable<Pelicula> {
     @Override
     public int compareTo(Pelicula arg0) {
         //return name.compareToIgnoreCase(arg0.name);
-        Utils.incrementarMedicionComplejidad();
+        Utils.incrementarContadorcomparaciones();
         return id.compareTo(arg0.id);
     }
 
