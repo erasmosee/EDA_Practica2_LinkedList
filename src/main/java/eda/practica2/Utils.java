@@ -1,10 +1,10 @@
 package eda.practica2;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -80,14 +80,23 @@ public class Utils {
 
     public static String cargarPropiedad(String inPropiedad) throws IOException {
 
-        Path rutaFichero = Path.of("config.properties");
+        //Me estaba volviendo loco intentando cargar el fichero config asi que he tenido que pedir sopitas con el getResourceAsStream para localizar el config de cualquier manera.
         Properties ficheroProperties = new Properties();
+        InputStream recurso = Utils.class.getResourceAsStream("/config.properties");
+        if (recurso == null) {
+            throw new IOException("No se encontró config.properties en el classpath. "
+                    + "Debe estar en src/main/resources.");
+        }
 
-        try (Reader reader = Files.newBufferedReader(rutaFichero, StandardCharsets.UTF_8)) {
+        try (InputStream input = recurso;
+             Reader reader = new InputStreamReader(input, StandardCharsets.UTF_8)) {
             ficheroProperties.load(reader);
         }
 
         String outPropiedad = ficheroProperties.getProperty(inPropiedad);
+        if (outPropiedad == null) {
+            throw new IOException("No se encontró la propiedad '" + inPropiedad + "' en config.properties.");
+        }
         return outPropiedad.trim();
     }
 
