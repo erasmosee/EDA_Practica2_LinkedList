@@ -16,6 +16,8 @@ public class LectorPeliculasActores {
     public int leerCarpeta(String rutaCarpeta, OrderedDoubleLinkedList<Actor> listaActores, OrderedDoubleLinkedList<Pelicula> listaPeliculas, int metodoHash, int metodoMerge, int tamanioLote) throws IOException {
         File carpeta = new File(rutaCarpeta);
         File[] ficheros = carpeta.listFiles();
+        Utils.traza("leerCarpeta", "leer carpeta inicio");
+
         if (ficheros == null) {
             throw new IOException("No se puede leer la carpeta: " + rutaCarpeta);
         }
@@ -31,12 +33,11 @@ public class LectorPeliculasActores {
         int registrosLeidos = 0;
         int registrosAntLeidos;
         // le pongo 10 porque no quiero recorrer los 54 ficheros a cada prueba
-        Utils.traza("leerCarpetaFin", "Lectura con metodo " + metodoHash + "-" + metodoMerge + " iniciada.");
         long tiempoCarpeta = Utils.iniciarCronometro();
 
         for (int i = 0; i < ficherosTxt.size(); i++) {
             File fichero = ficherosTxt.get(i);
-            Utils.traza("leerCarpetaFichero", "Leyendo fichero " + (i + 1) + " de " + ficherosTxt.size() + ": " + fichero.getName() + " ");
+            Utils.traza("leerFichero", "Leyendo fichero " + (i + 1) + " de " + ficherosTxt.size() + ": " + fichero.getName() + " ");
             int anioFichero = Integer.parseInt(fichero.getName().substring(fichero.getName().lastIndexOf('_') + 1, fichero.getName().lastIndexOf('.')));
             OrderedDoubleLinkedList<Actor> actoresDelFichero = new OrderedDoubleLinkedList<>();
             OrderedDoubleLinkedList<Pelicula> peliculasDelFichero = new OrderedDoubleLinkedList<>();
@@ -44,49 +45,26 @@ public class LectorPeliculasActores {
             long tiempoInicio = Utils.iniciarCronometro();
             registrosAntLeidos = registrosLeidos;
 
-            switch (metodoHash) {
+            registrosLeidos += leerFichero(fichero, actoresDelFichero, peliculasDelFichero, anioFichero, metodoMerge, tamanioLote);
 
-                case 1 -> {
-                    registrosLeidos += leerFicheroHashMap(fichero, actoresDelFichero, peliculasDelFichero, anioFichero);
-                }
-                case 2 -> {
-                    registrosLeidos += leerFichero(fichero, actoresDelFichero, peliculasDelFichero, anioFichero, metodoMerge, tamanioLote);
-                }
-                default ->
-                    throw new AssertionError();
-            }
-            switch (metodoMerge) {
+            listaActores.mergeEficaz(actoresDelFichero);
+            listaPeliculas.mergeEficaz(peliculasDelFichero);
 
-                case 1 -> {
-                    listaActores.mergeEficaz(actoresDelFichero);
-                    listaPeliculas.mergeEficaz(peliculasDelFichero);
+            Utils.traza("leerFicheroTamaño", "Tamaño fichero leido: " + fichero.length());
+            Utils.traza("leerFicheroRegistros", "Registros leidos: " + (registrosLeidos - registrosAntLeidos));
+            Utils.traza("leerFicheroListado", "Tamaño listaActores: " + listaActores.size());
+            Utils.traza("leerFicheroListado", "Tamaño listaPeliculas: " + listaPeliculas.size());
 
-                }
-                case 2 -> {
-                    listaActores.mergePruebas(actoresDelFichero);
-                    listaPeliculas.mergePruebas(peliculasDelFichero);
-
-                }
-                default ->
-                    throw new AssertionError();
-            }
-
-            Utils.traza("leerCarpetaTamaño", "Tamaño fichero leido: " + fichero.length());
-            Utils.traza("leerCarpetaRegistros", "Registros leidos: " + (registrosLeidos - registrosAntLeidos));
-            Utils.traza("leerCarpetaListado", "Tamaño listaActores: " + listaActores.size());
-            Utils.traza("leerCarpetaListado", "Tamaño listaPeliculas: " + listaPeliculas.size());
-
-            Utils.mostrarCronometro("leerCarpeta", tiempoInicio);
+            Utils.mostrarCronometro("leerFichero", tiempoInicio);
         }
-        Utils.mostrarCronometro("leerCarpetaFin", tiempoCarpeta);
+        Utils.mostrarCronometro("leerCarpeta", tiempoCarpeta);
 
-        Utils.traza("leerCarpetaFin", "Lectura de carpeta terminada.");
+        Utils.traza("leerCarpeta", "Lectura de carpeta terminada.");
 
         return registrosLeidos;
     }
 
     private int leerFichero(File fichero, OrderedDoubleLinkedList<Actor> actoresDelFichero, OrderedDoubleLinkedList<Pelicula> peliculasDelFichero, int anioFichero, int metodoMerge, int tamanioLote) throws IOException {
-        long tiempoInicio = Utils.iniciarCronometro();
         OrderedDoubleLinkedList<Actor> actoresLote = new OrderedDoubleLinkedList<>();
         OrderedDoubleLinkedList<Pelicula> peliculasLote = new OrderedDoubleLinkedList<>();
         int registrosEnLote = 0;
@@ -130,46 +108,20 @@ public class LectorPeliculasActores {
                 registrosEnLote++;
                 if (tamanioLote != 0 && registrosEnLote == tamanioLote) {
 
-                    switch (metodoMerge) {
-
-                        case 1 -> {
-                            actoresDelFichero.mergeEficaz(actoresLote);
-                            peliculasDelFichero.mergeEficaz(peliculasLote);
-                        }
-                        case 2 -> {
-                            actoresDelFichero.mergePruebas(actoresLote);
-                            peliculasDelFichero.mergePruebas(peliculasLote);
-                        }
-                        default ->
-                            throw new AssertionError();
-                    }
+                    actoresDelFichero.mergeEficaz(actoresLote);
+                    peliculasDelFichero.mergeEficaz(peliculasLote);
 
                     actoresLote = new OrderedDoubleLinkedList<>();
                     peliculasLote = new OrderedDoubleLinkedList<>();
                     registrosEnLote = 0;
                 }
-
             }
             if (tamanioLote != 0 && registrosEnLote > 0) {
-                switch (metodoMerge) {
-
-                    case 1 -> {
-                        actoresDelFichero.mergeEficaz(actoresLote);
-                        peliculasDelFichero.mergeEficaz(peliculasLote);
-                    }
-                    case 2 -> {
-                        actoresDelFichero.mergePruebas(actoresLote);
-                        peliculasDelFichero.mergePruebas(peliculasLote);
-                    }
-                    default ->
-                        throw new AssertionError();
-                }
+                actoresDelFichero.mergeEficaz(actoresLote);
+                peliculasDelFichero.mergeEficaz(peliculasLote);
             }
-
         }
-        Utils.mostrarCronometro("leerFichero", tiempoInicio);
         return registrosLeidos;
-
     }
 
     /**

@@ -11,36 +11,48 @@ import java.util.Properties;
 
 public class Utils {
 
-    private static final int NIVEL_INFO = 5;
+    private static final int NIVEL_INFO = 4;
+    private static final boolean MOSTRAR_TAG = true;
     private static long contadorComplejidad;
     private static final Map<String, Integer> nivelesTags = new HashMap<>();
 
     static {
-        nivelesTags.put("inicio", 9); // Mensaje de inicio del programa
-        nivelesTags.put("tipoPrueba", 8); // Tipo de prueba a realizar
-        nivelesTags.put("tiempo", 8); // Tiempo que dura la prueba
 
-        nivelesTags.put("mergeDetalle", 7);
-        nivelesTags.put("mergeDetalleComplejidad", 6);
+        int valor = 1;
 
-        nivelesTags.put("leerCarpeta", 3);
-        nivelesTags.put("leerCarpetaFichero", 3);
-        nivelesTags.put("leerCarpetaTamaño", 3);
-        nivelesTags.put("leerCarpetaRegistros", 3);
-        nivelesTags.put("leerCarpetaListado", 3);
-        nivelesTags.put("leerCarpetaFin", 5);
+        nivelesTags.put("leerFicheroHashMap", valor);
 
-        nivelesTags.put("leerFicheroHashMap", 2);
-        nivelesTags.put("leerFichero", 2);
-        nivelesTags.put("main", 9);
-        nivelesTags.put("datosLeidos", 4);
+        valor++;
+        nivelesTags.put("leerFicheroFichero", valor);
+        nivelesTags.put("leerFicheroTamaño", valor);
+        nivelesTags.put("leerFicheroRegistros", valor);
+        nivelesTags.put("leerFicheroListado", valor);
+        valor++;
+        nivelesTags.put("leerFichero", valor);
+        valor++;
+        nivelesTags.put("tieneRepesDetalle", valor);
+        nivelesTags.put("estaOrdenadaDetalle", valor);
+        nivelesTags.put("tieneRepes", valor);
+        nivelesTags.put("estaOrdenada", valor);
+        valor++;
+        nivelesTags.put("metodofind", valor);
+        nivelesTags.put("metodogetActor", valor);
+        nivelesTags.put("datosLeidos", valor);
+        valor++;
+        nivelesTags.put("leerCarpeta", valor);
+        valor++;
+        nivelesTags.put("detalleComplejidad", valor);
+        valor++;
+        nivelesTags.put("mergeDetalle", valor);
 
-        nivelesTags.put("metodofind", 5);
-        nivelesTags.put("metodogetActor", 5);
-        nivelesTags.put("tieneRepes", 5);
-        nivelesTags.put("estaOrdenada", 5);
-        nivelesTags.put("tieneRepesDetalle", 4);
-        nivelesTags.put("estaOrdenadaDetalle", 4);
+        valor++;
+        nivelesTags.put("tipoPrueba", valor); // Tipo de prueba a realizar
+        nivelesTags.put("tiempo", valor); // Tiempo que dura la prueba
+        valor++;
+        nivelesTags.put("programa", valor); // Mensaje de inicio del programa
+        valor++;
+        nivelesTags.put("main", valor);
+
     }
 
     public static boolean debeMostrar(String tag) {
@@ -71,10 +83,14 @@ public class Utils {
     public static void mostrarCronometro(String tag, long tiempo, boolean salto) {
         if (debeMostrar(tag)) {
             if (salto) {
-                System.out.println(tag + ": Tiempo (ms): " + devolverCronometro(tag, tiempo));
+                if (MOSTRAR_TAG) {
+                    System.out.println(tag + ": Tiempo (ms): " + devolverCronometro(tag, tiempo));
+                } else {
+                    System.out.println("Tiempo (ms): " + devolverCronometro(tag, tiempo));
+                }
 
             } else {
-                System.out.print(" - Tiempo (ms): " + devolverCronometro(tag, tiempo));
+                System.out.print(" - Tiempo (ms): " + devolverCronometro(tag, tiempo) + " ");
             }
         }
     }
@@ -82,10 +98,13 @@ public class Utils {
     public static void traza(String tag, String traza, boolean salto) {
         if (debeMostrar(tag)) {
             if (salto) {
-                System.out.println(tag + ": " + traza);
-
+                if (MOSTRAR_TAG) {
+                    System.out.println(tag + ": " + traza);
+                } else {
+                    System.out.println(traza);
+                }
             } else {
-                System.out.print(" - " + traza);
+                System.out.print(" - " + traza + " ");
 
             }
         }
