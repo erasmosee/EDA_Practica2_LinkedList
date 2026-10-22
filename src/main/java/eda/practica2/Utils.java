@@ -11,7 +11,8 @@ import java.util.Properties;
 
 public class Utils {
 
-    private static final int NIVEL_INFO = 7;
+    private static final int NIVEL_INFO = 5;
+    private static int contadorComplejidad;
     private static final Map<String, Integer> nivelesTags = new HashMap<>();
 
     static {
@@ -20,6 +21,7 @@ public class Utils {
         nivelesTags.put("tiempo", 8); // Tiempo que dura la prueba
 
         nivelesTags.put("mergeDetalle", 7);
+        nivelesTags.put("mergeDetalleComplejidad", 6);
 
         nivelesTags.put("leerCarpeta", 3);
         nivelesTags.put("leerCarpetaFichero", 3);
@@ -88,8 +90,7 @@ public class Utils {
                     + "Debe estar en src/main/resources.");
         }
 
-        try (InputStream input = recurso;
-             Reader reader = new InputStreamReader(input, StandardCharsets.UTF_8)) {
+        try (InputStream input = recurso; Reader reader = new InputStreamReader(input, StandardCharsets.UTF_8)) {
             ficheroProperties.load(reader);
         }
 
@@ -98,6 +99,18 @@ public class Utils {
             throw new IOException("No se encontró la propiedad '" + inPropiedad + "' en config.properties.");
         }
         return outPropiedad.trim();
+    }
+
+    public static void iniciarMedicionComplejidad() {
+        contadorComplejidad = 0;
+    }
+
+    public static void incrementarMedicionComplejidad() {
+        contadorComplejidad++;
+    }
+
+    public static int consultarMedicionComplejidad() {
+        return contadorComplejidad;
     }
 
 }

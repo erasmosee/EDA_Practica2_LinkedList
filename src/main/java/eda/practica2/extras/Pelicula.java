@@ -3,6 +3,7 @@ package eda.practica2.extras;
 import java.util.Iterator;
 
 import eda.practica2.OrderedDoubleLinkedList;
+import eda.practica2.Utils;
 
 public class Pelicula implements Comparable<Pelicula> {
 
@@ -12,7 +13,7 @@ public class Pelicula implements Comparable<Pelicula> {
     private int anio;
     private OrderedDoubleLinkedList<Actor> actorLinkedList = new OrderedDoubleLinkedList<>();
 
-    public Pelicula(String sId, String sName,int iAnio) { // Constructora
+    public Pelicula(String sId, String sName, int iAnio) { // Constructora
         id = sId;
         name = sName;
         anio = iAnio;
@@ -34,7 +35,7 @@ public class Pelicula implements Comparable<Pelicula> {
         this.name = name;
     }
 
-        public int getAnio() {
+    public int getAnio() {
         return anio;
     }
 
@@ -75,6 +76,7 @@ public class Pelicula implements Comparable<Pelicula> {
     @Override
     public int compareTo(Pelicula arg0) {
         //return name.compareToIgnoreCase(arg0.name);
+        Utils.incrementarMedicionComplejidad();
         return id.compareTo(arg0.id);
     }
 

@@ -37,7 +37,7 @@ public class LectorPeliculasActores {
         for (int i = 0; i < ficherosTxt.size(); i++) {
             File fichero = ficherosTxt.get(i);
             Utils.traza("leerCarpetaFichero", "Leyendo fichero " + (i + 1) + " de " + ficherosTxt.size() + ": " + fichero.getName() + " ");
-            int anioFichero = Integer.parseInt(fichero.getName().substring(fichero.getName().lastIndexOf('_')+1,fichero.getName().lastIndexOf('.')));
+            int anioFichero = Integer.parseInt(fichero.getName().substring(fichero.getName().lastIndexOf('_') + 1, fichero.getName().lastIndexOf('.')));
             OrderedDoubleLinkedList<Actor> actoresDelFichero = new OrderedDoubleLinkedList<>();
             OrderedDoubleLinkedList<Pelicula> peliculasDelFichero = new OrderedDoubleLinkedList<>();
 
@@ -47,10 +47,10 @@ public class LectorPeliculasActores {
             switch (metodoHash) {
 
                 case 1 -> {
-                    registrosLeidos += leerFicheroHashMap(fichero, actoresDelFichero, peliculasDelFichero,anioFichero);
+                    registrosLeidos += leerFicheroHashMap(fichero, actoresDelFichero, peliculasDelFichero, anioFichero);
                 }
                 case 2 -> {
-                    registrosLeidos += leerFichero(fichero, actoresDelFichero, peliculasDelFichero,anioFichero);
+                    registrosLeidos += leerFichero(fichero, actoresDelFichero, peliculasDelFichero, anioFichero);
                 }
                 default ->
                     throw new AssertionError();
@@ -60,10 +60,12 @@ public class LectorPeliculasActores {
                 case 1 -> {
                     listaActores.mergeEficaz(actoresDelFichero);
                     listaPeliculas.mergeEficaz(peliculasDelFichero);
+
                 }
                 case 2 -> {
                     listaActores.mergePruebas(actoresDelFichero);
                     listaPeliculas.mergePruebas(peliculasDelFichero);
+
                 }
                 default ->
                     throw new AssertionError();
@@ -83,7 +85,7 @@ public class LectorPeliculasActores {
         return registrosLeidos;
     }
 
-    private int leerFichero(File fichero, OrderedDoubleLinkedList<Actor> actoresDelFichero, OrderedDoubleLinkedList<Pelicula> peliculasDelFichero,int anioFichero) throws IOException {
+    private int leerFichero(File fichero, OrderedDoubleLinkedList<Actor> actoresDelFichero, OrderedDoubleLinkedList<Pelicula> peliculasDelFichero, int anioFichero) throws IOException {
         long tiempoInicio = Utils.iniciarCronometro();
 
         int registrosLeidos = 0;
@@ -109,8 +111,8 @@ public class LectorPeliculasActores {
                 String idPelicula = extraerId(datos[2]);
                 String nombrePelicula = datos[3].trim();
 
-                Actor actor = actoresDelFichero.findOrAdd(new Actor(idActor, nombreActor,anioFichero));
-                Pelicula pelicula = peliculasDelFichero.findOrAdd(new Pelicula(idPelicula, nombrePelicula,anioFichero));
+                Actor actor = actoresDelFichero.findOrAdd(new Actor(idActor, nombreActor, anioFichero));
+                Pelicula pelicula = peliculasDelFichero.findOrAdd(new Pelicula(idPelicula, nombrePelicula, anioFichero));
                 actor.getPeliculaLinkedList().add(pelicula);
                 pelicula.getActorLinkedList().add(actor);
 
@@ -124,7 +126,7 @@ public class LectorPeliculasActores {
 
     }
 
-    private int leerFicheroHashMap(File fichero, OrderedDoubleLinkedList<Actor> actoresDelFichero, OrderedDoubleLinkedList<Pelicula> peliculasDelFichero,int anioFichero) throws IOException {
+    private int leerFicheroHashMap(File fichero, OrderedDoubleLinkedList<Actor> actoresDelFichero, OrderedDoubleLinkedList<Pelicula> peliculasDelFichero, int anioFichero) throws IOException {
         long tiempoInicio = Utils.iniciarCronometro();
         HashMap<String, Actor> actoresPorId = new HashMap<>();
         HashMap<String, Pelicula> peliculasPorId = new HashMap<>();
@@ -152,13 +154,13 @@ public class LectorPeliculasActores {
 
                 Actor actor = actoresPorId.get(idActor);
                 if (actor == null) {
-                    actor = new Actor(idActor, nombreActor,anioFichero);
+                    actor = new Actor(idActor, nombreActor, anioFichero);
                     actoresPorId.put(idActor, actor);
                 }
 
                 Pelicula pelicula = peliculasPorId.get(idPelicula);
                 if (pelicula == null) {
-                    pelicula = new Pelicula(idPelicula, nombrePelicula,anioFichero);
+                    pelicula = new Pelicula(idPelicula, nombrePelicula, anioFichero);
                     peliculasPorId.put(idPelicula, pelicula);
                 }
 

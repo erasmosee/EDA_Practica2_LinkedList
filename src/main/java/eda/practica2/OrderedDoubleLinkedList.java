@@ -116,8 +116,6 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
      * @param lista lista ordenada que se incorpora a esta lista
      */
     public void mergeEficaz(DoubleLinkedList<T> lista) {
-        long tiempoInicio = Utils.iniciarCronometro();
-        int contadorOperaciones = 0;
 
         if (lista == null || lista.first == null) {
             return;
@@ -134,7 +132,6 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
         int cuantos2 = lista.count;
 
         while (cuantos1 > 0 && cuantos2 > 0) { // fusionamos ambas listas
-            contadorOperaciones++;
 
             if (p1.data.compareTo(p2.data) < 0) { // si esta ordenado, seguimos comprobando
                 p1 = p1.next;
@@ -157,13 +154,10 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
 
         // si aun quedan elementos en la otra lista, entonces es que quedan los mayores, por lo que irian al final.
         while (cuantos2 > 0) {
-            contadorOperaciones++;
             insertAdd(p2.data, first.prev, first); // insertamos cada elemento al final en orden
             p2 = p2.next;
             cuantos2--;
         }
-        Utils.traza("mergeDetalle", "operaciones realizadas: " + contadorOperaciones);
-        Utils.mostrarCronometro("mergeDetalle", tiempoInicio);
 
     }
 
@@ -175,9 +169,6 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
      * @param lista lista ordenada de la que se toman los elementos
      */
     public void mergePruebas(DoubleLinkedList<T> lista) {
-        long tiempoInicio = Utils.iniciarCronometro();
-        int contadorOperaciones = 0;
-
         if (lista == null || lista.first == null || lista == this) {
             return;
         }
@@ -189,7 +180,6 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
         Node<T> currentGrande = first;
 
         while (lista.count > 0 && currentGrande != first.prev) {
-            contadorOperaciones++;
 
             boolean seguir = true;
             Node<T> current = lista.first;
@@ -204,13 +194,14 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
                 insertAdd(current.data, first.prev, first);
                 seguir = false;
             }
-
-            if (seguir && currentGrande.data.compareTo(current.data) == 0) { // Existe en la lista
+            
+            int resultado = currentGrande.data.compareTo(current.data);
+            if (seguir && resultado == 0) { // Existe en la lista
                 combinarIguales(currentGrande.data, current.data);
                 seguir = false;
-            } else if (seguir && currentGrande.data.compareTo(current.data) < 0) { // si esta ordenado, seguimos comprobando
+            } else if (seguir && resultado < 0) { // si esta ordenado, seguimos comprobando
                 currentGrande = currentGrande.next;
-            } else if (seguir && currentGrande.data.compareTo(current.data) > 0) { // si no reemplazamos
+            } else if (seguir && resultado > 0) { // si no reemplazamos
 
                 insertAdd(current.data, currentGrande.prev, currentGrande);
                 seguir = false;
@@ -218,20 +209,16 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
             }
             if (!seguir) {
                 lista.removeFirst();
-
             }
         }
-        Utils.traza("mergeDetalle", "operaciones realizadas: " + contadorOperaciones);
-        Utils.mostrarCronometro("mergeDetalle", tiempoInicio);
 
     }
 
     /**
-     * <b>O(n(m + n + k))</b>: combina las X de {@code otro} con las de
-     * este Y. {@code n} es el número de X de {@code otro},
-     * {@code m} el número inicial de X de este Y y {@code k} el
-     * máximo de Y asociados a una X.
-     * 
+     * <b>O(n(m + n + k))</b>: combina las X de {@code otro} con las de este Y.
+     * {@code n} es el número de X de {@code otro}, {@code m} el número inicial
+     * de X de este Y y {@code k} el máximo de Y asociados a una X.
+     *
      * Siendo X Actor o Pelicula e Y el que no sea X
      *
      * @param otro Y cuyas X se incorporan a este Y
