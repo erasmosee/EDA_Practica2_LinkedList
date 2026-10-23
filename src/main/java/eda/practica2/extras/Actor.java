@@ -6,12 +6,12 @@ import java.util.Iterator;
 import eda.practica2.OrderedDoubleLinkedList;
 import eda.practica2.Utils;
 
-public class Actor implements Comparable<Actor> {
+public final class Actor implements Comparable<Actor> {
 
     // atributos
     private String id;
     private String name;
-    private ArrayList<Integer> anios = new ArrayList<>();
+    private final ArrayList<Integer> anios = new ArrayList<>();
     private OrderedDoubleLinkedList<Pelicula> peliculaLinkedList = new OrderedDoubleLinkedList<>();
 
     public Actor(String sId, String sName, int iAnio) { // Constructora
