@@ -43,25 +43,25 @@
 
 \section{Corregir las operaciones con casos límite}
 \begin{enumerate}
-  \item \textcolor{blue}{Corregido} \textbf{Evitar el error de \texttt{contains}.} Comprobar si \texttt{locate (elem)} devuelve \texttt{null} antes de acceder al nodo. La operación debe devolver \texttt{false} cuando el elemento no existe, tanto si la lista está vacía como si contiene otros datos.
-  \item \textcolor{blue}{Corregido} \textbf{Definir qué ocurre si falta el objetivo de \texttt{addAfter}.} Si la lista no está vacía y \texttt{target} no está presente, no se inserta nada; el comportamiento está documentado y no se desreferencia un nodo nulo.
-  \item \textbf{Proteger \texttt{merge} de la auto-fusión.} Comprobar si el argumento es la misma lista antes de iterar, para evitar un recorrido que pueda no terminar.
+  \item \textcolor{blue}{Corregido; falta prueba específica} \textbf{Evitar el error de \texttt{contains}.} La implementación comprueba si \texttt{locate(elem)} devuelve \texttt{null} y devuelve \texttt{false} si el elemento no existe. Añadir pruebas para lista vacía y elemento ausente.
+  \item \textcolor{blue}{Corregido y probado parcialmente} \textbf{Definir qué ocurre si falta el objetivo de \texttt{addAfter}.} Si la lista no está vacía y \texttt{target} no está presente, no se inserta nada. Hay pruebas para objetivo presente y ausente; falta probar la lista vacía.
+  \item \textbf{Pendiente: proteger y probar la auto-fusión.} El método \texttt{merge} no comprueba explícitamente si la lista recibida es la misma lista destino. Definir el comportamiento y añadir una prueba.
 \end{enumerate}
 \section{Completar y validar los merges ordenados}
 
 \begin{enumerate}
-    \item \textbf{Resolver la igualdad en \texttt{mergeEficaz}.} Cuando los elementos de ambas listas comparan igual, conservar un único elemento, combinar los datos asociados cuando corresponda y avanzar los dos punteros. Así se evita que el elemento entrante quede pendiente y pueda insertarse después como duplicado.
-    \item \textbf{Procesar todos los elementos en \texttt{mergePruebas}.} Revisar la condición de fin para asegurar que también se comparan el último elemento destino y todos los elementos entrantes. Probar especialmente elementos menores que el primero, mayores que el último e iguales a elementos de ambos extremos.
-    \item \textbf{Acordar si el merge consume la lista recibida.} Actualmente \texttt{mergePruebas} elimina elementos de ella, mientras que otros caminos no la consumen. Elegir y documentar un comportamiento uniforme, o dejar explícita la diferencia si es intencionada.
-    \item \textbf{Evitar aliasing al fusionar con un destino vacío.} En vez de compartir los mismos nodos asignando directamente \texttt{first} y \texttt{count}, decidir si se copian los elementos o si el consumo/transferencia de la lista fuente es parte del contrato. Añadir una prueba que modifique después cada lista y compruebe que el resultado es el esperado.
-    \item \textbf{Verificar la combinación de actores y películas.} Para IDs repetidos, comprobar que se conserva una sola entidad y que las relaciones actor-película quedan consistentes en ambas direcciones. Repetir las pruebas con los dos métodos de merge.
+    \item \textcolor{blue}{Implementado; falta probar} \textbf{Resolver la igualdad en \texttt{merge}.} El método combina elementos iguales y avanza ambos punteros. Faltan pruebas que verifiquen que no hay duplicados y que las relaciones asociadas se combinan correctamente.
+    \item \textcolor{blue}{Retirado} \textbf{Eliminar \texttt{mergePruebas}.} La variante experimental ya no está en \texttt{OrderedDouble\allowbreak LinkedList}; no requiere pruebas.
+    \item \textbf{Pendiente: documentar el comportamiento de la lista fuente.} \texttt{merge} conserva la fuente cuando el destino no está vacío, pero comparte sus nodos si el destino está vacío. Definir si ese caso debe copiar o transferir nodos y añadir pruebas.
+    \item \textbf{Pendiente: probar \texttt{merge}.} Cubrir listas vacías, rangos intercalados y separados, elementos iguales en distintas posiciones, tamaños diferentes y auto-fusión; comprobar orden, tamaño, duplicados y estado de la fuente.
+    \item \textbf{Pendiente: verificar las relaciones de actores y películas.} Comprobar que los IDs no se duplican y que cada relación existe en ambas direcciones, también al combinar lotes.
 \end{enumerate}
 
 \section{Aumentar la cobertura de pruebas}
 
-Crear pruebas automatizadas para listas vacías, de un elemento y de varios elementos; extremos y posiciones interiores; elementos presentes y ausentes; inserciones repetidas; y eliminación del primero, del último y de un elemento intermedio. Para las listas ordenadas, comprobar después de cada operación el orden, el tamaño y la ausencia de duplicados según \texttt{compareTo}.
+Hay dos pruebas de \texttt{addAfter} y una prueba de lectura de ficheros. Esta última comprueba cantidades de registros, actores y películas, algunos actores y la búsqueda de un actor por ID. Aún faltan pruebas automatizadas para listas vacías, de uno y varios elementos; extremos e interiores; elementos presentes y ausentes; inserciones repetidas; y eliminaciones. En listas ordenadas, comprobar también orden, tamaño y duplicados según \texttt{compareTo}.
 
-Para cada merge, probar listas fuente y destino vacías, una sola lista con datos, elementos intercalados, rangos sin solapamiento, IDs iguales al principio, en medio y al final, listas de tamaños distintos y auto-fusión. Verificar además si la lista fuente debe conservarse o consumirse, de acuerdo con el contrato finalmente escogido.
+Para los merges conservados, probar listas fuente y destino vacías, elementos intercalados, rangos sin solapamiento, elementos iguales y listas de tamaños distintos. Verificar si la fuente se conserva y probar la auto-fusión.
 
 En el ejemplo de actores y películas, comprobar que las cantidades de entidades son las esperadas, que no se repite ningún ID y que cada relación que aparece en la lista de películas de un actor aparece también en la lista de actores de esa película, y viceversa.
 
@@ -75,13 +75,13 @@ En el ejemplo de actores y películas, comprobar que las cantidades de entidades
 
 \section{Mejorar las mediciones de eficiencia}
 
-Una comparación de tiempos solo es válida después de confirmar que ambos métodos producen resultados correctos y equivalentes. Para completar la evaluación proponemos ejecutar cada variante con los mismos ficheros y listas nuevas, repetir varias veces, registrar las duraciones con resolución suficiente y presentar los resultados en una tabla con tamaños de entrada, número de repeticiones y entorno de ejecución. También conviene distinguir el tiempo de lectura, el tiempo de fusión y cualquier procesamiento adicional.
+El lector de listas enlazadas usa actualmente \texttt{merge} y procesa los registros en lotes de 127; los parámetros para seleccionar métodos se han retirado. No se está comparando más de una estrategia desde este lector. Si se mantienen mediciones de eficiencia, ejecutarlas con datos equivalentes y listas nuevas, repetirlas y distinguir lectura de fusión.
 
-La salida actual de cronómetro en segundos puede mostrar cero para tareas inferiores a un segundo. Por ello, habría que registrar las duraciones en milisegundos (o con un reloj de mayor resolución), calcular medias o medianas y evitar concluir cuál merge es más rápido a partir de una sola ejecución.
+El cronómetro informa milisegundos, pero usa \texttt{System.currentTimeMillis()}; para intervalos breves convendría un reloj de mayor resolución y varias ejecuciones antes de extraer conclusiones.
 
 \section{Criterio para dar el trabajo por terminado}
 
-Consideraríamos el proyecto listo cuando todas las operaciones respeten sus contratos y los invariantes de la lista, los dos métodos de fusión procesen todos los elementos sin pérdidas ni duplicados, las relaciones del ejemplo estén sincronizadas, las pruebas automatizadas cubran los casos normales y límite, y las mediciones presenten resultados reproducibles. Cualquier diferencia intencionada respecto al enunciado debe quedar explicada en la memoria.
+Consideraríamos el proyecto listo cuando las operaciones respeten sus contratos e invariantes, el método de fusión conservado no pierda ni duplique elementos, las relaciones del ejemplo estén sincronizadas, las pruebas cubran los casos normales y límite, y las mediciones que se presenten sean reproducibles. Cualquier diferencia intencionada respecto al enunciado debe quedar explicada en la memoria.
 
-\textcolor{blue}{Erasmo: Realmente no usaremos dos metodos de fusion, cuando Alex consiga que su metodo no duplique usaremos el suyo.}
+\textcolor{blue}{Actualización: se ha eliminado \texttt{mergePruebas} y el lector de listas enlazadas ahora utiliza \texttt{merge}.}
 \end{document}
