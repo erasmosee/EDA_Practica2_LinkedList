@@ -17,23 +17,14 @@ public class PruebaPeliculasActoresLinkedList {
             ruta = args[0];
         }
 
-        int[] metodosMerge = {1};
-        int tamanioLote = 127;
+        ejecutarPrueba(ruta);
 
-        //LectorHashMapPeliculasActores lector = new LectorHashMapPeliculasActores();
-        for (int metodoMerge : metodosMerge) {
-            //      ejecutarPrueba(ruta, 1, metodoMerge, 0);
-            // for (int i = 0; i < 10; i++) {
-            ejecutarPrueba(ruta, 2, metodoMerge, tamanioLote);
-            //}
-
-        }
         Utils.mostrarCronometro("programa", tiempoPrograma);
         Utils.traza("programa", "fin programa");
 
     }
 
-    private static void ejecutarPrueba(String ruta, int metodoHash, int metodoMerge, int tamanioLote) throws IOException {
+    private static void ejecutarPrueba(String ruta) throws IOException {
         Utils.iniciarContadorcomparaciones();
         long tiempoPrueba = Utils.iniciarCronometro();
 
@@ -41,10 +32,7 @@ public class PruebaPeliculasActoresLinkedList {
         OrderedDoubleLinkedList<Pelicula> peliculas = new OrderedDoubleLinkedList<>();
         LectorPeliculasActores lector = new LectorPeliculasActores();
 
-
-
-        int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas, metodoHash, metodoMerge, tamanioLote);
-
+        int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas);
 
         Utils.traza("detalleComplejidad", "nº comparaciones del metodo: " + Utils.consultarContadorcomparaciones());
         Utils.traza("estaOrdenada", "Actores supera prueba ordenados: " + estaOrdenada(actores));

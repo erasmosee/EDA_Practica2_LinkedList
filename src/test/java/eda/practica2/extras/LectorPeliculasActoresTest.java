@@ -1,22 +1,18 @@
 package eda.practica2.extras;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
 import eda.practica2.OrderedDoubleLinkedList;
 import eda.practica2.Utils;
 
 class LectorPeliculasActoresTest {
 
-    @TempDir
-    Path carpetaTemporal;
 
     @Test
     void leeActoresYPeliculasDelFichero() throws IOException {
@@ -27,7 +23,7 @@ class LectorPeliculasActoresTest {
         OrderedDoubleLinkedList<Pelicula> peliculas = new OrderedDoubleLinkedList<>();
         LectorPeliculasActores lector = new LectorPeliculasActores();
 
-        int registros = lector.leerCarpeta(ruta, actores, peliculas, 2, 1, 0);
+        int registros = lector.leerCarpeta(ruta, actores, peliculas);
 
         assertEquals(100, registros);
         assertEquals(50, actores.size());

@@ -161,60 +161,7 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
 
     }
 
-    /**
-     *
-     * <b>O(n + m)</b> en recorridos e inserciones: fusiona ambas listas en
-     * orden y elimina de {@code lista} cada elemento procesado. {@code n} y
-     * {@code m} son sus tamaños iniciales; combinar iguales añade su coste.
-     *
-     * @param lista lista ordenada de la que se toman los elementos
-     */
-    @Deprecated
-    public void mergePruebas(DoubleLinkedList<T> lista) {
-        if (lista == null || lista.first == null || lista == this) {
-            return;
-        }
-        if (isEmpty()) {
-            first = lista.first;
-            count = lista.count;
-            return;
-        }
-        Node<T> currentGrande = first;
-
-        while (lista.count > 0) {
-
-            boolean seguir = true;
-            Node<T> current = lista.first;
-            if (seguir && current.data.compareTo(first.data) < 0) {
-                // Si current es menor que el primero de listaGrande entonces es el nuervo primero
-                insertFirst(current.data);
-                seguir = false;
-            }
-
-            if (seguir && current.data.compareTo(first.prev.data) > 0) {
-                // Si current es mayor que el ultimo de listaGrande entonces es el nuervo ultimo
-                insertAdd(current.data, first.prev, first);
-                seguir = false;
-            }
-
-            int resultado = currentGrande.data.compareTo(current.data);
-            if (seguir && resultado == 0) { // Existe en la lista
-                combinarIguales(currentGrande.data, current.data);
-                seguir = false;
-            } else if (seguir && resultado < 0) { // si esta ordenado, seguimos comprobando
-                currentGrande = currentGrande.next;
-            } else if (seguir && resultado > 0) { // si no reemplazamos
-
-                insertAdd(current.data, currentGrande.prev, currentGrande);
-                seguir = false;
-
-            }
-            if (!seguir) {
-                lista.removeFirst();
-            }
-        }
-
-    }
+  
 
     /**
      * <b>O(n(m + n + k))</b>: combina las X de {@code otro} con las de este Y.

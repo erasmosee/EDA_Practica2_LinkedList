@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Scanner;
 
 import eda.practica2.OrderedDoubleLinkedList;
@@ -13,7 +12,7 @@ import eda.practica2.Utils;
 
 public class LectorPeliculasActores {
 
-    public int leerCarpeta(String rutaCarpeta, OrderedDoubleLinkedList<Actor> listaActores, OrderedDoubleLinkedList<Pelicula> listaPeliculas, int metodoHash, int metodoMerge, int tamanioLote) throws IOException {
+    public int leerCarpeta(String rutaCarpeta, OrderedDoubleLinkedList<Actor> listaActores, OrderedDoubleLinkedList<Pelicula> listaPeliculas) throws IOException {
         File carpeta = new File(rutaCarpeta);
         File[] ficheros = carpeta.listFiles();
         Utils.traza("leerCarpeta", "leer carpeta inicio");
@@ -45,7 +44,7 @@ public class LectorPeliculasActores {
             long tiempoInicio = Utils.iniciarCronometro();
             registrosAntLeidos = registrosLeidos;
 
-            registrosLeidos += leerFichero(fichero, actoresDelFichero, peliculasDelFichero, anioFichero, metodoMerge, tamanioLote);
+            registrosLeidos += leerFichero(fichero, actoresDelFichero, peliculasDelFichero, anioFichero);
 
             listaActores.mergeEficaz(actoresDelFichero);
             listaPeliculas.mergeEficaz(peliculasDelFichero);
@@ -64,7 +63,7 @@ public class LectorPeliculasActores {
         return registrosLeidos;
     }
 
-    private int leerFichero(File fichero, OrderedDoubleLinkedList<Actor> actoresDelFichero, OrderedDoubleLinkedList<Pelicula> peliculasDelFichero, int anioFichero, int metodoMerge, int tamanioLote) throws IOException {
+    private int leerFichero(File fichero, OrderedDoubleLinkedList<Actor> actoresDelFichero, OrderedDoubleLinkedList<Pelicula> peliculasDelFichero, int anioFichero) throws IOException {
         OrderedDoubleLinkedList<Actor> actoresLote = new OrderedDoubleLinkedList<>();
         OrderedDoubleLinkedList<Pelicula> peliculasLote = new OrderedDoubleLinkedList<>();
         int registrosEnLote = 0;
@@ -94,19 +93,14 @@ public class LectorPeliculasActores {
                 Actor actor;
                 Pelicula pelicula;
 
-                if (tamanioLote == 0) {
-                    actor = actoresDelFichero.findOrAdd(new Actor(idActor, nombreActor, anioFichero));
-                    pelicula = peliculasDelFichero.findOrAdd(new Pelicula(idPelicula, nombrePelicula, anioFichero));
-                } else {
-                    actor = actoresLote.findOrAdd(new Actor(idActor, nombreActor, anioFichero));
-                    pelicula = peliculasLote.findOrAdd(new Pelicula(idPelicula, nombrePelicula, anioFichero));
-                }
+                actor = actoresLote.findOrAdd(new Actor(idActor, nombreActor, anioFichero));
+                pelicula = peliculasLote.findOrAdd(new Pelicula(idPelicula, nombrePelicula, anioFichero));
 
                 actor.getPeliculaLinkedList().add(pelicula);
                 pelicula.getActorLinkedList().add(actor);
                 registrosLeidos++;
                 registrosEnLote++;
-                if (tamanioLote != 0 && registrosEnLote == tamanioLote) {
+                if ( registrosEnLote == 127) {
 
                     actoresDelFichero.mergeEficaz(actoresLote);
                     peliculasDelFichero.mergeEficaz(peliculasLote);
@@ -116,80 +110,11 @@ public class LectorPeliculasActores {
                     registrosEnLote = 0;
                 }
             }
-            if (tamanioLote != 0 && registrosEnLote > 0) {
+            if (registrosEnLote > 0) {
                 actoresDelFichero.mergeEficaz(actoresLote);
                 peliculasDelFichero.mergeEficaz(peliculasLote);
             }
         }
-        return registrosLeidos;
-    }
-
-    /**
-     * @param fichero
-     * @param actoresDelFichero
-     * @param peliculasDelFichero
-     * @param anioFichero
-     * @return
-     * @throws IOException
-     */
-    @Deprecated
-    private int leerFicheroHashMap(File fichero, OrderedDoubleLinkedList<Actor> actoresDelFichero, OrderedDoubleLinkedList<Pelicula> peliculasDelFichero, int anioFichero) throws IOException {
-        long tiempoInicio = Utils.iniciarCronometro();
-        HashMap<String, Actor> actoresPorId = new HashMap<>();
-        HashMap<String, Pelicula> peliculasPorId = new HashMap<>();
-        int registrosLeidos = 0;
-        int numeroLinea = 0;
-
-        try (Scanner entrada = new Scanner(fichero, StandardCharsets.UTF_8)) {
-            while (entrada.hasNextLine()) {
-                String linea = entrada.nextLine();
-                numeroLinea++;
-
-                if (linea.trim().isEmpty()) {
-                    continue;
-                }
-
-                String[] datos = linea.split("\\s+###\\s+");
-                if (datos.length != 4) {
-                    throw new IOException("Formato incorrecto en " + fichero.getPath() + ", línea " + numeroLinea);
-                }
-
-                String idActor = extraerId(datos[0]);
-                String nombreActor = datos[1].trim();
-                String idPelicula = extraerId(datos[2]);
-                String nombrePelicula = datos[3].trim();
-
-                Actor actor = actoresPorId.get(idActor);
-                if (actor == null) {
-                    actor = new Actor(idActor, nombreActor, anioFichero);
-                    actoresPorId.put(idActor, actor);
-                }
-
-                Pelicula pelicula = peliculasPorId.get(idPelicula);
-                if (pelicula == null) {
-                    pelicula = new Pelicula(idPelicula, nombrePelicula, anioFichero);
-                    peliculasPorId.put(idPelicula, pelicula);
-                }
-
-                actor.getPeliculaLinkedList().add(pelicula);
-                pelicula.getActorLinkedList().add(actor);
-                registrosLeidos++;
-            }
-        }
-
-        ArrayList<Actor> actoresOrdenados = new ArrayList<>(actoresPorId.values());
-        Collections.sort(actoresOrdenados);
-        for (Actor actor : actoresOrdenados) {
-            actoresDelFichero.add(actor);
-        }
-
-        ArrayList<Pelicula> peliculasOrdenadas = new ArrayList<>(peliculasPorId.values());
-        Collections.sort(peliculasOrdenadas);
-        for (Pelicula pelicula : peliculasOrdenadas) {
-            peliculasDelFichero.add(pelicula);
-        }
-
-        Utils.mostrarCronometro("leerFicheroHashMap", tiempoInicio);
         return registrosLeidos;
     }
 
