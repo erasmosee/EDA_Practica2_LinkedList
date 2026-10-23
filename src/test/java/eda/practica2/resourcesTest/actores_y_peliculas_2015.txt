@@ -1,0 +1,14 @@
+http://www.wikidata.org/entity/Q8353578 ### Dani Rovira ### http://www.wikidata.org/entity/Q16007945 ### Spanish Affair
+http://www.wikidata.org/entity/Q8353578 ### Dani Rovira ### http://www.wikidata.org/entity/Q19946904 ### Ahora o nunca
+http://www.wikidata.org/entity/Q28464313 ### Alain Hernández ### http://www.wikidata.org/entity/Q20741638 ### Ocho apellidos catalanes
+http://www.wikidata.org/entity/Q772729 ### Antonio Resines ### http://www.wikidata.org/entity/Q20741638 ### Ocho apellidos catalanes
+http://www.wikidata.org/entity/Q5725385 ### Belén Cuesta ### http://www.wikidata.org/entity/Q20741638 ### Ocho apellidos catalanes
+http://www.wikidata.org/entity/Q8353578 ### Dani Rovira ### http://www.wikidata.org/entity/Q20741638 ### Ocho apellidos catalanes
+http://www.wikidata.org/entity/Q5840221 ### Esperanza Pedreño ### http://www.wikidata.org/entity/Q20741638 ### Ocho apellidos catalanes
+http://www.wikidata.org/entity/Q276739 ### Karra Elejalde ### http://www.wikidata.org/entity/Q20741638 ### Ocho apellidos catalanes
+http://www.wikidata.org/entity/Q272435 ### Rosa Maria Sardà ### http://www.wikidata.org/entity/Q20741638 ### Ocho apellidos catalanes
+http://www.wikidata.org/entity/Q772729 ### Antonio Resines ### http://www.wikidata.org/entity/Q1582752 ### Torrente 2: Misión en Marbella
+http://www.wikidata.org/entity/Q5126010 ### Clara Lago ### http://www.wikidata.org/entity/Q19946904 ### Ahora o nunca
+http://www.wikidata.org/entity/Q5126010 ### Clara Lago ### http://www.wikidata.org/entity/Q6166723 ### Extinction
+http://www.wikidata.org/entity/Q5126010 ### Clara Lago ### http://www.wikidata.org/entity/Q20741638 ### Ocho apellidos catalanes
+http://www.wikidata.org/entity/Q5126010 ### Clara Lago ### http://www.wikidata.org/entity/Q16007945 ### Spanish Affair

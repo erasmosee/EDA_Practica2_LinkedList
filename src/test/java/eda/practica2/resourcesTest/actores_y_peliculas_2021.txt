@@ -1,0 +1,13 @@
+http://www.wikidata.org/entity/Q5696237 ### Anna Castillo ### http://www.wikidata.org/entity/Q105296607 ### Mediterraneo: The Law of the Sea
+http://www.wikidata.org/entity/Q108783384 ### Constantin Symsiris ### http://www.wikidata.org/entity/Q105296607 ### Mediterraneo: The Law of the Sea
+http://www.wikidata.org/entity/Q8353578 ### Dani Rovira ### http://www.wikidata.org/entity/Q105296607 ### Mediterraneo: The Law of the Sea
+http://www.wikidata.org/entity/Q1224788 ### Eduard Fernández ### http://www.wikidata.org/entity/Q105296607 ### Mediterraneo: The Law of the Sea
+http://www.wikidata.org/entity/Q112743 ### Melika Foroutan ### http://www.wikidata.org/entity/Q105296607 ### Mediterraneo: The Law of the Sea
+http://www.wikidata.org/entity/Q47460321 ### Patricia López Arnaiz ### http://www.wikidata.org/entity/Q105296607 ### Mediterraneo: The Law of the Sea
+http://www.wikidata.org/entity/Q107749895 ### Stathis Stamoulakatos ### http://www.wikidata.org/entity/Q105296607 ### Mediterraneo: The Law of the Sea
+http://www.wikidata.org/entity/Q88692410 ### Vasilis Bismpikis ### http://www.wikidata.org/entity/Q105296607 ### Mediterraneo: The Law of the Sea
+http://www.wikidata.org/entity/Q107617828 ### Yiannis Niarros ### http://www.wikidata.org/entity/Q105296607 ### Mediterraneo: The Law of the Sea
+http://www.wikidata.org/entity/Q61252868 ### Yiota Festa ### http://www.wikidata.org/entity/Q105296607 ### Mediterraneo: The Law of the Sea
+http://www.wikidata.org/entity/Q3576947 ### Àlex Monner ### http://www.wikidata.org/entity/Q105296607 ### Mediterraneo: The Law of the Sea
+http://www.wikidata.org/entity/Q772729 ### Antonio Resines ### http://www.wikidata.org/entity/Q108169225 ### García y García
+http://www.wikidata.org/entity/Q5725385 ### Belén Cuesta ### http://www.wikidata.org/entity/Q102219145 ### The People Upstairs

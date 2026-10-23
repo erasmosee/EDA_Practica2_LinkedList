@@ -1,0 +1,16 @@
+http://www.wikidata.org/entity/Q2833293 ### Alexandra Jiménez ### http://www.wikidata.org/entity/Q58875268 ### Super López
+http://www.wikidata.org/entity/Q12255669 ### Carlos Zabala ### http://www.wikidata.org/entity/Q58875268 ### Super López
+http://www.wikidata.org/entity/Q8353578 ### Dani Rovira ### http://www.wikidata.org/entity/Q58875268 ### Super López
+http://www.wikidata.org/entity/Q8964703 ### Gonzalo de Castro ### http://www.wikidata.org/entity/Q58875268 ### Super López
+http://www.wikidata.org/entity/Q5883909 ### Gracia Olayo ### http://www.wikidata.org/entity/Q58875268 ### Super López
+http://www.wikidata.org/entity/Q6457544 ### Julián López ### http://www.wikidata.org/entity/Q58875268 ### Super López
+http://www.wikidata.org/entity/Q41899519 ### Marc Rodríguez Naque ### http://www.wikidata.org/entity/Q58875268 ### Super López
+http://www.wikidata.org/entity/Q235391 ### Maribel Verdú ### http://www.wikidata.org/entity/Q58875268 ### Super López
+http://www.wikidata.org/entity/Q20876386 ### Mireia Portas ### http://www.wikidata.org/entity/Q58875268 ### Super López
+http://www.wikidata.org/entity/Q8353578 ### Dani Rovira ### http://www.wikidata.org/entity/Q99243112 ### Todos los caminos
+http://www.wikidata.org/entity/Q772729 ### Antonio Resines ### http://www.wikidata.org/entity/Q56847806 ### Crime Wave
+http://www.wikidata.org/entity/Q772729 ### Antonio Resines ### http://www.wikidata.org/entity/Q52233671 ### Growing Up
+http://www.wikidata.org/entity/Q5725385 ### Belén Cuesta ### http://www.wikidata.org/entity/Q50659054 ### Super López
+http://www.wikidata.org/entity/Q5725385 ### Belén Cuesta ### http://www.wikidata.org/entity/Q50659054 ### The Warning
+http://www.wikidata.org/entity/Q5126010 ### Clara Lago ### http://www.wikidata.org/entity/Q27566067 ### The Commuter
+http://www.wikidata.org/entity/Q5126010 ### Clara Lago ### http://www.wikidata.org/entity/Q99243112 ### Todos los caminos

@@ -22,35 +22,36 @@ public class Utils {
 
         nivelesTags.put("leerFicheroHashMap", valor);
 
-        valor++;
+        valor++; //2
         nivelesTags.put("leerFicheroFichero", valor);
         nivelesTags.put("leerFicheroTamaño", valor);
         nivelesTags.put("leerFicheroRegistros", valor);
         nivelesTags.put("leerFicheroListado", valor);
-        valor++;
+        valor++; //3
         nivelesTags.put("leerFichero", valor);
-        valor++;
+        valor++; //4
         nivelesTags.put("tieneRepesDetalle", valor);
         nivelesTags.put("estaOrdenadaDetalle", valor);
         nivelesTags.put("tieneRepes", valor);
         nivelesTags.put("estaOrdenada", valor);
-        valor++;
+        valor++; //5
         nivelesTags.put("metodofind", valor);
         nivelesTags.put("metodogetActor", valor);
         nivelesTags.put("datosLeidos", valor);
-        valor++;
+        valor++; //6
         nivelesTags.put("leerCarpeta", valor);
-        valor++;
+        valor++; //7
         nivelesTags.put("detalleComplejidad", valor);
-        valor++;
+        valor++; //8
         nivelesTags.put("mergeDetalle", valor);
 
-        valor++;
+        valor++; //9
         nivelesTags.put("tipoPrueba", valor); // Tipo de prueba a realizar
+        nivelesTags.put("tiempoPrueba", valor); // Tiempo que dura la prueba
         nivelesTags.put("tiempo", valor); // Tiempo que dura la prueba
-        valor++;
+        valor++; //10
         nivelesTags.put("programa", valor); // Mensaje de inicio del programa
-        valor++;
+        valor++; //11
         nivelesTags.put("main", valor);
 
     }
