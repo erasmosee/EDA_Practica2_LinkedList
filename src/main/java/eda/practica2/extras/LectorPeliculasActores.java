@@ -46,8 +46,8 @@ public class LectorPeliculasActores {
 
             registrosLeidos += leerFichero(fichero, actoresDelFichero, peliculasDelFichero, anioFichero);
 
-            listaActores.mergeEficaz(actoresDelFichero);
-            listaPeliculas.mergeEficaz(peliculasDelFichero);
+            listaActores.merge(actoresDelFichero);
+            listaPeliculas.merge(peliculasDelFichero);
 
             Utils.traza("leerFicheroTamaño", "Tamaño fichero leido: " + fichero.length());
             Utils.traza("leerFicheroRegistros", "Registros leidos: " + (registrosLeidos - registrosAntLeidos));
@@ -102,8 +102,8 @@ public class LectorPeliculasActores {
                 registrosEnLote++;
                 if ( registrosEnLote == 127) {
 
-                    actoresDelFichero.mergeEficaz(actoresLote);
-                    peliculasDelFichero.mergeEficaz(peliculasLote);
+                    actoresDelFichero.merge(actoresLote);
+                    peliculasDelFichero.merge(peliculasLote);
 
                     actoresLote = new OrderedDoubleLinkedList<>();
                     peliculasLote = new OrderedDoubleLinkedList<>();
@@ -111,8 +111,8 @@ public class LectorPeliculasActores {
                 }
             }
             if (registrosEnLote > 0) {
-                actoresDelFichero.mergeEficaz(actoresLote);
-                peliculasDelFichero.mergeEficaz(peliculasLote);
+                actoresDelFichero.merge(actoresLote);
+                peliculasDelFichero.merge(peliculasLote);
             }
         }
         return registrosLeidos;

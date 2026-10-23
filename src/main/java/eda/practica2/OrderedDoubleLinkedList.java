@@ -96,18 +96,6 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
      *
      * @param lista lista ordenada cuyos elementos se incorporan
      */
-    @Override
-    public void merge(DoubleLinkedList<T> lista) {
-        if (lista == null || lista.isEmpty()) {
-            return; // comprobamos si la lista que recibimos esta vacia o nula -> si es así, no hacemos nada
-        }
-        Node<T> actual = lista.first; // creamos un "indice" de la lista que recibimos 
-        for (int i = 0; i < lista.count; i++) {
-            add(actual.data); // dejamos que add() haga el resto del trabajo de algoritmia de comparaciones
-            actual = actual.next; // actualizamos el indice
-        }
-    }
-
     /**
      * <b>O(n + m)</b> en recorridos e inserciones: fusiona ambas listas en
      * orden. {@code n} y {@code m} son sus tamaños iniciales; combinar
@@ -115,7 +103,8 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
      *
      * @param lista lista ordenada que se incorpora a esta lista
      */
-    public void mergeEficaz(DoubleLinkedList<T> lista) {
+    @Override
+    public void merge(DoubleLinkedList<T> lista) {
 
         if (lista == null || lista.first == null) {
             return;
@@ -160,8 +149,6 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
         }
 
     }
-
-  
 
     /**
      * <b>O(n(m + n + k))</b>: combina las X de {@code otro} con las de este Y.
