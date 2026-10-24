@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class Utils {
 
-    private static final int NIVEL_INFO = 4;
+    private static final int NIVEL_INFO = 3;
     private static final boolean MOSTRAR_TAG = true;
     private static long contadorComplejidad;
     private static final Map<String, Integer> nivelesTags = new HashMap<>();

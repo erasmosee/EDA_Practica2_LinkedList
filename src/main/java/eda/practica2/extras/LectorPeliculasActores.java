@@ -96,8 +96,8 @@ public class LectorPeliculasActores {
                 actor = actoresLote.findOrAdd(new Actor(idActor, nombreActor, anioFichero));
                 pelicula = peliculasLote.findOrAdd(new Pelicula(idPelicula, nombrePelicula, anioFichero));
 
-                actor.getPeliculaLinkedList().add(pelicula);
-                pelicula.getActorLinkedList().add(actor);
+                actor.getPeliculaLinkedList().addToFront(pelicula);
+                pelicula.getActorLinkedList().addToFront(actor);
                 registrosLeidos++;
                 registrosEnLote++;
                 if ( registrosEnLote == 127) {

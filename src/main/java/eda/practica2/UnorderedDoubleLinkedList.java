@@ -18,7 +18,27 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
             }
         }
 
+    }
 
+    /**
+     * <b>O(n)</b>: busca un elemento igual a {@code elem} o lo inserta en
+     * orden. {@code n} es el tamaño de la lista.
+     *
+     * @param elem elemento que se busca o se va a insertar
+     * @return el elemento ya almacenado si es igual, o {@code elem} si se
+     * inserta
+     */
+    public T findOrAdd(T elem) {
+        if (isEmpty()) {
+            addWhenEmpty(elem);
+            return elem;
+        }
+        Node<T> aux = locate(elem);
+        if (aux == null) {
+            addToRear(elem);
+        }
+
+        return elem;
     }
 
     /**
@@ -33,8 +53,8 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
     }
 
     /**
-     * <b>O(1)</b>: inserta {@code elem} al final, actualizando los enlaces entre
-     * el nuevo nodo y los extremos de la lista.
+     * <b>O(1)</b>: inserta {@code elem} al final, actualizando los enlaces
+     * entre el nuevo nodo y los extremos de la lista.
      *
      * @param elem elemento que se va a insertar
      */
@@ -46,8 +66,8 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
     /**
      * <b>O(n)</b>: busca {@code target} e inserta {@code elem} a continuación,
      * actualizando los enlaces de los nodos vecinos. Si la lista está vacía,
-     * inserta primero {@code target} y después {@code elem}; si no está vacía
-     * y no encuentra {@code target}, no modifica la lista.
+     * inserta primero {@code target} y después {@code elem}; si no está vacía y
+     * no encuentra {@code target}, no modifica la lista.
      *
      * @param elem elemento que se va a insertar
      * @param target elemento después del cual se insertará {@code elem}

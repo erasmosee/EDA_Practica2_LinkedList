@@ -3,7 +3,7 @@ package eda.practica2.extras;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import eda.practica2.OrderedDoubleLinkedList;
+import eda.practica2.UnorderedDoubleLinkedList;
 import eda.practica2.Utils;
 
 public final class Actor implements Comparable<Actor> {
@@ -12,7 +12,7 @@ public final class Actor implements Comparable<Actor> {
     private String id;
     private String name;
     private final ArrayList<Integer> anios = new ArrayList<>();
-    private OrderedDoubleLinkedList<Pelicula> peliculaLinkedList = new OrderedDoubleLinkedList<>();
+    private UnorderedDoubleLinkedList<Pelicula> peliculaLinkedList = new UnorderedDoubleLinkedList<>();
 
     public Actor(String sId, String sName, int iAnio) { // Constructora
         id = sId;
@@ -89,11 +89,11 @@ public final class Actor implements Comparable<Actor> {
         return name + " " + id;
     }
 
-    public OrderedDoubleLinkedList<Pelicula> getPeliculaLinkedList() {
+    public UnorderedDoubleLinkedList<Pelicula> getPeliculaLinkedList() {
         return peliculaLinkedList;
     }
 
-    public void setPeliculaLinkedList(OrderedDoubleLinkedList<Pelicula> peliculaLinkedList) {
+    public void setPeliculaLinkedList(UnorderedDoubleLinkedList<Pelicula> peliculaLinkedList) {
         this.peliculaLinkedList = peliculaLinkedList;
     }
 
@@ -111,7 +111,7 @@ public final class Actor implements Comparable<Actor> {
         while (it.hasNext()) {
             Pelicula pelicula = it.next();
             Pelicula peliculaDelActor = peliculaLinkedList.findOrAdd(pelicula);
-            peliculaDelActor.getActorLinkedList().add(this);
+            peliculaDelActor.getActorLinkedList().findOrAdd(this);
         }
     }
 
