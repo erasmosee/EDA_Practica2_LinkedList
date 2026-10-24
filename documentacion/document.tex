@@ -70,8 +70,6 @@ Los objetivos principales son:
 Por lo que hemos agregado comentarios a los metodos indicando su complejidad, hemos preparado unos Junits para probar las funcionalidades de \texttt{DoubleLinkedList}, \texttt{UnorderedDoubleLinkedList} y \texttt{OrderedDoubleLinkedList}.
 Hemos implementado las listas ordenadas en el proyecto de la practica1 para las listas generales de actores y peliculas, y hemos dejado las listas no ordenadas para las listas de peliculas de cada actor y las listas de actores de cada pelicula.
 
-
-
 \chapter{Diseño de las clases}
 En esta sección se mencionarán las clases principales planteadas para la solución al problema. Por cada clase, se presentarán sus características, atributos y métodos, especificando por cada uno sus propiedades (visibilidad, parámetros, tipo de los resultados\ldots).
 Un gráfico que muestre las clases y sus relaciones puede ser una buena idea. Por ejemplo, el que se muestra en la siguiente figura.
@@ -90,43 +88,210 @@ Sobre las listas doblemente enlazadas, podemos afirmar que si la lista esta vaci
 En los casos en los que solo hay un nodo, este sea puntara a si mismo. El contador nos permite saber el numero de elementos de manera directa \texttt{O(1)} sin tener que recorrer toda la lista contando elementos, a coste de que cada vez que añadimos o quitamos un elemento de la lista agregar una modificacion al contador.
 Cada vez que se añade o se retira un elemento de la lista, hay que actualizar los enlaces del elemento nuevo y de los elementos que rodean al nuevo elemento para que no se rompa la lista.
 
-\chapter{Diseño e implementacón de los métodos principales}
-En este apartado se presentarán los métodos principales, indicando por cada uno su especificación (precondiciones y postcondiciones), además de los casos de prueba planteados. Por cada método no trivial, se presentará la descripción del algoritmo implementado. Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de cada algoritmo.
-Presentamos un ejemplo de una posible manera de presentar un método de ejemplo.
-
 \chapter{Diseño e implementación de los métodos principales}
-En este apartado se presentarán los métodos principales, indicando por cada uno su especificación (precondiciones y postcondiciones), además de los casos de prueba planteados. Por cada método no trivial, se presentará la descripción del algoritmo implementado. Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de cada algoritmo.
-Presentamos un ejemplo de una posible manera de presentar un método de ejemplo.
 
-\section{Método buscarElemento}
+Presentación los métodos principales, indicando por cada uno su especificación (precondiciones y postcondiciones), además de los casos de prueba planteados.
+Por cada método no trivial, se presentará la descripción del algoritmo implementado. 
+Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de cada algoritmo.
 
+\section{\label{isEmpty}isEmpty}
 \begin{lstlisting}[language=Java]
-    public boolean buscarElemento(int x) {
-    // Precondicion: el array no esta vacio
-    // Postcondicion: el resultado es true si x pertenece 
-    //         a la lista y false si no
-         
+  //Complejidad O(1)
+  //comprueba si la lista está vacía.
+  public boolean isEmpty() {return first == null;} 
 \end{lstlisting}
+
+\section{\label{size}size}
+\begin{lstlisting}[language=Java]
+  //Complejidad O(1)
+  //devuelve el número de elementos de la lista.
+  public int size() {return count;} 
+\end{lstlisting}
+
+\section{\label{isAlone}isAlone}
+\begin{lstlisting}[language=Java]
+  //Complejidad O(1)
+  //comprueba si la lista contiene un único nodo.
+  public boolean isAlone() {return first == first.next;}
+\end{lstlisting}
+
+\section{\label{locate}locate}
+\begin{lstlisting}[language=Java]
+       protected Node<T> locate(T elem) {
+        if (isEmpty()) {return null;}
+        Node<T> aux = first;
+        do {
+            if (Objects.equals(elem, aux.data)) {return aux;}
+            aux = aux.next;
+        } while (aux != first);
+        return null;
+    }
+\end{lstlisting}
+
+\section{\label{removeFirst}removeFirst}
+\begin{lstlisting}[language=Java]
+    public T removeFirst() {
+        Node<T> aux;
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        } else {
+            aux = first;
+            if (isAlone()) {
+                first = null;
+            } else {
+                first.prev.next = first.next;
+                first.next.prev = first.prev;
+                first = first.next;
+            }
+            count--;
+        }
+        return aux.data;
+    }
+\end{lstlisting}
+
+\section{\label{removeLast}removeLast}
+\begin{lstlisting}[language=Java]
+ public T removeLast() {
+        Node<T> aux;
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        } else {
+            aux = first.prev;
+            if (isAlone()) {
+                first = null;
+            } else {
+                first.prev.prev.next = first;
+                first.prev = first.prev.prev;
+            }
+            count--;
+        }
+        return aux.data;
+    }
+\end{lstlisting}
+
+\section{\label{remove}remove}
+\texttt{remove} se apoya en \ref{locate} \texttt{locate}
+\begin{lstlisting}[language=Java]
+ public T remove(T elem) {
+        if (isEmpty()) {throw new NoSuchElementException();}
+
+        Node<T> aux = locate(elem);
+        if (aux == null) {return null;}
+        if (aux == first) {return removeFirst();}
+
+        aux.prev.next = aux.next;
+        aux.next.prev = aux.prev;
+        count--;
+
+        return aux.data;
+    }
+\end{lstlisting}
+
+\section{\label{first}first}
+\begin{lstlisting}[language=Java]
+    public T first() {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        } else {
+            return first.data;
+        }
+    }  
+\end{lstlisting}
+
+\section{\label{last}last}
+\begin{lstlisting}[language=Java]
+    public T last() {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        } else {
+            return first.prev.data;
+        }
+    }  
+\end{lstlisting}
+
+\section{\label{contains}contains}
+\texttt{contains} se apoya en \ref{locate} \texttt{locate}
+\begin{lstlisting}[language=Java]
+    public boolean contains(T elem) {
+        Node<T> aux;
+        if (isEmpty()) {
+            return false;
+        } else {
+            aux = locate(elem);
+            if (aux != null) {
+                return Objects.equals(aux.data, elem);
+            } else {
+                return false;
+            }
+        }
+    }
+\end{lstlisting}
+
+\section{\label{find}find}
+\texttt{find} se apoya en \ref{locate} \texttt{locate}
+\begin{lstlisting}[language=Java]
+    public T find(T elem) {
+        Node<T> aux;
+        if (isEmpty()) {
+            return null;
+        } else {
+            aux = locate(elem);
+            if (aux == null) {
+                return null;
+            }
+            if (Objects.equals(aux.data, elem)) {
+                return aux.data;
+            } else {
+                return null;
+            }
+        }
+    }
+\end{lstlisting}
+
+\section{\label{iterator}iterator}
+\begin{lstlisting}[language=Java]
+    public Iterator<T> iterator() {return new ListIterator();}
+    private class ListIterator implements Iterator<T> {
+        private Node<T> aux = first;
+        private int contador = count;
+        @Override
+        public boolean hasNext() {return contador > 0;}
+        @Override
+        public T next() {
+            if (!hasNext()) {throw new NoSuchElementException();}
+            T data = aux.data;
+            aux = aux.next;
+            contador--;
+            return data;
+        }
+    }
+\end{lstlisting}
+
+
+
+
+
+
 
 
 
 Casos de prueba:
 \begin{itemize}
-\item B\'{u}squeda de un elemento en lista vac\'{i}a
-\item B\'{u}squeda de un elemento en lista de un solo elemento:
+\item Búsqueda de un elemento en lista vacía
+\item Búsqueda de un elemento en lista de un solo elemento:
 \begin{itemize}
 
 \item el elemento buscado es igual al de la lista
 \item el elemento buscado no es el de la lista
 \end{itemize}
 
-\item B\'{u}squeda en una lista no vacía
+\item Búsqueda en una lista no vacía
 
 \begin{itemize}
 
 \item El elemento buscado no está en la lista
 \item El elemento buscado es el primero de la lista
-\item El elemento buscado es el \'{u}ltimo de la lista
+\item El elemento buscado es el último de la lista
 \item El elemento buscado está en la mitad de la lista
 \end{itemize}
 
@@ -171,7 +336,7 @@ En este apartado se presentará el código de las clases, junto con los programa
 
 
 \chapter{Conclusiones}
-Aqu\'{i} se presentarán las principales conclusiones obtenidas del trabajo: brevemente se explicarán los resultados principales y características principales de la solución desarrollada. También se podrán indicar las posibles l\'{i}neas de trabajo futuras.
+Aquí se presentarán las principales conclusiones obtenidas del trabajo: brevemente se explicarán los resultados principales y características principales de la solución desarrollada. También se podrán indicar las posibles líneas de trabajo futuras.
 
 además, puede servir para indicar las principales dificultadas y problemas encontrados.
 
