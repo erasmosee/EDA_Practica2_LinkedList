@@ -620,7 +620,6 @@ Casos de prueba:
 
 \end{itemize}
 
-
 Este es el código del algoritmo resultante:
 \begin{lstlisting}
 
@@ -633,66 +632,83 @@ Este es el código del algoritmo resultante:
     devolver enc
 \end{lstlisting}
 
-
 Coste: el algoritmo, en el caso peor, examina todos los elementos de la lista. Para una lista de n elementos, el coste será O(n).
 
 \chapter{Código}
-En este apartado se presentará el código de las clases, junto con los programas de prueba o Junits desarrollados. Por ejemplo:
-
-\begin{lstlisting}[language=Java]
-    public void cargarLista(String nomF){
-
-       try{
-          Scanner entrada = new Scanner(new FileReader(nomF));
-   
-          String linea;
-
-          while (entrada.hasNext()) {
-             linea = entrada.nextLine();
-             ...
-          }
-          entrada.close();
-       }
-       catch(IOException e) {e.printStackTrace();}
-    }
-\end{lstlisting}
-
+Para una mejor lectura del codigo, se facilita el enlace al gitHub publico:
+\begin{itemize}
+\item $https://github.com/erasmosee/EDA_Practica2_LinkedList$
+\end{itemize}
 
 \chapter{Conclusiones}
-Aquí se presentarán las principales conclusiones obtenidas del trabajo: brevemente se explicarán los resultados principales y características principales de la solución desarrollada. También se podrán indicar las posibles líneas de trabajo futuras.
+La practica nos ha servido para ver el potencial que tienen las listas enlazas cuando cumplen los criterios de estar doblemente enlazadas y de ser una lista circular, frente a listas enlazadas mas simples, si bien es cierto que la memoria usada por las listas doblemente enlazadas es bastante superior a las listas enlazadas de una sola direccion, consideramos que es un coste asumible a la hora de proceder a trabajar con dichas listas.
 
-además, puede servir para indicar las principales dificultadas y problemas encontrados.
+\section{\label{dificultades}dificultades}
 
-\begin{table}
-\begin{scriptsize}
-\begin{center}
-\begin{tabular}{|l|r|r|r|}
-\hline 
-\multicolumn{4}{|c|}{\bf Algoritmos para ordenación}\tabularnewline
-\hline 
- \textbf{Tamaño} & \textbf{Algoritmo 1} & \textbf{Algoritmo 2} & \textbf{Algoritmo 3}\tabularnewline
-\hline 
-  10.000 & 60.30 &  65.99  & {\bf66.66} \tabularnewline
-\cline{1-4}
-  20.000 &  61.00   &  65.88  & 65.74  \tabularnewline
- \cline{1-4}
- 40.000 &  61.00   &  65.85  & 66.02  \tabularnewline
- \cline{1-4}
-  80.000 &  60.10   & 64.59  & 65.68  \tabularnewline
-    \cline{1-4}
-   1.000.000  &  60.90   & 65.34  & 66.06
- \tabularnewline 
-    \cline{1-4}
-  2.000.000 &  61.20   & 65.86  & 65.45
- \tabularnewline 
+Durante el desarrollo de la practica 2, hemos ido probando distintas formas de integrarla con la practica 1, pues era un objetivo que ya teniamos en mente desde el principio.
+En un primer momento antes de implementar el metodo \texttt{merge}, procediamos a volcar la informacion leida de los ficheros a un hashmap, ordenarlo y posterioremente lo volcabamos a una \texttt{OrderedDoubleLinkedList}, como es de suponer, la velocidad de insertar elementos ordenados en una lista ordenada es O(1) siempre que compares previamente el elemento a insertar con el first y con el prev.
+Mas tarde, tuvimos un metodo merge no cuadratico, y fue cuando pasamos empezamos a tener pequeñas listas sacadas una de cada fichero de año, las cuales obteniamos aun mediante hashmap, pero que las volcabamos a OrderedDoubleLinkedList para luego proceder a mergearlas en una unica lista OrderedDoubleLinkedList, en este momento fue cuando el programa paso de tardar de 12 minutos a 70 segundos en procesar la lista completa de actores y peliculas.
+Una vez llegados a este punto en el que el programa tardaba "solo" 70 segundos, y lo comentabamos contentos pues sabiamos de donde veniamos, empezamos una pequeña competicion por hacer un merge decente.
+Mientras unos estaban con el merge, otros estaban dilucidando como reducir esos 70 segundos con los que en ese momento estabamos contentos, por lo que empezamos a pensar en hacer merge de listas mas pequeñas a medida que leiamos de cada fichero.
+En un principio pensamos que cada 1000 elementos podiamos hacer un merge por lo que modificamos el lector para que cuando llevase X elementos mergease lo leido a una \texttt{OrderedDoubleLinkedList} de los datos de ese año, para una vez finalizado el fichero de año, mergearlo con la \texttt{OrderedDoubleLinkedList} global.
+Ya que teniamos un numero, decidimos empezar a variarlo y comprobar como respondia el codigo, para nuestra sorpresa, el numero bueno no era mil elementos, si no 127, y es en ese punto donde descubrimos que se realizaban el menor numero de operaciones \texttt{compareTo} en nuestro codigo.
+ni que decir que cuanto mas aproximabamos el numero de lotes a 127 mas rapido se procesaba el codigo, las ultimas pruebas ya fueron para ajustar milesimas, es cuando habiamos llegado a menos de 5 segundos.
 
-\hline 
-\end{tabular}\end{center}\end{scriptsize}
-\caption{\label{tab3} Resultados (en ms) para diferentes algoritmos y distintos tamaños de datos. 
-}
+
+\begin{table}[ht]
+\section{\label{tablaTiemposComparaciones}tablaTiemposComparaciones}
+\begin{minipage}{0.95\linewidth}
+  Dado que mergePruebas realizaba siempre mas operaciones se opto por descartarlo y usar mergeEficaz, el cual fue renombrado a merge.
+
+\centering
+\begin{tabular}{>{\ttfamily}l l l l l}
+\toprule
+\normalfont Tipo de lectura & Tipo de Merge & Tamaño lote & Tiempo (ms) & Comparaciones \\
+\midrule
+HashMap & eficaz & 0000 & 4211 & 30.948.898\\
+HashMap & eficaz & 0000 & 4249 & 30.948.898\\
+HashMap & eficaz & 0000 & 4268 & 30.948.898\\
+HashMap & eficaz & 0000 & 4275 & 30.948.898\\
+\midrule
+HashMap & pruebas & 0000 & 4121 & 42.431.698\\
+HashMap & pruebas & 0000 & 4186 & 42.431.698\\
+\midrule
+LinkedList & eficaz & 0000 & 77256 & 2.347.578.829\\
+LinkedList & eficaz & 0000 & 78528 & 2.347.578.829\\
+LinkedList & eficaz & 0002 & 52019 & 1.471.529.362\\
+LinkedList & eficaz & 0050 & 5959 & 126.511.381\\
+LinkedList & eficaz & 0100 & 4948 & 96.650.651\\
+LinkedList & eficaz & 0120 & 4667 & 94.876.555\\
+LinkedList & eficaz & 0121 & 4723 & 94.896.816\\
+LinkedList & eficaz & 0122 & 4730 & 94.832.180\\
+LinkedList & eficaz & 0123 & 4731 & 94.817.682\\
+LinkedList & eficaz & 0124 & 4739 & 94.823.336\\
+LinkedList & eficaz & 0125 & 4646 & 94.842.586\\
+LinkedList & eficaz & 0126 & 4663 & 94.821.298\\
+LinkedList & eficaz & 0127 & 4674 & 94.791.060\\
+LinkedList & eficaz & 0128 & 4655 & 94.783.518\\
+LinkedList & eficaz & 0129 & 4651 & 94.849.962\\
+LinkedList & eficaz & 0130 & 4540 & 94.861.467\\
+LinkedList & eficaz & 0150 & 4663 & 95.812.115\\
+LinkedList & eficaz & 0175 & 4640 & 98.592.713\\
+LinkedList & eficaz & 0200 & 4581 & 102.238.615\\
+LinkedList & eficaz & 0225 & 4572 & 106.536.856\\
+LinkedList & eficaz & 0250 & 4495 & 111.328.433\\
+LinkedList & eficaz & 0500 & 5278 & 167.814.219\\
+LinkedList & eficaz & 1000 & 7432 & 283.025.042\\
+LinkedList & eficaz & 2000 & 12320 & 488.769.245\\
+\midrule
+LinkedList & pruebas & 0000 & 75663 & 2.359.061.629\\
+LinkedList & pruebas & 0000 & 78484 & 2.359.061.629\\
+LinkedList & pruebas & 0100 & 6804 & 198.922.278\\
+LinkedList & pruebas & 0250 & 5600 & 160.686.346\\
+LinkedList & pruebas & 0500 & 6148 & 199.115.873\\
+LinkedList & pruebas & 1000 & 8053 & 304.985.577\\
+LinkedList & pruebas & 2000 & 12932 & 505.847.776\\
+\bottomrule
+\end{tabular}
+\caption{Numero de operacions por tamaños de lotes y tiempo de operacion en (ms).}
+\end{minipage}\smallskip
 \end{table}
-
-
-La tabla \ref{tab3} se puede referenciar desde el texto.
 
 \end{document}          
