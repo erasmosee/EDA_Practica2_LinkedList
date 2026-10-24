@@ -317,7 +317,6 @@ public class DoubleLinkedList<T> implements ListADT<T> {
             aux = aux.next;
             contador--;
             return data;
-
         }
     }
 

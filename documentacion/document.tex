@@ -99,7 +99,6 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \begin{minipage}{0.95\linewidth}
 \section{\label{isEmpty}isEmpty}
 \begin{lstlisting}[language=Java]
-  //Complejidad O(1)
   //comprueba si la lista está vacía.
   public boolean isEmpty() {return first == null;} 
 \end{lstlisting}
@@ -109,7 +108,6 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \begin{minipage}{0.95\linewidth}
 \section{\label{size}size}
 \begin{lstlisting}[language=Java]
-  //Complejidad O(1)
   //devuelve el número de elementos de la lista.
   public int size() {return count;} 
 \end{lstlisting}
@@ -119,7 +117,6 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \begin{minipage}{0.95\linewidth}
 \section{\label{isAlone}isAlone}
 \begin{lstlisting}[language=Java]
-  //Complejidad O(1)
   //comprueba si la lista contiene un único nodo.
   public boolean isAlone() {return first == first.next;}
 \end{lstlisting}
@@ -129,7 +126,6 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \begin{minipage}{0.95\linewidth}
 \section{\label{locate}locate}
 \begin{lstlisting}[language=Java]
-  //Complejidad O(n)
   //busca el nodo cuyo dato es igual a {@code elem}.
   protected Node<T> locate(T elem) {
     if (isEmpty()) {return null;}
@@ -146,7 +142,6 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \begin{minipage}{0.95\linewidth}
 \section{\label{removeFirst}removeFirst}
 \begin{lstlisting}[language=Java]
-  //Complejidad O(1)
   //Elimina el primer nodo, actualiza {@code first} y los enlaces entre el nuevo primero y el último.
   public T removeFirst() {
     Node<T> aux;
@@ -172,7 +167,6 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \begin{minipage}{0.95\linewidth}
 \section{\label{removeLast}removeLast}
 \begin{lstlisting}[language=Java]
-  //Complejidad O(1)
   //Elimina el último nodo y actualiza los enlaces entre el nuevo último y {@code first}.
   public T removeLast() {
     Node<T> aux;
@@ -198,7 +192,6 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \section{\label{remove}remove}
 \texttt{remove} se apoya en \ref{locate} \texttt{locate}
 \begin{lstlisting}[language=Java]
-  //Complejidad O(n)
   //Busca y elimina el primer elemento igual a {@code elem}, actualizando los enlaces de sus nodos vecinos.
   public T remove(T elem) {
     if (isEmpty()) {throw new NoSuchElementException();}
@@ -220,13 +213,14 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \begin{minipage}{0.95\linewidth}
 \section{\label{first}first}
 \begin{lstlisting}[language=Java]
-    public T first() {
-        if (isEmpty()) {
-            throw new NoSuchElementException();
-        } else {
-            return first.data;
-        }
-    }  
+  //Devuelve el primer elemento
+  public T first() {
+    if (isEmpty()) {
+      throw new NoSuchElementException();
+    } else {
+      return first.data;
+    }
+  }  
 \end{lstlisting}
 \end{minipage}\smallskip
 
@@ -234,13 +228,14 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \begin{minipage}{0.95\linewidth}
 \section{\label{last}last}
 \begin{lstlisting}[language=Java]
-    public T last() {
-        if (isEmpty()) {
-            throw new NoSuchElementException();
-        } else {
-            return first.prev.data;
-        }
-    }  
+  //Devuelve el último elemento
+  public T last() {
+    if (isEmpty()) {
+      throw new NoSuchElementException();
+    } else {
+      return first.prev.data;
+    }
+  }  
 \end{lstlisting}
 \end{minipage}\smallskip
 
@@ -249,19 +244,20 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \section{\label{contains}contains}
 \texttt{contains} se apoya en \ref{locate} \texttt{locate}
 \begin{lstlisting}[language=Java]
-    public boolean contains(T elem) {
-        Node<T> aux;
-        if (isEmpty()) {
-            return false;
-        } else {
-            aux = locate(elem);
-            if (aux != null) {
-                return Objects.equals(aux.data, elem);
-            } else {
-                return false;
-            }
-        }
+  //Comprueba si la lista contiene un elemento igual a {@code elem}
+  public boolean contains(T elem) {
+    Node<T> aux;
+    if (isEmpty()) {
+      return false;
+    } else {
+      aux = locate(elem);
+      if (aux != null) {
+        return Objects.equals(aux.data, elem);
+      } else {
+        return false;
+      }
     }
+  }
 \end{lstlisting}
 \end{minipage}\smallskip
 
@@ -289,33 +285,179 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \end{lstlisting}
 \end{minipage}\smallskip
 
+\begin{minipage}{0.95\linewidth}
+\section{\label{addWhenEmpty}addWhenEmpty}
+\begin{lstlisting}[language=Java]
+  //Crea el único nodo de la lista vacía y enlaza sus referencias {@code next} y {@code prev} consigo mismo.
+  public void addWhenEmpty(T elem) {
+    Node<T> newNode = new Node<>(elem);
+    newNode.next = newNode;
+    newNode.prev = newNode;
+    first = newNode;
+    count++;
+  }
+\end{lstlisting}
+\end{minipage}\smallskip
+
+\begin{minipage}{0.95\linewidth}
+\section{\label{insertFirst}insertFirst}
+\begin{lstlisting}[language=Java]
+  //Inserta {@code elem} al principio y actualiza {@code first}
+  public void insertFirst(T elem) {
+    if (isEmpty()) {
+      addWhenEmpty(elem);
+      return;
+    }
+    insertAdd(elem, first.prev, first);
+    first = first.prev;
+  }
+\end{lstlisting}
+\end{minipage}\smallskip
 
 \begin{minipage}{0.95\linewidth}
 \section{\label{iterator}iterator}
 \begin{lstlisting}[language=Java]
-    public Iterator<T> iterator() {return new ListIterator();}
-    private class ListIterator implements Iterator<T> {
-        private Node<T> aux = first;
-        private int contador = count;
-        @Override
-        public boolean hasNext() {return contador > 0;}
-        @Override
-        public T next() {
-            if (!hasNext()) {throw new NoSuchElementException();}
-            T data = aux.data;
-            aux = aux.next;
-            contador--;
-            return data;
-        }
+  public Iterator<T> iterator() {return new ListIterator();}
+  private class ListIterator implements Iterator<T> {
+    private Node<T> aux = first;
+    private int contador = count;
+    @Override
+    public boolean hasNext() {return contador > 0;}
+    @Override
+    public T next() {
+      if (!hasNext()) {throw new NoSuchElementException();}
+      T data = aux.data;
+      aux = aux.next;
+      contador--;
+      return data;
     }
+  }
 \end{lstlisting}
 \end{minipage}\smallskip
 
 
+\begin{table}[ht]
+\section{\label{tablaResumen}tablaResumen}
+\begin{minipage}{0.95\linewidth}
+\centering
+\begin{tabular}{>{\ttfamily}l l}
+\toprule
+\normalfont Operación & complejidad\\
+\midrule
+isEmpty & $O(1)$\\
+size & $O(1)$\\
+isAlone & $O(1)$\\
+locate & $O(n)$\\
+removeFirst & $O(1)$\\
+removeLast & $O(1)$\\
+remove & $O(n)$\\
+first & $O(1)$\\
+last & $O(1)$\\
+contains & $O(n)$\\
+find & $O(n)$\\
+addWhenEmpty & $O(1)$\\
+insertFirst & $O(1)$\\
+
+\bottomrule
+\end{tabular}
+\caption{Costes de las operaciones comunes.}
+\end{minipage}\smallskip
+\end{table}
+
+\begin{minipage}{0.95\linewidth}
+\section{\label{addTo}addTo}
+\begin{lstlisting}[language=Java]
+  //Inserta un elemento al principio o al final
+  private void addTo(T elem, boolean front) {
+    if (isEmpty()) {
+      addWhenEmpty(elem);
+    } else {
+      insertAdd(elem, first.prev, first);
+      if (front) {actualizarFirst(first.prev);}
+    }
+  }
+\end{lstlisting}
+\end{minipage}\smallskip
+
+\begin{minipage}{0.95\linewidth}
+\section{\label{findOrAdd}findOrAdd}
+  //Busca un elemento igual a {@code elem} o lo inserta en orden. {@code n} es el tamaño de la lista.
+  public T findOrAdd(T elem) {
+    if (isEmpty()) {
+      addWhenEmpty(elem);
+      return elem;
+    }
+    Node<T> aux = locate(elem);
+    if (aux == null) {addToRear(elem);}
+    return elem;
+  }
+\begin{lstlisting}[language=Java]
+ 
+\end{lstlisting}
+\end{minipage}\smallskip
+
+\begin{minipage}{0.95\linewidth}
+\section{\label{addToFront}addToFront}
+//Inserta {@code elem} entre el primero y el ultimo y actualiza {@code first} y los enlaces entre el nuevo nodo y los extremos de la lista.
+  public void addToFront(T elem) {
+    addTo(elem, true);
+  }
+\begin{lstlisting}[language=Java]
+ 
+\end{lstlisting}
+\end{minipage}\smallskip
+
+\begin{minipage}{0.95\linewidth}
+\section{\label{addToRear}addToRear}
+//Inserta {@code elem} entre el primero y el ultimo y actualiza los enlaces entre el nuevo nodo y los extremos de la lista.
+  public void addToRear(T elem) {
+    addTo(elem, false);
+  }
+\begin{lstlisting}[language=Java]
+ 
+\end{lstlisting}
+\end{minipage}\smallskip
+
+\begin{minipage}{0.95\linewidth}
+\section{\label{addAfter}addAfter}
+  //Busca {@code target} e inserta {@code elem} a continuación, actualizando los enlaces de los nodos vecinos. 
+  //Si la lista está vacía, inserta primero {@code target} y después {@code elem}.
+  //Si no está vacía y no encuentra {@code target}, no modifica la lista.
+  public void addAfter(T elem, T target) {
+    if (isEmpty()) {
+      addWhenEmpty(target);
+      addAfter(elem, target);
+    } else {
+      Node<T> nodoTarget = locate(target);
+      if (nodoTarget != null) {insertAdd(elem, nodoTarget, nodoTarget.next);}
+    }
+  }
+\begin{lstlisting}[language=Java]
+ 
+\end{lstlisting}
+\end{minipage}\smallskip
 
 
+\begin{table}[ht]
+\section{\label{tablaResumenUnordered}tablaResumenUnordered}
+\begin{minipage}{0.95\linewidth}
+\centering
+\begin{tabular}{>{\ttfamily}l l}
+\toprule
+\normalfont Operación & complejidad\\
+\midrule
+addTo & $O(1)$\\
+findOrAdd & $O(n)$\\
+addToFront & $O(1)$\\
+addToRear & $O(1)$\\
+addAfter & $O(n)$\\
 
 
+\bottomrule
+\end{tabular}
+\caption{Costes de las operaciones comunes.}
+\end{minipage}\smallskip
+\end{table}
 
 
 

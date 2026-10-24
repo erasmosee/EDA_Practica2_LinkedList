@@ -17,7 +17,6 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
                 actualizarFirst(first.prev);
             }
         }
-
     }
 
     /**
