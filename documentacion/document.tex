@@ -1,0 +1,227 @@
+\documentclass[a4paper,11pt]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-noquoting]{babel}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usetikzlibrary{positioning,arrows.meta}
+
+\geometry{margin=2.5cm}
+\setlength{\emergencystretch}{2em}
+\renewcommand{\chaptername}{Capítulo}
+\renewcommand{\contentsname}{Índice}
+\renewcommand{\listtablename}{Índice de tablas}
+\renewcommand{\lstlistingname}{Listado}
+
+\lstset{ % Esto nos permite escribir normal sin tener que escapar acentos
+    basicstyle=\small\ttfamily,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    showstringspaces=false,
+    tabsize=4,
+    literate=
+        {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+        {ñ}{{\~n}}1
+}
+% Title Page
+
+\title{Práctica 2\\Listas doblemente enlazadas circulares}
+\author{Samuel Carrasco Santurde\\Alexander Tomás Echevarria Pizarro\\Erasmo Seebold Guadilla}
+\date{}
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+\listoftables
+
+\chapter{Introducción}
+
+En esta práctica hemos implementado una estructura basada en listas enlazadas, concretamente listas doblemente enlazadas circulares.
+
+A partir de la clase común \texttt{DoubleLinkedList} hemos creado una variante sin orden \texttt{UnorderedDoubleLinkedList} y otra con orden \texttt{OrderedDoubleLinkedList}.
+
+El nodo \texttt{Node<T>} guarda referencias a anterior y a siguiente, lo que nos permite recorrer la lista de manera bidireccional conectando el primero con el ultimo.
+
+La lista ordenada tiene la resctriccion de que ha de implementar elementos que implementen \texttt{Comparable<T>}, mientras que la no ordenada tiene mas libertad en cuanto a los elementos que almacena.
+
+Se han realizado pruebas tanto con enteros y objetos \texttt{Persona} para finalmente implementarlo en la practica 1 de Atores y peliculas.
+
+
+\section{Objetivos y alcance}
+
+Los objetivos principales son:
+\begin{itemize}
+    \item Especificar, diseñar e implementar en Java los métodos de las clases \texttt{DoubleLinkedList} y \texttt{UnorderedDoubleLinkedList}.
+    \item Programa de pruebas que diseñado y la complejidad decada método.
+    \item Sustituir la nueva clase \texttt{UnorderedDoubleLinkedList} en alguna de las listas usadas en la fase 1 de la práctica, y comprobar que funciona correctamente (por ejemplo, en la lista de actores que participan en una película)
+    \item Implementación de la clase \texttt{OrderedDoubleLinkedList} es opcional*
+\end{itemize}
+
+Por lo que hemos agregado comentarios a los metodos indicando su complejidad, hemos preparado unos Junits para probar las funcionalidades de \texttt{DoubleLinkedList}, \texttt{UnorderedDoubleLinkedList} y \texttt{OrderedDoubleLinkedList}.
+Hemos implementado las listas ordenadas en el proyecto de la practica1 para las listas generales de actores y peliculas, y hemos dejado las listas no ordenadas para las listas de peliculas de cada actor y las listas de actores de cada pelicula.
+
+
+
+\chapter{Diseño de las clases}
+En esta secci\'{o}n se mencionar\'{a}n las clases principales planteadas para la soluci\'{o}n al problema. Por cada clase, se presentar\'{a}n sus caracter\'{i}sticas, atributos y m\'{e}todos, especificando por cada uno sus propiedades (visibilidad, par\'{a}metros, tipo de los resultados\ldots).
+Un gr\'{a}fico que muestre las clases y sus relaciones puede ser una buena idea. Por ejemplo, el que se muestra en la figura \ref{fig1}.
+
+\begin{figure}[h]
+\includegraphics[scale=0.7]{figuras/image.png}
+\caption{\label{fig1} Diagrama de clases. }
+
+\end{figure}
+
+% Hasta aqui.
+% Lo de abajo es lo que venia en el documento de prueba.
+
+
+
+
+Para realizar enumeraciones:
+
+
+
+
+
+
+
+
+
+\begin{itemize}
+\item Primer elemento.
+\item Segundo elemento.
+\item Tercer elemento.
+
+\end{itemize}
+
+
+
+
+\chapter{Descripci\'{o}n de las estructuras de datos principales}
+Este apartado describir\'{a} las principales estructuras diseñadas para la soluci\'{o}n del problema, detallando sus caracter\'{i}sticas principales, as\'{i} como la justificaci\'{o}n de su idoneidad para resolver el problema planteado.
+
+\chapter{Diseño e implementaci\'{o}n de los m\'{e}todos principales}
+En este apartado se presentar\'{a}n los m\'{e}todos principales, indicando por cada uno su especificaci\'{o}n (precondiciones y postcondiciones), adem\'{a}s de los casos de prueba planteados. Por cada m\'{e}todo no trivial, se presentar\'{a} la descripci\'{o}n del algoritmo implementado. Finalmente, se deber\'{a} presentar, de manera razonada, el c\'{a}lculo del coste de cada algoritmo.
+Presentamos un ejemplo de una posible manera de presentar un m\'{e}todo de ejemplo.
+
+\section{M\'{e}todo buscarElemento}
+
+\begin{lstlisting}[language=Java]
+    public boolean buscarElemento(int x) {
+    // Precondicion: el array no esta vacio
+    // Postcondicion: el resultado es true si x pertenece 
+    //         a la lista y false si no
+         
+\end{lstlisting}
+
+
+
+Casos de prueba:
+\begin{itemize}
+\item B\'{u}squeda de un elemento en lista vac\'{i}a
+\item B\'{u}squeda de un elemento en lista de un solo elemento:
+\begin{itemize}
+
+\item el elemento buscado es igual al de la lista
+\item el elemento buscado no es el de la lista
+\end{itemize}
+
+\item B\'{u}squeda en una lista no vacía
+
+\begin{itemize}
+
+\item El elemento buscado no est\'{a} en la lista
+\item El elemento buscado es el primero de la lista
+\item El elemento buscado es el \'{u}ltimo de la lista
+\item El elemento buscado est\'{a} en la mitad de la lista
+\end{itemize}
+
+\end{itemize}
+
+
+Este es el c\'{o}digo del algoritmo resultante:
+\begin{lstlisting}
+
+    i := 0
+    enc := 0
+    mientras (i <= n) y no enc hacer
+        si el elemento i-esimo es igual a x 
+        entonces enc := true
+        si no i := i + 1
+    devolver enc
+\end{lstlisting}
+
+
+Coste: el algoritmo, en el caso peor, examina todos los elementos de la lista. Para una lista de n elementos, el coste será O(n).
+
+\chapter{Código}
+En este apartado se presentar\'{a} el c\'{o}digo de las clases, junto con los programas de prueba o Junits desarrollados. Por ejemplo:
+
+\begin{lstlisting}[language=Java]
+    public void cargarLista(String nomF){
+
+       try{
+          Scanner entrada = new Scanner(new FileReader(nomF));
+   
+          String linea;
+
+          while (entrada.hasNext()) {
+             linea = entrada.nextLine();
+             ...
+          }
+          entrada.close();
+       }
+       catch(IOException e) {e.printStackTrace();}
+    }
+\end{lstlisting}
+
+
+\chapter{Conclusiones}
+Aqu\'{i} se presentar\'{a}n las principales conclusiones obtenidas del trabajo: brevemente se explicar\'{a}n los resultados principales y caracter\'{i}sticas principales de la soluci\'{o}n desarrollada. Tambi\'{e}n se podr\'{a}n indicar las posibles l\'{i}neas de trabajo futuras.
+
+Adem\'{a}s, puede servir para indicar las principales dificultadas y problemas encontrados.
+
+\begin{table}
+\begin{scriptsize}
+\begin{center}
+\begin{tabular}{|l|r|r|r|}
+\hline 
+\multicolumn{4}{|c|}{\bf Algoritmos para ordenaci\'{o}n}\tabularnewline
+\hline 
+ \textbf{Tamaño} & \textbf{Algoritmo 1} & \textbf{Algoritmo 2} & \textbf{Algoritmo 3}\tabularnewline
+\hline 
+  10.000 & 60.30 &  65.99  & {\bf66.66} \tabularnewline
+\cline{1-4}
+  20.000 &  61.00   &  65.88  & 65.74  \tabularnewline
+ \cline{1-4}
+ 40.000 &  61.00   &  65.85  & 66.02  \tabularnewline
+ \cline{1-4}
+  80.000 &  60.10   & 64.59  & 65.68  \tabularnewline
+    \cline{1-4}
+   1.000.000  &  60.90   & 65.34  & 66.06
+ \tabularnewline 
+    \cline{1-4}
+  2.000.000 &  61.20   & 65.86  & 65.45
+ \tabularnewline 
+
+\hline 
+\end{tabular}\end{center}\end{scriptsize}
+\caption{\label{tab3} Resultados (en ms) para diferentes algoritmos y distintos tamaños de datos. 
+}
+\end{table}
+
+
+La tabla \ref{tab3} se puede referenciar desde el texto.
+
+\end{document}          
