@@ -73,49 +73,32 @@ Hemos implementado las listas ordenadas en el proyecto de la practica1 para las 
 
 
 \chapter{Diseño de las clases}
-En esta secci\'{o}n se mencionar\'{a}n las clases principales planteadas para la soluci\'{o}n al problema. Por cada clase, se presentar\'{a}n sus caracter\'{i}sticas, atributos y m\'{e}todos, especificando por cada uno sus propiedades (visibilidad, par\'{a}metros, tipo de los resultados\ldots).
-Un gr\'{a}fico que muestre las clases y sus relaciones puede ser una buena idea. Por ejemplo, el que se muestra en la figura \ref{fig1}.
+En esta sección se mencionarán las clases principales planteadas para la solución al problema. Por cada clase, se presentarán sus características, atributos y métodos, especificando por cada uno sus propiedades (visibilidad, parámetros, tipo de los resultados\ldots).
+Un gráfico que muestre las clases y sus relaciones puede ser una buena idea. Por ejemplo, el que se muestra en la siguiente figura.
 
 \begin{figure}[h]
+\centering
 \includegraphics[scale=0.7]{figuras/image.png}
-\caption{\label{fig1} Diagrama de clases. }
+\caption{Diagrama de clases. }
 
 \end{figure}
 
-% Hasta aqui.
-% Lo de abajo es lo que venia en el documento de prueba.
 
+\chapter{Descripción de las estructuras de datos principales}
 
+Sobre las listas doblemente enlazadas, podemos afirmar que si la lista esta vacia, no hay ningun nodo, por lo que \texttt{first == null} y el contador vale cero \texttt{count == 0}. En caso de tener elementos cada nodo desde el primero apuntara tanto al siguiente como al anterior, de manera que el ultimo es accesible desde el primero y el primero desde el ultimo formando un circulo.
+En los casos en los que solo hay un nodo, este sea puntara a si mismo. El contador nos permite saber el numero de elementos de manera directa \texttt{O(1)} sin tener que recorrer toda la lista contando elementos, a coste de que cada vez que añadimos o quitamos un elemento de la lista agregar una modificacion al contador.
+Cada vez que se añade o se retira un elemento de la lista, hay que actualizar los enlaces del elemento nuevo y de los elementos que rodean al nuevo elemento para que no se rompa la lista.
 
+\chapter{Diseño e implementacón de los métodos principales}
+En este apartado se presentarán los métodos principales, indicando por cada uno su especificación (precondiciones y postcondiciones), además de los casos de prueba planteados. Por cada método no trivial, se presentará la descripción del algoritmo implementado. Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de cada algoritmo.
+Presentamos un ejemplo de una posible manera de presentar un método de ejemplo.
 
-Para realizar enumeraciones:
+\chapter{Diseño e implementación de los métodos principales}
+En este apartado se presentarán los métodos principales, indicando por cada uno su especificación (precondiciones y postcondiciones), además de los casos de prueba planteados. Por cada método no trivial, se presentará la descripción del algoritmo implementado. Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de cada algoritmo.
+Presentamos un ejemplo de una posible manera de presentar un método de ejemplo.
 
-
-
-
-
-
-
-
-
-\begin{itemize}
-\item Primer elemento.
-\item Segundo elemento.
-\item Tercer elemento.
-
-\end{itemize}
-
-
-
-
-\chapter{Descripci\'{o}n de las estructuras de datos principales}
-Este apartado describir\'{a} las principales estructuras diseñadas para la soluci\'{o}n del problema, detallando sus caracter\'{i}sticas principales, as\'{i} como la justificaci\'{o}n de su idoneidad para resolver el problema planteado.
-
-\chapter{Diseño e implementaci\'{o}n de los m\'{e}todos principales}
-En este apartado se presentar\'{a}n los m\'{e}todos principales, indicando por cada uno su especificaci\'{o}n (precondiciones y postcondiciones), adem\'{a}s de los casos de prueba planteados. Por cada m\'{e}todo no trivial, se presentar\'{a} la descripci\'{o}n del algoritmo implementado. Finalmente, se deber\'{a} presentar, de manera razonada, el c\'{a}lculo del coste de cada algoritmo.
-Presentamos un ejemplo de una posible manera de presentar un m\'{e}todo de ejemplo.
-
-\section{M\'{e}todo buscarElemento}
+\section{Método buscarElemento}
 
 \begin{lstlisting}[language=Java]
     public boolean buscarElemento(int x) {
@@ -141,16 +124,16 @@ Casos de prueba:
 
 \begin{itemize}
 
-\item El elemento buscado no est\'{a} en la lista
+\item El elemento buscado no está en la lista
 \item El elemento buscado es el primero de la lista
 \item El elemento buscado es el \'{u}ltimo de la lista
-\item El elemento buscado est\'{a} en la mitad de la lista
+\item El elemento buscado está en la mitad de la lista
 \end{itemize}
 
 \end{itemize}
 
 
-Este es el c\'{o}digo del algoritmo resultante:
+Este es el código del algoritmo resultante:
 \begin{lstlisting}
 
     i := 0
@@ -166,7 +149,7 @@ Este es el c\'{o}digo del algoritmo resultante:
 Coste: el algoritmo, en el caso peor, examina todos los elementos de la lista. Para una lista de n elementos, el coste será O(n).
 
 \chapter{Código}
-En este apartado se presentar\'{a} el c\'{o}digo de las clases, junto con los programas de prueba o Junits desarrollados. Por ejemplo:
+En este apartado se presentará el código de las clases, junto con los programas de prueba o Junits desarrollados. Por ejemplo:
 
 \begin{lstlisting}[language=Java]
     public void cargarLista(String nomF){
@@ -188,16 +171,16 @@ En este apartado se presentar\'{a} el c\'{o}digo de las clases, junto con los pr
 
 
 \chapter{Conclusiones}
-Aqu\'{i} se presentar\'{a}n las principales conclusiones obtenidas del trabajo: brevemente se explicar\'{a}n los resultados principales y caracter\'{i}sticas principales de la soluci\'{o}n desarrollada. Tambi\'{e}n se podr\'{a}n indicar las posibles l\'{i}neas de trabajo futuras.
+Aqu\'{i} se presentarán las principales conclusiones obtenidas del trabajo: brevemente se explicarán los resultados principales y características principales de la solución desarrollada. También se podrán indicar las posibles l\'{i}neas de trabajo futuras.
 
-Adem\'{a}s, puede servir para indicar las principales dificultadas y problemas encontrados.
+además, puede servir para indicar las principales dificultadas y problemas encontrados.
 
 \begin{table}
 \begin{scriptsize}
 \begin{center}
 \begin{tabular}{|l|r|r|r|}
 \hline 
-\multicolumn{4}{|c|}{\bf Algoritmos para ordenaci\'{o}n}\tabularnewline
+\multicolumn{4}{|c|}{\bf Algoritmos para ordenación}\tabularnewline
 \hline 
  \textbf{Tamaño} & \textbf{Algoritmo 1} & \textbf{Algoritmo 2} & \textbf{Algoritmo 3}\tabularnewline
 \hline 
