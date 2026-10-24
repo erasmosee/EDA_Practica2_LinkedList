@@ -90,13 +90,6 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
     }
 
     /**
-     * <b>O(m(n + m))</b> en el peor caso: añade a esta lista los elementos de
-     * {@code lista}. {@code n} y {@code m} son los tamaños iniciales de ambas
-     * listas, respectivamente. No elimina elementos de {@code lista}.
-     *
-     * @param lista lista ordenada cuyos elementos se incorporan
-     */
-    /**
      * <b>O(n + m)</b> en recorridos e inserciones: fusiona ambas listas en
      * orden. {@code n} y {@code m} son sus tamaños iniciales; combinar
      * elementos iguales añade el coste de {@code combinarCon}.
