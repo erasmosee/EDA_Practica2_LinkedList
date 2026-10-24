@@ -117,74 +117,82 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 
 \section{\label{locate}locate}
 \begin{lstlisting}[language=Java]
-       protected Node<T> locate(T elem) {
-        if (isEmpty()) {return null;}
-        Node<T> aux = first;
-        do {
-            if (Objects.equals(elem, aux.data)) {return aux;}
-            aux = aux.next;
-        } while (aux != first);
-        return null;
-    }
+  //Complejidad O(n)
+  //busca el nodo cuyo dato es igual a {@code elem}.
+  protected Node<T> locate(T elem) {
+    if (isEmpty()) {return null;}
+    Node<T> aux = first;
+    do {
+      if (Objects.equals(elem, aux.data)) {return aux;}
+      aux = aux.next;
+    } while (aux != first);
+    return null;
+  }
 \end{lstlisting}
 
 \section{\label{removeFirst}removeFirst}
 \begin{lstlisting}[language=Java]
-    public T removeFirst() {
-        Node<T> aux;
-        if (isEmpty()) {
-            throw new NoSuchElementException();
-        } else {
-            aux = first;
-            if (isAlone()) {
-                first = null;
-            } else {
-                first.prev.next = first.next;
-                first.next.prev = first.prev;
-                first = first.next;
-            }
-            count--;
-        }
-        return aux.data;
+  //Complejidad O(1)
+  //Elimina el primer nodo, actualiza {@code first} y los enlaces entre el nuevo primero y el último.
+  public T removeFirst() {
+    Node<T> aux;
+    if (isEmpty()) {
+      throw new NoSuchElementException();
+    } else {
+      aux = first;
+      if (isAlone()) {
+        first = null;
+      } else {
+        first.prev.next = first.next;
+        first.next.prev = first.prev;
+        first = first.next;
+      }
+      count--;
     }
+    return aux.data;
+  }
 \end{lstlisting}
 
 \section{\label{removeLast}removeLast}
 \begin{lstlisting}[language=Java]
- public T removeLast() {
-        Node<T> aux;
-        if (isEmpty()) {
-            throw new NoSuchElementException();
+  //Complejidad O(1)
+  //Elimina el último nodo y actualiza los enlaces entre el nuevo último y {@code first}.
+  public T removeLast() {
+    Node<T> aux;
+    if (isEmpty()) {
+      throw new NoSuchElementException();
+    } else {
+        aux = first.prev;
+        if (isAlone()) {
+          first = null;
         } else {
-            aux = first.prev;
-            if (isAlone()) {
-                first = null;
-            } else {
-                first.prev.prev.next = first;
-                first.prev = first.prev.prev;
-            }
-            count--;
+          first.prev.prev.next = first;
+          first.prev = first.prev.prev;
         }
-        return aux.data;
+        count--;
     }
+    return aux.data;
+  }
 \end{lstlisting}
 
 \section{\label{remove}remove}
 \texttt{remove} se apoya en \ref{locate} \texttt{locate}
 \begin{lstlisting}[language=Java]
- public T remove(T elem) {
-        if (isEmpty()) {throw new NoSuchElementException();}
+  //Complejidad O(n)
+  //Busca y elimina el primer elemento igual a {@code elem}, actualizando los enlaces de sus nodos vecinos.
+  public T remove(T elem) {
+    if (isEmpty()) {throw new NoSuchElementException();}
 
-        Node<T> aux = locate(elem);
-        if (aux == null) {return null;}
-        if (aux == first) {return removeFirst();}
+    Node<T> aux = locate(elem);
+    if (aux == null) {return null;}
+    if (aux == first) {return removeFirst();}
 
-        aux.prev.next = aux.next;
-        aux.next.prev = aux.prev;
-        count--;
+    aux.prev.next = aux.next;
+    aux.next.prev = aux.prev;
+    count--;
 
-        return aux.data;
-    }
+    return aux.data;
+  }
 \end{lstlisting}
 
 \section{\label{first}first}
