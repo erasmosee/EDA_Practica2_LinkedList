@@ -50,20 +50,20 @@
 \section{Completar y validar los merges ordenados}
 
 \begin{enumerate}
-    \item \textcolor{blue}{Implementado; falta probar} \textbf{Resolver la igualdad en \texttt{merge}.} El método combina elementos iguales y avanza ambos punteros. Faltan pruebas que verifiquen que no hay duplicados y que las relaciones asociadas se combinan correctamente.
+    \item \textcolor{blue}{Implementado y probado parcialmente} \textbf{Resolver la igualdad en \texttt{merge}.} El método combina elementos iguales y avanza ambos punteros. Las pruebas del lector comprueban que los IDs principales no se duplican y que las relaciones del ejemplo se mantienen en ambos sentidos. Siguen faltando pruebas específicas de igualdad en distintas posiciones del merge.
     \item \textcolor{blue}{Retirado} \textbf{Eliminar \texttt{mergePruebas}.} La variante experimental ya no está en \texttt{OrderedDouble\allowbreak LinkedList}; no requiere pruebas.
     \item \textbf{Pendiente: documentar el comportamiento de la lista fuente.} \texttt{merge} conserva la fuente cuando el destino no está vacío, pero comparte sus nodos si el destino está vacío. Definir si ese caso debe copiar o transferir nodos y añadir pruebas.
     \item \textbf{Pendiente: probar \texttt{merge}.} Cubrir listas vacías, rangos intercalados y separados, elementos iguales en distintas posiciones, tamaños diferentes y auto-fusión; comprobar orden, tamaño, duplicados y estado de la fuente.
-    \item \textbf{Pendiente: verificar las relaciones de actores y películas.} Comprobar que los IDs no se duplican y que cada relación existe en ambas direcciones, también al combinar lotes.
+    \item \textcolor{blue}{Corregido y probado con los ficheros de ejemplo} \textbf{Evitar relaciones repetidas entre actores y películas.} \texttt{UnorderedDoubleLinkedList.findOrAdd} evita insertar un elemento que ya existe, y \texttt{Actor.combinarCon} y \texttt{Pelicula.combinarCon} lo usan para actualizar las dos direcciones de la relación. El test \texttt{noDuplicaRelacionesActorPeliculaRepetidas} comprueba, entre otros datos, que las 11 filas de \textit{Super López} corresponden a 10 actores únicos porque Dani Rovira aparece en 2015 y 2018. La prueba verifica también cantidades para Dani Rovira y la identidad de las primeras referencias; falta un test aislado con registros repetidos y comprobación de unicidad e identidad para todas las relaciones.
 \end{enumerate}
 
 \section{Aumentar la cobertura de pruebas}
 
-Hay dos pruebas de \texttt{addAfter} y una prueba de lectura de ficheros. Esta última comprueba cantidades de registros, actores y películas, algunos actores y la búsqueda de un actor por ID. Aún faltan pruebas automatizadas para listas vacías, de uno y varios elementos; extremos e interiores; elementos presentes y ausentes; inserciones repetidas; y eliminaciones. En listas ordenadas, comprobar también orden, tamaño y duplicados según \texttt{compareTo}.
+Los tests del lector comprueban cantidades de registros, actores y películas, algunos actores y la búsqueda por ID. También validan que las relaciones entre actores y películas existan en ambos sentidos, y que no se duplique el número de actores de \textit{Super López} cuando Dani Rovira aparece en dos años. La prueba de relaciones usa el conjunto de ficheros de ejemplo; no fuerza un caso con más de 127 registros ni comprueba de forma exhaustiva que cada referencia sea la instancia canónica. Aún faltan pruebas automatizadas para listas vacías, de uno y varios elementos; extremos e interiores; elementos presentes y ausentes; inserciones repetidas; y eliminaciones. En listas ordenadas, comprobar también orden, tamaño y duplicados según \texttt{compareTo}.
 
 Para los merges conservados, probar listas fuente y destino vacías, elementos intercalados, rangos sin solapamiento, elementos iguales y listas de tamaños distintos. Verificar si la fuente se conserva y probar la auto-fusión.
 
-En el ejemplo de actores y películas, comprobar que las cantidades de entidades son las esperadas, que no se repite ningún ID y que cada relación que aparece en la lista de películas de un actor aparece también en la lista de actores de esa película, y viceversa.
+En el ejemplo de actores y películas, las pruebas comprueban que las cantidades de entidades son las esperadas, que no se repite ningún ID y que cada relación que aparece en la lista de películas de un actor aparece también en la lista de actores de esa película, y viceversa. Añadir un caso pequeño, independiente de los ficheros de ejemplo, que repita deliberadamente un mismo registro y compruebe que no se duplica ninguna de las dos asociaciones.
 
 \section{Alinear el diseño con el enunciado}
 
