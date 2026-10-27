@@ -32,21 +32,26 @@ public class PruebaPeliculasActoresLinkedList {
         OrderedDoubleLinkedList<Pelicula> peliculas = new OrderedDoubleLinkedList<>();
         LectorPeliculasActores lector = new LectorPeliculasActores();
 
-        int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas);
+        int tamanioLote = 128;
+        int rango = 10;
+        for (int i = tamanioLote - (rango / 2); i < (tamanioLote + (rango / 2)); i++) {
+            int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas, i);
 
-        Utils.traza("detalleComplejidad", "nº comparaciones del metodo: " + Utils.consultarContadorcomparaciones());
-        Utils.traza("estaOrdenada", "Actores supera prueba ordenados: " + estaOrdenada(actores));
-        Utils.traza("tieneRepes", "Actores supera prueba repetidos: " + tieneRepes(actores));
+            Utils.traza("tamanioLote", "tamanioLote: " + i);
+            Utils.traza("detalleComplejidad", "nº comparaciones del metodo: " + Utils.consultarContadorcomparaciones());
+            Utils.traza("estaOrdenada", "Actores supera prueba ordenados: " + estaOrdenada(actores));
+            Utils.traza("tieneRepes", "Actores supera prueba repetidos: " + tieneRepes(actores));
 
-        Utils.traza("estaOrdenada", "Películas supera prueba ordenadas: " + estaOrdenada(peliculas));
-        Utils.traza("tieneRepes", "Películas supera prueba repetidos: " + tieneRepes(peliculas));
+            Utils.traza("estaOrdenada", "Películas supera prueba ordenadas: " + estaOrdenada(peliculas));
+            Utils.traza("tieneRepes", "Películas supera prueba repetidos: " + tieneRepes(peliculas));
 
-        Utils.traza("datosLeidos", "Registros leídos: " + registrosLeidos);
-        Utils.traza("datosLeidos", "Actores: " + actores.size());
-        Utils.traza("datosLeidos", "Películas: " + peliculas.size());
-        Utils.mostrarCronometro("tiempoPrueba", tiempoPrueba);
+            Utils.traza("datosLeidos", "Registros leídos: " + registrosLeidos);
+            Utils.traza("datosLeidos", "Actores: " + actores.size());
+            Utils.traza("datosLeidos", "Películas: " + peliculas.size());
+            Utils.mostrarCronometro("tiempoPrueba", tiempoPrueba);
 
-        System.out.println();
+            System.out.println();
+        }
     }
 
     private static <T extends Comparable<T>> boolean estaOrdenada(OrderedDoubleLinkedList<T> lista) {

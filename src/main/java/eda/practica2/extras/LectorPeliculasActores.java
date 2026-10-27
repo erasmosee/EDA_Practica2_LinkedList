@@ -12,7 +12,7 @@ import eda.practica2.Utils;
 
 public class LectorPeliculasActores {
 
-    public int leerCarpeta(String rutaCarpeta, OrderedDoubleLinkedList<Actor> listaActores, OrderedDoubleLinkedList<Pelicula> listaPeliculas) throws IOException {
+    public int leerCarpeta(String rutaCarpeta, OrderedDoubleLinkedList<Actor> listaActores, OrderedDoubleLinkedList<Pelicula> listaPeliculas,int tamanioLote) throws IOException {
         File carpeta = new File(rutaCarpeta);
         File[] ficheros = carpeta.listFiles();
         Utils.traza("leerCarpeta", "leer carpeta inicio");
@@ -44,7 +44,7 @@ public class LectorPeliculasActores {
             long tiempoInicio = Utils.iniciarCronometro();
             registrosAntLeidos = registrosLeidos;
 
-            registrosLeidos += leerFichero(fichero, actoresDelFichero, peliculasDelFichero, anioFichero);
+            registrosLeidos += leerFichero(fichero, actoresDelFichero, peliculasDelFichero, anioFichero,tamanioLote);
 
             listaActores.merge(actoresDelFichero);
             listaPeliculas.merge(peliculasDelFichero);
@@ -63,7 +63,7 @@ public class LectorPeliculasActores {
         return registrosLeidos;
     }
 
-    private int leerFichero(File fichero, OrderedDoubleLinkedList<Actor> actoresDelFichero, OrderedDoubleLinkedList<Pelicula> peliculasDelFichero, int anioFichero) throws IOException {
+    private int leerFichero(File fichero, OrderedDoubleLinkedList<Actor> actoresDelFichero, OrderedDoubleLinkedList<Pelicula> peliculasDelFichero, int anioFichero,int tamanioLote) throws IOException {
         OrderedDoubleLinkedList<Actor> actoresLote = new OrderedDoubleLinkedList<>();
         OrderedDoubleLinkedList<Pelicula> peliculasLote = new OrderedDoubleLinkedList<>();
         int registrosEnLote = 0;
@@ -100,7 +100,7 @@ public class LectorPeliculasActores {
                 pelicula.getActorLinkedList().addToFront(actor);
                 registrosLeidos++;
                 registrosEnLote++;
-                if ( registrosEnLote == 127) {
+                if ( registrosEnLote == tamanioLote) {
 
                     actoresDelFichero.merge(actoresLote);
                     peliculasDelFichero.merge(peliculasLote);
