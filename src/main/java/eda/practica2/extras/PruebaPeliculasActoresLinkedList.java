@@ -25,10 +25,13 @@ public class PruebaPeliculasActoresLinkedList {
     }
 
     private static void ejecutarPrueba(String ruta) throws IOException {
+        long tiempoTotal = Utils.iniciarCronometro();
+
         int tamanioLote = 128;
-        int rango = 40;
+        int rango = 64;
         for (int i = tamanioLote - (rango / 2); i < (tamanioLote + (rango / 2)); i++) {
             long tiempoMedio = 0;
+            long contadorComplejidad = 0;
             for (int j = 0; j < 4; j++) {
 
                 Utils.iniciarContadorcomparaciones();
@@ -39,8 +42,9 @@ public class PruebaPeliculasActoresLinkedList {
                 LectorPeliculasActores lector = new LectorPeliculasActores();
 
                 int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas, i);
+                contadorComplejidad = Utils.consultarContadorcomparaciones();
                 tiempoMedio = tiempoMedio + Utils.devolverCronometro("tablaLatex", tiempoPrueba);
-                Utils.traza("tablaLatex", "LinkedList & eficaz & " + String.format("%04d", i) + " & " + Utils.devolverCronometro("tablaLatex", tiempoPrueba) + " & " + Utils.consultarContadorcomparaciones());
+                Utils.traza("tablaLatex", "LinkedList & eficaz & " + String.format("%04d", i) + " & " + Utils.devolverCronometro("tablaLatex", tiempoPrueba) + " & " + contadorComplejidad);
                 Utils.traza("tamanioLote", "tamanioLote: " + i);
                 Utils.traza("detalleComplejidad", "nº comparaciones: " + Utils.consultarContadorcomparaciones());
                 Utils.traza("estaOrdenada", "Actores supera prueba ordenados: " + estaOrdenada(actores));
@@ -55,12 +59,15 @@ public class PruebaPeliculasActoresLinkedList {
                 Utils.mostrarCronometro("tiempoPrueba", tiempoPrueba);
 
             }
-            tiempoMedio = (tiempoMedio/4);
-            Utils.traza("tablaLatex", "LinkedList & eficaz & " + String.format("%04d", i) + " & " + tiempoMedio + " & " + Utils.consultarContadorcomparaciones());
+            tiempoMedio = (tiempoMedio / 4);
+            Utils.traza("tablaLatex", "LinkedList & eficaz & " + String.format("%04d", i) + " & " + tiempoMedio + " & " + contadorComplejidad);
 
             System.out.println();
 
         }
+        System.out.println();
+        Utils.mostrarCronometro("main", tiempoTotal);
+
     }
 
     private static <T extends Comparable<T>> boolean estaOrdenada(OrderedDoubleLinkedList<T> lista) {

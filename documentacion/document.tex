@@ -656,7 +656,66 @@ ni que decir que cuanto mas aproximabamos el numero de lotes a 127 mas rapido se
 
 
 \begin{table}[ht]
-\section{\label{tablaTiemposComparaciones}tablaTiemposComparaciones}
+\section{\label{tablaTiemposComparacionesMerge}tablaTiemposComparacionesMerge}
+\begin{minipage}{0.95\linewidth}
+  Dado que mergePruebas realizaba siempre mas operaciones se opto por descartarlo y usar mergeEficaz, el cual fue renombrado a merge.
+
+\centering
+\begin{tabular}{>{\ttfamily}l l l l l}
+\toprule
+\normalfont Tipo de lectura & Tipo de Merge & Tamaño lote & Tiempo (ms) & Comparaciones \\
+\midrule
+LinkedList & eficaz & 0100 & 3008 & 84505092\\
+LinkedList & eficaz & 0101 & 2972 & 84382285\\
+LinkedList & eficaz & 0102 & 2990 & 84233346\\
+LinkedList & eficaz & 0103 & 3005 & 84050349\\
+LinkedList & eficaz & 0104 & 2960 & 83982697\\
+LinkedList & eficaz & 0105 & 2993 & 83796540\\
+LinkedList & eficaz & 0106 & 2998 & 83708411\\
+LinkedList & eficaz & 0107 & 2958 & 83577457\\
+LinkedList & eficaz & 0108 & 3004 & 83476276\\
+LinkedList & eficaz & 0109 & 2907 & 83377290\\
+LinkedList & eficaz & 0110 & 3019 & 83296420\\
+LinkedList & eficaz & 0111 & 3028 & 83179341\\
+LinkedList & eficaz & 0112 & 3014 & 83155664\\
+LinkedList & eficaz & 0113 & 3033 & 83048387\\
+LinkedList & eficaz & 0114 & 2918 & 82956969\\
+LinkedList & eficaz & 0115 & 3001 & 82927237\\
+LinkedList & eficaz & 0116 & 2975 & 82840151\\
+LinkedList & eficaz & 0117 & 3174 & 82862973\\
+LinkedList & eficaz & 0118 & 3061 & 82731382\\
+LinkedList & eficaz & 0119 & 2852 & 82737519\\
+LinkedList & eficaz & 0120 & 2878 & 82697094\\
+LinkedList & eficaz & 0121 & 2975 & 82718085\\
+LinkedList & eficaz & 0122 & 2890 & 82650588\\
+LinkedList & eficaz & 0123 & 2966 & 82635178\\
+LinkedList & eficaz & 0124 & 2977 & 82638738\\
+LinkedList & eficaz & 0125 & 2918 & 82654824\\
+LinkedList & eficaz & 0126 & 2994 & 82634253\\
+LinkedList & eficaz & 0127 & 2940 & 82600991\\
+LinkedList & eficaz & 0128 & 2900 & 82594718\\
+LinkedList & eficaz & 0129 & 2972 & 82656716\\
+LinkedList & eficaz & 0130 & 2968 & 82667334\\
+LinkedList & eficaz & 0131 & 3009 & 82604169\\
+LinkedList & eficaz & 0132 & 3019 & 82652078\\
+LinkedList & eficaz & 0133 & 2939 & 82702540\\
+LinkedList & eficaz & 0134 & 3000 & 82766518\\
+LinkedList & eficaz & 0135 & 2943 & 82778629\\
+LinkedList & eficaz & 0136 & 2950 & 82816234\\
+LinkedList & eficaz & 0137 & 2939 & 82837771\\
+LinkedList & eficaz & 0138 & 2874 & 82834454\\
+LinkedList & eficaz & 0139 & 2910 & 82945814\\
+LinkedList & eficaz & 0140 & 2925 & 82985020\\
+
+\bottomrule
+\end{tabular}
+\caption{Numero de operacions por tamaños de lotes y tiempo de operacion en (ms) del merge elegido.}
+\end{minipage}\smallskip
+\end{table}
+
+
+\begin{table}[ht]
+\section{\label{tablaTiemposComparacionesOtrosMerge}tablaTiemposComparacionesOtrosMerge}
 \begin{minipage}{0.95\linewidth}
   Dado que mergePruebas realizaba siempre mas operaciones se opto por descartarlo y usar mergeEficaz, el cual fue renombrado a merge.
 
@@ -673,31 +732,6 @@ HashMap & eficaz & 0000 & 4275 & 30.948.898\\
 HashMap & pruebas & 0000 & 4121 & 42.431.698\\
 HashMap & pruebas & 0000 & 4186 & 42.431.698\\
 \midrule
-LinkedList & eficaz & 0000 & 77256 & 2.347.578.829\\
-LinkedList & eficaz & 0000 & 78528 & 2.347.578.829\\
-LinkedList & eficaz & 0002 & 52019 & 1.471.529.362\\
-LinkedList & eficaz & 0050 & 5959 & 126.511.381\\
-LinkedList & eficaz & 0100 & 4948 & 96.650.651\\
-LinkedList & eficaz & 0120 & 4667 & 94.876.555\\
-LinkedList & eficaz & 0121 & 4723 & 94.896.816\\
-LinkedList & eficaz & 0122 & 4730 & 94.832.180\\
-LinkedList & eficaz & 0123 & 4731 & 94.817.682\\
-LinkedList & eficaz & 0124 & 4739 & 94.823.336\\
-LinkedList & eficaz & 0125 & 4646 & 94.842.586\\
-LinkedList & eficaz & 0126 & 4663 & 94.821.298\\
-LinkedList & eficaz & 0127 & 4674 & 94.791.060\\
-LinkedList & eficaz & 0128 & 4655 & 94.783.518\\
-LinkedList & eficaz & 0129 & 4651 & 94.849.962\\
-LinkedList & eficaz & 0130 & 4540 & 94.861.467\\
-LinkedList & eficaz & 0150 & 4663 & 95.812.115\\
-LinkedList & eficaz & 0175 & 4640 & 98.592.713\\
-LinkedList & eficaz & 0200 & 4581 & 102.238.615\\
-LinkedList & eficaz & 0225 & 4572 & 106.536.856\\
-LinkedList & eficaz & 0250 & 4495 & 111.328.433\\
-LinkedList & eficaz & 0500 & 5278 & 167.814.219\\
-LinkedList & eficaz & 1000 & 7432 & 283.025.042\\
-LinkedList & eficaz & 2000 & 12320 & 488.769.245\\
-\midrule
 LinkedList & pruebas & 0000 & 75663 & 2.359.061.629\\
 LinkedList & pruebas & 0000 & 78484 & 2.359.061.629\\
 LinkedList & pruebas & 0100 & 6804 & 198.922.278\\
@@ -707,7 +741,7 @@ LinkedList & pruebas & 1000 & 8053 & 304.985.577\\
 LinkedList & pruebas & 2000 & 12932 & 505.847.776\\
 \bottomrule
 \end{tabular}
-\caption{Numero de operacions por tamaños de lotes y tiempo de operacion en (ms).}
+\caption{Numero de operacions por tamaños de lotes y tiempo de operacion en (ms) de otros merges.}
 \end{minipage}\smallskip
 \end{table}
 
