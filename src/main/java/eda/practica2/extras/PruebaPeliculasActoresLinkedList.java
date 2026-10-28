@@ -25,19 +25,19 @@ public class PruebaPeliculasActoresLinkedList {
     }
 
     private static void ejecutarPrueba(String ruta) throws IOException {
-        Utils.iniciarContadorcomparaciones();
-        long tiempoPrueba = Utils.iniciarCronometro();
-
-        OrderedDoubleLinkedList<Actor> actores = new OrderedDoubleLinkedList<>();
-        OrderedDoubleLinkedList<Pelicula> peliculas = new OrderedDoubleLinkedList<>();
-        LectorPeliculasActores lector = new LectorPeliculasActores();
-
         int tamanioLote = 128;
-        int rango = 10;
+        int rango = 40;
         for (int i = tamanioLote - (rango / 2); i < (tamanioLote + (rango / 2)); i++) {
+            Utils.iniciarContadorcomparaciones();
+            long tiempoPrueba = Utils.iniciarCronometro();
+
+            OrderedDoubleLinkedList<Actor> actores = new OrderedDoubleLinkedList<>();
+            OrderedDoubleLinkedList<Pelicula> peliculas = new OrderedDoubleLinkedList<>();
+            LectorPeliculasActores lector = new LectorPeliculasActores();
+
             int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas, i);
 
-            Utils.traza("tamanioLote", "tamanioLote: " + i);
+            Utils.traza("tamanioLote", "tamanioLote: " + i, false);
             Utils.traza("detalleComplejidad", "nº comparaciones del metodo: " + Utils.consultarContadorcomparaciones());
             Utils.traza("estaOrdenada", "Actores supera prueba ordenados: " + estaOrdenada(actores));
             Utils.traza("tieneRepes", "Actores supera prueba repetidos: " + tieneRepes(actores));
