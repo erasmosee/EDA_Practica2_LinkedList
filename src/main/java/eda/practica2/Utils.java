@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class Utils {
 
-    private static final int NIVEL_INFO = 6;
+    private static final int NIVEL_INFO = 10;
     private static final boolean MOSTRAR_TAG = false;
     private static long contadorComplejidad;
     private static final Map<String, Integer> nivelesTags = new HashMap<>();
@@ -54,6 +54,7 @@ public class Utils {
         nivelesTags.put("programa", valor); // Mensaje de inicio del programa
         valor++; //11
         nivelesTags.put("main", valor);
+        nivelesTags.put("tablaLatex", valor); // Mensaje de inicio del programa
 
     }
 

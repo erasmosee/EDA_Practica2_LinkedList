@@ -28,29 +28,38 @@ public class PruebaPeliculasActoresLinkedList {
         int tamanioLote = 128;
         int rango = 40;
         for (int i = tamanioLote - (rango / 2); i < (tamanioLote + (rango / 2)); i++) {
-            Utils.iniciarContadorcomparaciones();
-            long tiempoPrueba = Utils.iniciarCronometro();
+            long tiempoMedio = 0;
+            for (int j = 0; j < 4; j++) {
 
-            OrderedDoubleLinkedList<Actor> actores = new OrderedDoubleLinkedList<>();
-            OrderedDoubleLinkedList<Pelicula> peliculas = new OrderedDoubleLinkedList<>();
-            LectorPeliculasActores lector = new LectorPeliculasActores();
+                Utils.iniciarContadorcomparaciones();
+                long tiempoPrueba = Utils.iniciarCronometro();
 
-            int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas, i);
+                OrderedDoubleLinkedList<Actor> actores = new OrderedDoubleLinkedList<>();
+                OrderedDoubleLinkedList<Pelicula> peliculas = new OrderedDoubleLinkedList<>();
+                LectorPeliculasActores lector = new LectorPeliculasActores();
 
-            Utils.traza("tamanioLote", "tamanioLote: " + i, false);
-            Utils.traza("detalleComplejidad", "nº comparaciones del metodo: " + Utils.consultarContadorcomparaciones());
-            Utils.traza("estaOrdenada", "Actores supera prueba ordenados: " + estaOrdenada(actores));
-            Utils.traza("tieneRepes", "Actores supera prueba repetidos: " + tieneRepes(actores));
+                int registrosLeidos = lector.leerCarpeta(ruta, actores, peliculas, i);
+                tiempoMedio = tiempoMedio + Utils.devolverCronometro("tablaLatex", tiempoPrueba);
+                Utils.traza("tablaLatex", "LinkedList & eficaz & " + String.format("%04d", i) + " & " + Utils.devolverCronometro("tablaLatex", tiempoPrueba) + " & " + Utils.consultarContadorcomparaciones());
+                Utils.traza("tamanioLote", "tamanioLote: " + i);
+                Utils.traza("detalleComplejidad", "nº comparaciones: " + Utils.consultarContadorcomparaciones());
+                Utils.traza("estaOrdenada", "Actores supera prueba ordenados: " + estaOrdenada(actores));
+                Utils.traza("tieneRepes", "Actores supera prueba repetidos: " + tieneRepes(actores));
 
-            Utils.traza("estaOrdenada", "Películas supera prueba ordenadas: " + estaOrdenada(peliculas));
-            Utils.traza("tieneRepes", "Películas supera prueba repetidos: " + tieneRepes(peliculas));
+                Utils.traza("estaOrdenada", "Películas supera prueba ordenadas: " + estaOrdenada(peliculas));
+                Utils.traza("tieneRepes", "Películas supera prueba repetidos: " + tieneRepes(peliculas));
 
-            Utils.traza("datosLeidos", "Registros leídos: " + registrosLeidos);
-            Utils.traza("datosLeidos", "Actores: " + actores.size());
-            Utils.traza("datosLeidos", "Películas: " + peliculas.size());
-            Utils.mostrarCronometro("tiempoPrueba", tiempoPrueba);
+                Utils.traza("datosLeidos", "Registros leídos: " + registrosLeidos);
+                Utils.traza("datosLeidos", "Actores: " + actores.size());
+                Utils.traza("datosLeidos", "Películas: " + peliculas.size());
+                Utils.mostrarCronometro("tiempoPrueba", tiempoPrueba);
+
+            }
+            tiempoMedio = (tiempoMedio/4);
+            Utils.traza("tablaLatex", "LinkedList & eficaz & " + String.format("%04d", i) + " & " + tiempoMedio + " & " + Utils.consultarContadorcomparaciones());
 
             System.out.println();
+
         }
     }
 
