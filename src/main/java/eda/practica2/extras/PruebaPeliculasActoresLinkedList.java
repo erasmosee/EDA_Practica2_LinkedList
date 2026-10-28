@@ -25,10 +25,9 @@ public class PruebaPeliculasActoresLinkedList {
     }
 
     private static void ejecutarPrueba(String ruta) throws IOException {
-        long tiempoTotal = Utils.iniciarCronometro();
 
         int tamanioLote = 128;
-        int rango = 64;
+        int rango = 5;
         for (int i = tamanioLote - (rango / 2); i < (tamanioLote + (rango / 2)); i++) {
             long tiempoMedio = 0;
             long contadorComplejidad = 0;
@@ -66,7 +65,6 @@ public class PruebaPeliculasActoresLinkedList {
 
         }
         System.out.println();
-        Utils.mostrarCronometro("main", tiempoTotal);
 
     }
 
