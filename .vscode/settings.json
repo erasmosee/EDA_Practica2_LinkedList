@@ -1,5 +1,5 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.configuration.updateBuildConfiguration": "disabled",
     "terminal.integrated.profiles.windows": {
         "PowerShell UTF-8": {
             "source": "PowerShell",
