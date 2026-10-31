@@ -13,6 +13,12 @@
 
 \geometry{margin=2.8cm}
 \setlength{\emergencystretch}{2em}
+\setlength{\intextsep}{22pt plus 4pt minus 4pt}
+\setlength{\floatsep}{22pt plus 4pt minus 4pt}
+\setlength{\textfloatsep}{22pt plus 4pt minus 4pt}
+
+% Bloque de coste: "Coste:" en negrita y separado del codigo y del texto siguiente
+\newcommand{\coste}[1]{\par\bigskip\noindent\textbf{Coste:} #1\par\bigskip}
 
 \renewcommand{\chaptername}{Capítulo}
 \renewcommand{\contentsname}{Índice}
@@ -51,11 +57,11 @@ En esta práctica hemos implementado una estructura basada en listas enlazadas, 
 
 A partir de la clase común \texttt{DoubleLinkedList} hemos creado una variante sin orden \texttt{UnorderedDoubleLinkedList} y otra con orden \texttt{OrderedDoubleLinkedList}.
 
-El nodo \texttt{Node<T>} guarda referencias a anterior y a siguiente, lo que nos permite recorrer la lista de manera bidireccional conectando el primero con el ultimo.
+El nodo \texttt{Node<T>} guarda referencias a anterior y a siguiente, lo que nos permite recorrer la lista de manera bidireccional conectando el primero con el último.
 
-La lista ordenada tiene la resctriccion de que ha de implementar elementos que implementen \texttt{Comparable<T>}, mientras que la no ordenada tiene mas libertad en cuanto a los elementos que almacena.
+La lista ordenada tiene la restricción de que ha de implementar elementos que implementen \texttt{Comparable<T>}, mientras que la no ordenada tiene más libertad en cuanto a los elementos que almacena.
 
-Se han realizado pruebas tanto con enteros y objetos \texttt{Persona} para finalmente implementarlo en la practica 1 de Atores y peliculas.
+Se han realizado pruebas tanto con enteros y con objetos \texttt{Persona} para finalmente implementarlo en la práctica 1 de Actores y películas.
 
 
 \section{Objetivos y alcance}
@@ -63,17 +69,17 @@ Se han realizado pruebas tanto con enteros y objetos \texttt{Persona} para final
 Los objetivos principales son:
 \begin{itemize}
     \item Especificar, diseñar e implementar en Java los métodos de las clases \texttt{DoubleLinkedList} y \texttt{UnorderedDoubleLinkedList}.
-    \item Programa de pruebas que diseñado y la complejidad decada método.
+    \item Programa de pruebas diseñado y complejidad de cada método.
     \item Sustituir la nueva clase \texttt{UnorderedDoubleLinkedList} en alguna de las listas usadas en la fase 1 de la práctica, y comprobar que funciona correctamente (por ejemplo, en la lista de actores que participan en una película)
-    \item Implementación de la clase \texttt{OrderedDoubleLinkedList} es opcional*
+    \item Implementación de la clase \texttt{OrderedDoubleLinkedList} es opcional
 \end{itemize}
 
-Por lo que hemos agregado comentarios a los metodos indicando su complejidad, hemos preparado unos Junits para probar las funcionalidades de \texttt{DoubleLinkedList}, \texttt{UnorderedDoubleLinkedList} y \texttt{OrderedDoubleLinkedList}.
-Hemos implementado las listas ordenadas en el proyecto de la practica1 para las listas generales de actores y peliculas, y hemos dejado las listas no ordenadas para las listas de peliculas de cada actor y las listas de actores de cada pelicula.
+Por lo que hemos agregado comentarios a los métodos indicando su complejidad, hemos preparado unos Junits para probar las funcionalidades de \texttt{DoubleLinkedList}, \texttt{UnorderedDoubleLinkedList} y \texttt{OrderedDoubleLinkedList}.
+Hemos implementado las listas ordenadas en el proyecto de la práctica 1 para las listas generales de actores y películas, y hemos dejado las listas no ordenadas para las listas de películas de cada actor y las listas de actores de cada película.
 
 \chapter{Diseño de las clases}
 En esta sección se mencionarán las clases principales planteadas para la solución al problema. Por cada clase, se presentarán sus características, atributos y métodos, especificando por cada uno sus propiedades (visibilidad, parámetros, tipo de los resultados\ldots).
-Un gráfico que muestre las clases y sus relaciones puede ser una buena idea. Por ejemplo, el que se muestra en la siguiente figura.
+En la siguiente figura se muestran las clases y sus relaciones.
 
 \begin{figure}[h]
 \centering
@@ -84,15 +90,13 @@ Un gráfico que muestre las clases y sus relaciones puede ser una buena idea. Po
 
 \chapter{Descripción de las estructuras de datos principales}
 
-Sobre las listas doblemente enlazadas, podemos afirmar que si la lista esta vacia, no hay ningun nodo, por lo que \texttt{first == null} y el contador vale cero \texttt{count == 0}. En caso de tener elementos cada nodo desde el primero apuntara tanto al siguiente como al anterior, de manera que el ultimo es accesible desde el primero y el primero desde el ultimo formando un circulo.
-En los casos en los que solo hay un nodo, este sea puntara a si mismo. El contador nos permite saber el numero de elementos de manera directa \texttt{O(1)} sin tener que recorrer toda la lista contando elementos, a coste de que cada vez que añadimos o quitamos un elemento de la lista agregar una modificacion al contador.
+Sobre las listas doblemente enlazadas, podemos afirmar que si la lista está vacía, no hay ningún nodo, por lo que \texttt{first == null} y el contador vale cero \texttt{count == 0}. En caso de tener elementos cada nodo desde el primero apuntará tanto al siguiente como al anterior, de manera que el último es accesible desde el primero y el primero desde el último formando un círculo.
+En los casos en los que solo hay un nodo, este se apuntará a sí mismo. El contador nos permite saber el número de elementos de manera directa \texttt{O(1)} sin tener que recorrer toda la lista contando elementos, a coste de que cada vez que añadimos o quitamos un elemento de la lista agregar una modificación al contador.
 Cada vez que se añade o se retira un elemento de la lista, hay que actualizar los enlaces del elemento nuevo y de los elementos que rodean al nuevo elemento para que no se rompa la lista.
 
 \chapter{Diseño e implementación de los métodos principales}
 
-Presentación los métodos principales, indicando por cada uno su especificación (precondiciones y postcondiciones), además de los casos de prueba planteados.
-Por cada método no trivial, se presentará la descripción del algoritmo implementado. 
-Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de cada algoritmo.
+A continuación se presentan los métodos principales de las listas, con su código y el coste de cada uno. En los costes, $n$ es el número de elementos de la lista y comparar dos elementos cuesta $O(1)$. Los métodos \texttt{isEmpty}, \texttt{size}, \texttt{isAlone}, \texttt{first}, \texttt{last} y \texttt{addWhenEmpty} hacen un número fijo de operaciones $\Rightarrow O(1)$.
 
 
 \bigskip
@@ -139,6 +143,8 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \end{lstlisting}
 \end{minipage}\smallskip
 
+\coste{mejor caso (es el primero): 1 comparación $\Rightarrow O(1)$. Peor caso (no está o es el último): $n$ comparaciones de coste constante $\Rightarrow O(n)$.}
+
 \begin{minipage}{0.95\linewidth}
 \section{\label{removeFirst}removeFirst}
 \begin{lstlisting}[language=Java]
@@ -164,6 +170,8 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \end{minipage}\smallskip
 
 
+\coste{sin recorridos, solo comprobaciones y un número fijo de asignaciones $\Rightarrow O(1)$.}
+
 \begin{minipage}{0.95\linewidth}
 \section{\label{removeLast}removeLast}
 \begin{lstlisting}[language=Java]
@@ -188,6 +196,8 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \end{minipage}\smallskip
 
 
+\coste{el último es \texttt{first.prev} (lista circular), así que no hay recorrido $\Rightarrow O(1)$. En una lista simple sería $O(n)$.}
+
 \begin{minipage}{0.95\linewidth}
 \section{\label{remove}remove}
 \texttt{remove} se apoya en \ref{locate} \texttt{locate}
@@ -209,6 +219,8 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \end{lstlisting}
 \end{minipage}\smallskip
 
+
+\coste{se busca con \texttt{locate} y se enlazan los vecinos: $O(n) + O(1) = O(n)$.}
 
 \begin{minipage}{0.95\linewidth}
 \section{\label{first}first}
@@ -262,6 +274,8 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \end{minipage}\smallskip
 
 
+\coste{solo llama a \texttt{locate} $\Rightarrow O(n)$.}
+
 \begin{minipage}{0.95\linewidth}
 \section{\label{find}find}
 \texttt{find} se apoya en \ref{locate} \texttt{locate}
@@ -285,6 +299,8 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \end{lstlisting}
 \end{minipage}\smallskip
 
+\coste{igual que \texttt{contains}, solo depende de \texttt{locate} $\Rightarrow O(n)$.}
+
 \begin{minipage}{0.95\linewidth}
 \section{\label{addWhenEmpty}addWhenEmpty}
 \begin{lstlisting}[language=Java]
@@ -300,6 +316,32 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \end{minipage}\smallskip
 
 \begin{minipage}{0.95\linewidth}
+\section{\label{insertAdd}insertAdd}
+\texttt{insertAdd} inserta entre dos nodos que ya recibe, por lo que no recorre la lista.
+\begin{lstlisting}[language=Java]
+  //Inserta {@code elem} entre los nodos {@code prev} y {@code next}, actualizando {@code prev.next} y {@code next.prev}.
+  public void insertAdd(T elem, Node<T> prev, Node<T> next) {
+    Node<T> newNode = new Node<>(elem, prev, next);
+    prev.next = newNode;
+    next.prev = newNode;
+    count++;
+  }
+\end{lstlisting}
+\end{minipage}\smallskip
+
+\coste{crear el nodo y actualizar \texttt{prev.next}, \texttt{next.prev} y \texttt{count} $\Rightarrow O(1)$.}
+
+\begin{minipage}{0.95\linewidth}
+\section{\label{actualizarFirst}actualizarFirst}
+\begin{lstlisting}[language=Java]
+  //Cambia la referencia al primer nodo; no modifica los enlaces ni el número de elementos.
+  public void actualizarFirst(Node<T> node) {first = node;}
+\end{lstlisting}
+\end{minipage}\smallskip
+
+\coste{una sola asignación $\Rightarrow O(1)$.}
+
+\begin{minipage}{0.95\linewidth}
 \section{\label{insertFirst}insertFirst}
 \begin{lstlisting}[language=Java]
   //Inserta {@code elem} al principio y actualiza {@code first}
@@ -313,6 +355,8 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
   }
 \end{lstlisting}
 \end{minipage}\smallskip
+
+\coste{\texttt{insertAdd} y mover \texttt{first}: $O(1) + O(1) = O(1)$.}
 
 \begin{minipage}{0.95\linewidth}
 \section{\label{iterator}iterator}
@@ -336,10 +380,32 @@ Finalmente, se deberá presentar, de manera razonada, el cálculo del coste de c
 \end{minipage}\smallskip
 
 
+\coste{\texttt{hasNext} y \texttt{next} cuestan $O(1)$. Recorrer toda la lista: $n \cdot O(1) = O(n)$.}
+
+\begin{minipage}{0.95\linewidth}
+\section{\label{toString}toString}
+\begin{lstlisting}[language=Java]
+  //Concatena la representación de todos los elementos.
+  public String toString() {
+    String result = new String();
+    Iterator<T> it = iterator();
+    while (it.hasNext()) {
+      T elem = it.next();
+      result = result + "[" + elem.toString() + "] \n";
+    }
+    return "DoubleLinkedList " + result + "]";
+  }
+\end{lstlisting}
+\end{minipage}\smallskip
+
+\coste{el recorrido es $O(n)$, pero cada concatenación copia todo lo acumulado:
+\[ \sum_{i=1}^{n} i = \frac{n(n+1)}{2} \;\Rightarrow\; O(n^2) \]}
+
 \begin{table}[ht]
-\section{\label{tablaResumen}tablaResumen}
+\section{\label{tablaResumen}Resumen de costes comunes}
 \begin{minipage}{0.95\linewidth}
 \centering
+\renewcommand{\arraystretch}{1.3}
 \begin{tabular}{>{\ttfamily}l l}
 \toprule
 \normalfont Operación & complejidad\\
@@ -356,7 +422,11 @@ last & $O(1)$\\
 contains & $O(n)$\\
 find & $O(n)$\\
 addWhenEmpty & $O(1)$\\
+insertAdd & $O(1)$\\
+actualizarFirst & $O(1)$\\
 insertFirst & $O(1)$\\
+iterator & $O(1)$\\
+toString & $O(n^2)$\\
 
 \bottomrule
 \end{tabular}
@@ -379,6 +449,8 @@ insertFirst & $O(1)$\\
 \end{lstlisting}
 \end{minipage}\smallskip
 
+\coste{\texttt{insertAdd} (y \texttt{actualizarFirst} si es al principio) $\Rightarrow O(1)$.}
+
 \begin{minipage}{0.95\linewidth}
 \section{\label{UnorderedfindOrAdd}UnorderedfindOrAdd}
 \begin{lstlisting}[language=Java]
@@ -395,6 +467,8 @@ insertFirst & $O(1)$\\
  
 \end{lstlisting}
 \end{minipage}\smallskip
+
+\coste{\texttt{locate} y después \texttt{addToRear}: $O(n) + O(1) = O(n)$. Mejor caso (vacía o es el primero): $O(1)$.}
 
 \begin{minipage}{0.95\linewidth}
 \section{\label{addToFront}addToFront}
@@ -418,6 +492,8 @@ insertFirst & $O(1)$\\
 \end{lstlisting}
 \end{minipage}\smallskip
 
+\coste{\texttt{addToFront} y \texttt{addToRear} solo llaman a \texttt{addTo} $\Rightarrow O(1)$.}
+
 \begin{minipage}{0.95\linewidth}
 \section{\label{addAfter}addAfter}
 \begin{lstlisting}[language=Java]
@@ -437,10 +513,13 @@ insertFirst & $O(1)$\\
 \end{lstlisting}
 \end{minipage}\smallskip
 
+\coste{lista no vacía: \texttt{locate} y \texttt{insertAdd}, $O(n) + O(1) = O(n)$. Lista vacía: se inserta \texttt{target} y se encuentra a la primera $\Rightarrow O(1)$.}
+
 \begin{table}[ht]
-\section{\label{tablaResumenUnordered}tablaResumenUnordered}
+\section{\label{tablaResumenUnordered}Resumen de costes de la lista no ordenada}
 \begin{minipage}{0.95\linewidth}
 \centering
+\renewcommand{\arraystretch}{1.3}
 \begin{tabular}{>{\ttfamily}l l}
 \toprule
 \normalfont Operación & complejidad\\
@@ -454,7 +533,7 @@ addAfter & $O(n)$\\
 
 \bottomrule
 \end{tabular}
-\caption{Costes de las operaciones comunes.}
+\caption{Costes de las operaciones de la lista no ordenada.}
 \end{minipage}\smallskip
 \end{table}
 
@@ -485,6 +564,8 @@ addAfter & $O(n)$\\
   }
 \end{lstlisting}
 \end{minipage}\smallskip
+
+\coste{mejor caso: se compara solo con \texttt{first} y \texttt{last} $\Rightarrow O(1)$. Peor caso: el elemento queda entre medias y se recorren hasta $n$ nodos $\Rightarrow O(n)$.}
 
 \begin{minipage}{0.95\linewidth}
 \section{\label{OrderedfindOrAdd}OrderedfindOrAdd}
@@ -518,6 +599,8 @@ addAfter & $O(n)$\\
   }
 \end{lstlisting}
 \end{minipage}\smallskip
+
+\coste{igual que \texttt{add}: mejor caso $O(1)$, peor caso $O(n)$.}
 
 \begin{minipage}{0.95\linewidth}
 \section{\label{merge}merge}
@@ -563,6 +646,10 @@ addAfter & $O(n)$\\
 \end{lstlisting}
 \end{minipage}\smallskip
 
+\coste{$n$ y $m$ son los tamaños de las dos listas. Si alguna está vacía, $O(1)$ (con la actual vacía solo se copian \texttt{first} y \texttt{count}). En el caso general cada vuelta del bucle avanza en al menos una lista y cuesta $O(1)$:
+\[ \mbox{vueltas} \leq n + m \;\Rightarrow\; O(n + m) \]
+Cada pareja de elementos iguales suma una llamada a \texttt{combinarIguales}.}
+
 \begin{minipage}{0.95\linewidth}
 \section{\label{combinarIguales}combinarIguales}
 \begin{lstlisting}[language=Java]
@@ -578,87 +665,96 @@ addAfter & $O(n)$\\
 \end{lstlisting}
 \end{minipage}\smallskip
 
+\coste{solo llama a \texttt{combinarCon} (de \texttt{Actor} o de \texttt{Pelicula}), así que cuesta lo mismo que ese método. Para dos actores, $n$ son las películas del actor que entra, $m$ las que ya tenía el nuestro y $k$ el máximo de actores de una película (no son las letras de \texttt{merge}). Por cada una de las $n$ películas hay dos \texttt{findOrAdd}, uno en las películas del actor ($\leq m + n$ elementos) y otro en los actores de la película ($\leq k$):
+\[ n \cdot \bigl( O(m + n) + O(k) \bigr) = O\bigl(n(m + n + k)\bigr) \]
+Con dos películas es igual, intercambiando los papeles.}
+
 \begin{table}[ht]
-\section{\label{tablaResumenOrdered}tablaResumenOrdered}
+\section{\label{tablaResumenOrdered}Resumen de costes de la lista ordenada}
 \begin{minipage}{0.95\linewidth}
 \centering
-\begin{tabular}{>{\ttfamily}l l}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{>{\ttfamily}l p{8cm}}
 \toprule
 \normalfont Operación & complejidad\\
 \midrule
 add & $O(n)$\\
 OrderedfindOrAdd & $O(n)$\\
-merge & $O(n + m)$\\
+merge & $O(n + m)$ + llamadas a \texttt{combinarIguales}\\
 combinarIguales & $O(n(m + n + k))$\\
 
 
 \bottomrule
 \end{tabular}
-\caption{Costes de las operaciones comunes.}
+\caption{Costes de las operaciones de la lista ordenada.}
 \end{minipage}\smallskip
 \end{table}
 
-Casos de prueba:
-\begin{itemize}
-\item Búsqueda de un elemento en lista vacía
-\item Búsqueda de un elemento en lista de un solo elemento:
-\begin{itemize}
+\section{Pruebas realizadas}
+Se han implementado 18 pruebas con JUnit 5, agrupadas por clase.
 
-\item el elemento buscado es igual al de la lista
-\item el elemento buscado no es el de la lista
+\subsection*{Lista ordenada (\texttt{OrderedDoubleLinkedListTest})}
+\begin{itemize}
+\item \texttt{testOrdenYDuplicados}: inserta C, A, B y un A repetido; comprueba que quedan 3 elementos en orden A, B, C.
+\item \texttt{testFindOrAdd}: \texttt{findOrAdd} con un elemento nuevo y con uno repetido; el tamaño no crece con el repetido.
+\item \texttt{testMergeVaciaConVacia}: fusionar dos listas vacías deja la lista vacía.
+\item \texttt{testMergeVaciaConDatos}: fusionar una lista con datos en una lista vacía.
+\item \texttt{testMergeConDatosConVacia}: fusionar una lista vacía en una con datos no la modifica.
+\item \texttt{testMergeRangosSeparados}: listas con rangos que no se solapan (A, B con C, D).
+\item \texttt{testMergeRangosIntercalados}: listas con elementos intercalados (A, C con B, D); el resultado queda ordenado.
+\item \texttt{testMergeConIDsRepetidos}: dos \texttt{Actor} con el mismo identificador se combinan en uno que conserva los dos años.
+\item \texttt{testAutoFusion}: fusionar una lista consigo misma no lanza excepción.
 \end{itemize}
 
-\item Búsqueda en una lista no vacía
-
+\subsection*{Lista no ordenada (\texttt{UnorderedDoubleLinkedListTest})}
 \begin{itemize}
-
-\item El elemento buscado no está en la lista
-\item El elemento buscado es el primero de la lista
-\item El elemento buscado es el último de la lista
-\item El elemento buscado está en la mitad de la lista
+\item \texttt{testAddAfterSinTarget}: \texttt{addAfter} con un objetivo ausente en una lista no vacía no modifica la lista.
+\item \texttt{testAddToRearaddAfter}: con películas, \texttt{addToRear} y \texttt{addAfter} dejan los elementos en el orden esperado.
+\item \texttt{testInsertarFrontRear}: \texttt{addToFront} y \texttt{addToRear} en lista vacía, de un elemento y de varios; se comprueban \texttt{first}, \texttt{last} y \texttt{size}.
+\item \texttt{testAddAfterListaVacia}: \texttt{addAfter} en lista vacía, con objetivo presente y con objetivo ausente.
+\item \texttt{testContainsYFind}: \texttt{contains} y \texttt{find} en lista vacía, con elemento presente y con elemento ausente.
+\item \texttt{testEliminaciones}: excepciones en lista vacía; eliminación de un elemento intermedio, del primero, del último y del único restante.
 \end{itemize}
 
+\subsection*{Integración con la práctica 1 (\texttt{LectorPeliculasActoresTest})}
+\begin{itemize}
+\item \texttt{leeActoresYPeliculasDelFichero}: cantidades de registros, actores y películas, algunos actores concretos y búsqueda por identificador.
+\item \texttt{testRelacionesActorPeliculaConLotes}: las relaciones entre actores y películas existen en ambos sentidos y no se repiten identificadores.
+\item \texttt{noDuplicaRelacionesActorPeliculaRepetidas}: las 11 filas de \textit{Super López} corresponden a 10 actores únicos, porque Dani Rovira aparece en 2015 y 2018.
 \end{itemize}
-
-Este es el código del algoritmo resultante:
-\begin{lstlisting}
-
-    i := 0
-    enc := 0
-    mientras (i <= n) y no enc hacer
-        si el elemento i-esimo es igual a x 
-        entonces enc := true
-        si no i := i + 1
-    devolver enc
-\end{lstlisting}
-
-Coste: el algoritmo, en el caso peor, examina todos los elementos de la lista. Para una lista de n elementos, el coste será O(n).
 
 \chapter{Código}
-Para una mejor lectura del codigo, se facilita el enlace al gitHub publico:
+Para una mejor lectura del código, se facilita el enlace al GitHub público:
 \begin{itemize}
-\item $https://github.com/erasmosee/EDA_Practica2_LinkedList$
+\item \url{https://github.com/erasmosee/EDA_Practica2_LinkedList}
 \end{itemize}
 
 \chapter{Conclusiones}
-La practica nos ha servido para ver el potencial que tienen las listas enlazas cuando cumplen los criterios de estar doblemente enlazadas y de ser una lista circular, frente a listas enlazadas mas simples, si bien es cierto que la memoria usada por las listas doblemente enlazadas es bastante superior a las listas enlazadas de una sola direccion, consideramos que es un coste asumible a la hora de proceder a trabajar con dichas listas.
+La práctica nos ha servido para ver el potencial que tienen las listas enlazadas cuando cumplen los criterios de estar doblemente enlazadas y de ser una lista circular, frente a listas enlazadas más simples, si bien es cierto que la memoria usada por las listas doblemente enlazadas es bastante superior a las listas enlazadas de una sola dirección, consideramos que es un coste asumible a la hora de proceder a trabajar con dichas listas.
 
-\section{\label{dificultades}dificultades}
+\section{\label{dificultades}Dificultades}
 
-Durante el desarrollo de la practica 2, hemos ido probando distintas formas de integrarla con la practica 1, pues era un objetivo que ya teniamos en mente desde el principio.
-En un primer momento antes de implementar el metodo \texttt{merge}, procediamos a volcar la informacion leida de los ficheros a un hashmap, ordenarlo y posterioremente lo volcabamos a una \texttt{OrderedDoubleLinkedList}, como es de suponer, la velocidad de insertar elementos ordenados en una lista ordenada es O(1) siempre que compares previamente el elemento a insertar con el first y con el prev.
-Mas tarde, tuvimos un metodo merge no cuadratico, y fue cuando pasamos empezamos a tener pequeñas listas sacadas una de cada fichero de año, las cuales obteniamos aun mediante hashmap, pero que las volcabamos a OrderedDoubleLinkedList para luego proceder a mergearlas en una unica lista OrderedDoubleLinkedList, en este momento fue cuando el programa paso de tardar de 12 minutos a 70 segundos en procesar la lista completa de actores y peliculas.
-Una vez llegados a este punto en el que el programa tardaba "solo" 70 segundos, y lo comentabamos contentos pues sabiamos de donde veniamos, empezamos una pequeña competicion por hacer un merge decente.
-Mientras unos estaban con el merge, otros estaban dilucidando como reducir esos 70 segundos con los que en ese momento estabamos contentos, por lo que empezamos a pensar en hacer merge de listas mas pequeñas a medida que leiamos de cada fichero.
-En un principio pensamos que cada 1000 elementos podiamos hacer un merge por lo que modificamos el lector para que cuando llevase X elementos mergease lo leido a una \texttt{OrderedDoubleLinkedList} de los datos de ese año, para una vez finalizado el fichero de año, mergearlo con la \texttt{OrderedDoubleLinkedList} global.
-Ya que teniamos un numero, decidimos empezar a variarlo y comprobar como respondia el codigo, para nuestra sorpresa, el numero bueno no era mil elementos, si no 127, y es en ese punto donde descubrimos que se realizaban el menor numero de operaciones \texttt{compareTo} en nuestro codigo.
-ni que decir que cuanto mas aproximabamos el numero de lotes a 127 mas rapido se procesaba el codigo, las ultimas pruebas ya fueron para ajustar milesimas, es cuando habiamos llegado a menos de 5 segundos.
+Durante el desarrollo de la práctica 2, hemos ido probando distintas formas de integrarla con la práctica 1, pues era un objetivo que ya teníamos en mente desde el principio.
+
+En un primer momento antes de implementar el método \texttt{merge}, procedíamos a volcar la información leída de los ficheros a un hashmap, ordenarlo y posteriormente lo volcábamos a una \texttt{OrderedDoubleLinkedList}, como es de suponer, la velocidad de insertar elementos ordenados en una lista ordenada es O(1) siempre que compares previamente el elemento a insertar con el first y con el prev.
+
+Más tarde, tuvimos un método merge no cuadrático, y fue cuando empezamos a tener pequeñas listas sacadas una de cada fichero de año, las cuales obteníamos aun mediante hashmap, pero que las volcábamos a OrderedDoubleLinkedList para luego proceder a mergearlas en una única lista OrderedDoubleLinkedList, en este momento fue cuando el programa pasó de tardar de 12 minutos a 70 segundos en procesar la lista completa de actores y películas.
+
+Una vez llegados a este punto en el que el programa tardaba \textquotedblleft solo\textquotedblright{} 70 segundos, y lo comentábamos contentos pues sabíamos de donde veníamos, empezamos una pequeña competición por hacer un merge decente.
+
+Mientras unos estaban con el merge, otros estaban dilucidando como reducir esos 70 segundos con los que en ese momento estábamos contentos, por lo que empezamos a pensar en hacer merge de listas más pequeñas a medida que leíamos de cada fichero.
+
+En un principio pensamos que cada 1000 elementos podíamos hacer un merge por lo que modificamos el lector para que cuando llevase X elementos mergease lo leído a una \texttt{OrderedDoubleLinkedList} de los datos de ese año, para una vez finalizado el fichero de año, mergearlo con la \texttt{OrderedDoubleLinkedList} global.
+
+Ya que teníamos un número, decidimos empezar a variarlo y comprobar como respondía el código, para nuestra sorpresa, el número bueno no era mil elementos, sino 127, y es en ese punto donde descubrimos que se realizaban el menor número de operaciones \texttt{compareTo} en nuestro código.
+
+Ni que decir que cuanto más aproximábamos el número de lotes a 127 más rápido se procesaba el código, las últimas pruebas ya fueron para ajustar milésimas, es cuando habíamos llegado a menos de 5 segundos.
 
 
 \begin{table}[ht]
-\section{\label{tablaTiemposComparacionesMerge}tablaTiemposComparacionesMerge}
+\section{\label{tablaTiemposComparacionesMerge}Tiempos y comparaciones del merge elegido}
 \begin{minipage}{0.95\linewidth}
-  Dado que mergePruebas realizaba siempre mas operaciones se opto por descartarlo y usar mergeEficaz, el cual fue renombrado a merge.
+  Dado que mergePruebas realizaba siempre más operaciones se optó por descartarlo y usar mergeEficaz, el cual fue renombrado a merge.
 
 \centering
 \begin{tabular}{>{\ttfamily}l l l l l}
@@ -709,15 +805,15 @@ LinkedList & eficaz & 0140 & 2925 & 82985020\\
 
 \bottomrule
 \end{tabular}
-\caption{Numero de operacions por tamaños de lotes y tiempo de operacion en (ms) del merge elegido.}
+\caption{Número de operaciones por tamaños de lotes y tiempo de operación en (ms) del merge elegido.}
 \end{minipage}\smallskip
 \end{table}
 
 
 \begin{table}[ht]
-\section{\label{tablaTiemposComparacionesOtrosMerge}tablaTiemposComparacionesOtrosMerge}
+\section{\label{tablaTiemposComparacionesOtrosMerge}Tiempos y comparaciones de otros merges}
 \begin{minipage}{0.95\linewidth}
-  Dado que mergePruebas realizaba siempre mas operaciones se opto por descartarlo y usar mergeEficaz, el cual fue renombrado a merge.
+  Dado que mergePruebas realizaba siempre más operaciones se optó por descartarlo y usar mergeEficaz, el cual fue renombrado a merge.
 
 \centering
 \begin{tabular}{>{\ttfamily}l l l l l}
@@ -741,8 +837,8 @@ LinkedList & pruebas & 1000 & 8053 & 304.985.577\\
 LinkedList & pruebas & 2000 & 12932 & 505.847.776\\
 \bottomrule
 \end{tabular}
-\caption{Numero de operacions por tamaños de lotes y tiempo de operacion en (ms) de otros merges.}
+\caption{Número de operaciones por tamaños de lotes y tiempo de operación en (ms) de otros merges.}
 \end{minipage}\smallskip
 \end{table}
 
-\end{document}          
+\end{document}
