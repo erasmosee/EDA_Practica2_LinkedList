@@ -746,9 +746,9 @@ Mientras unos estaban con el merge, otros estaban dilucidando como reducir esos 
 
 En un principio pensamos que cada 1000 elementos podíamos hacer un merge por lo que modificamos el lector para que cuando llevase X elementos mergease lo leído a una \texttt{OrderedDoubleLinkedList} de los datos de ese año, para una vez finalizado el fichero de año, mergearlo con la \texttt{OrderedDoubleLinkedList} global.
 
-Ya que teníamos un número, decidimos empezar a variarlo y comprobar como respondía el código, para nuestra sorpresa, el número bueno no era mil elementos, sino 127, y es en ese punto donde descubrimos que se realizaban el menor número de operaciones \texttt{compareTo} en nuestro código.
+Ya que teníamos un número, decidimos empezar a variarlo y comprobar como respondía el código, para nuestra sorpresa, el número bueno no era mil elementos, sino 128, y es en ese punto donde descubrimos que se realizaban el menor número de operaciones \texttt{compareTo} en nuestro código.
 
-Ni que decir que cuanto más aproximábamos el número de lotes a 127 más rápido se procesaba el código, las últimas pruebas ya fueron para ajustar milésimas, es cuando habíamos llegado a menos de 5 segundos.
+Ni que decir que cuanto más aproximábamos el número de lotes a 128 más rápido se procesaba el código, las últimas pruebas ya fueron para ajustar milésimas, es cuando habíamos llegado a menos de 3 segundos.
 
 
 \begin{table}[ht]
