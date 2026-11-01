@@ -7,9 +7,10 @@
 \usepackage{array}
 \usepackage{booktabs}
 \usepackage{listings}
+\usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{hyperref}
-\usetikzlibrary{positioning,arrows.meta}
+\usetikzlibrary{positioning, arrows.meta, calc, shapes.multipart}
 
 \geometry{margin=2.8cm}
 \setlength{\emergencystretch}{2em}
@@ -81,11 +82,293 @@ Hemos implementado las listas ordenadas en el proyecto de la práctica 1 para la
 En esta sección se mencionarán las clases principales planteadas para la solución al problema. Por cada clase, se presentarán sus características, atributos y métodos, especificando por cada uno sus propiedades (visibilidad, parámetros, tipo de los resultados\ldots).
 En la siguiente figura se muestran las clases y sus relaciones.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering
-\includegraphics[scale=0.7]{figuras/image.png}
-\caption{Diagrama de clases. }
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+    font=\small\sffamily,
+    % Estilo de las clases UML
+    umlclass/.style={
+        rectangle split,
+        rectangle split parts=3,
+        draw=black,
+        rounded corners=1pt,
+        fill=blue!3,
+        text width=7.2cm,
+        align=left,
+        inner sep=4pt
+    },
+    % Estilo para interfaces UML
+    umlinterface/.style={
+        rectangle split,
+        rectangle split parts=3,
+        draw=black,
+        rounded corners=1pt,
+        fill=green!4,
+        text width=7.2cm,
+        align=left,
+        inner sep=4pt
+    },
+    % Estilo para notas / aclaraciones UML
+    umlnote/.style={
+        draw=black!70,
+        dashed,
+        fill=yellow!10,
+        text width=7.2cm,
+        align=left,
+        inner sep=6pt,
+        rounded corners=2pt,
+        font=\footnotesize\sffamily
+    },
+    % Estilos de flechas UML estándar
+    generalization/.style={-{Triangle[open, length=8pt, width=6pt]}, thick},
+    realization/.style={-{Triangle[open, length=8pt, width=6pt]}, dashed, thick},
+    association/.style={-{Latex[length=6pt, width=4pt]}, thick},
+    composition/.style={-{Diamond[fill=black, length=8pt, width=5pt]}, thick}
+]
 
+% ==============================================================================
+% COLUMNA CENTRAL: JERARQUÍA BASE
+% ==============================================================================
+
+% Interfaz ListADT
+\node[umlinterface] (ListADT) at (0, 16) {
+    \centering \guillemotleft interface\guillemotright \\ \textbf{ListADT\textless T\textgreater}
+    \nodepart{second}
+    \textit{(sin atributos)}
+    \nodepart{third}
+    $+$ setDescr(nom: String): void \\
+    $+$ getDescr(): String \\
+    $+$ removeFirst(): T \\
+    $+$ removeLast(): T \\
+    $+$ remove(elem: T): T \\
+    $+$ first(): T \\
+    $+$ last(): T \\
+    $+$ contains(elem: T): boolean \\
+    $+$ find(elem: T): T \\
+    $+$ isEmpty(): boolean \\
+    $+$ size(): int \\
+    $+$ iterator(): Iterator\textless T\textgreater
+};
+
+% Clase principal: DoubleLinkedList
+\node[umlclass, below=1.8cm of ListADT] (DoubleLinkedList) {
+    \centering \textbf{DoubleLinkedList\textless T\textgreater}
+    \nodepart{second}
+    $*$ first: Node\textless T\textgreater \\
+    $*$ descr: String \\
+    $*$ count: int
+    \nodepart{third}
+    $+$ DoubleLinkedList() \\
+    $+$ setDescr(nom: String): void \\
+    $+$ getDescr(): String \\
+    $+$ removeFirst(): T \\
+    $+$ removeLast(): T \\
+    $*$ locate(elem: T): Node\textless T\textgreater \\
+    $+$ remove(elem: T): T \\
+    $+$ first(): T \\
+    $+$ last(): T \\
+    $+$ contains(elem: T): boolean \\
+    $+$ find(elem: T): T \\
+    $+$ addWhenEmpty(elem: T): void \\
+    $+$ insertFirst(elem: T): void \\
+    $+$ isEmpty(): boolean \\
+    $+$ isAlone(): boolean \\
+    $+$ actualizarFirst(node: Node\textless T\textgreater): void \\
+    $+$ size(): int \\
+    $+$ iterator(): Iterator\textless T\textgreater \\
+    $+$ insertAdd(elem: T, prev: Node\textless T\textgreater, next: Node\textless T\textgreater): void \\
+    $+$ visualizarNodos(): void \\
+    $+$ toString(): String
+};
+
+% ==============================================================================
+% COLUMNA IZQUIERDA: Listas Desordenadas (Alineada por el título superior con DoubleLinkedList)
+% ==============================================================================
+
+\node[umlinterface, left=2.5cm of DoubleLinkedList.north west, anchor=north east] (UnorderedListADT) {
+    \centering \guillemotleft interface\guillemotright \\ \textbf{UnorderedListADT\textless T\textgreater}
+    \nodepart{second}
+    \textit{(sin atributos)}
+    \nodepart{third}
+    $+$ addToFront(elem: T): void \\
+    $+$ addToRear(elem: T): void \\
+    $+$ addAfter(elem: T, target: T): void
+};
+
+\node[umlclass, below=1.7cm of UnorderedListADT] (UnorderedDoubleLinkedList) {
+    \centering \textbf{UnorderedDoubleLinkedList\textless T\textgreater}
+    \nodepart{second}
+    \textit{(sin atributos propios)}
+    \nodepart{third}
+    $-$ addToTo(elem: T, front: boolean): void \\
+    $+$ findOrAdd(elem: T): T \\
+    $+$ addToFront(elem: T): void \\
+    $+$ addToRear(elem: T): void \\
+    $+$ addAfter(elem: T, target: T): void
+};
+
+% ==============================================================================
+% COLUMNA DERECHA: Listas Ordenadas (Alineada por el título superior con DoubleLinkedList)
+% ==============================================================================
+
+\node[umlinterface, right=2.5cm of DoubleLinkedList.north east, anchor=north west] (OrderedListADT) {
+    \centering \guillemotleft interface\guillemotright \\ \textbf{OrderedListADT\textless T\textgreater}
+    \nodepart{second}
+    \textit{(sin atributos)}
+    \nodepart{third}
+    $+$ add(elem: T): void \\
+    $+$ merge(zerrenda: DoubleLinkedList\textless T\textgreater): void
+};
+
+\node[umlclass, below=1.1cm of OrderedListADT] (OrderedDoubleLinkedList) {
+    \centering \textbf{OrderedDoubleLinkedList\textless T extends Comparable\textless T\textgreater\textgreater}
+    \nodepart{second}
+    \textit{(sin atributos propios)}
+    \nodepart{third}
+    $+$ add(elem: T): void \\
+    $+$ findOrAdd(elem: T): T \\
+    $+$ merge(lista: DoubleLinkedList\textless T\textgreater): void \\
+    $-$ combinarIguales(actual: T, entrante: T): void
+};
+
+% Nota / Disclaimer situada directamente debajo de OrderedDoubleLinkedList
+\node[umlnote, below=1.2cm of OrderedDoubleLinkedList] (Disclaimer) {
+    \textbf{Nota / Alcance del diagrama:} \\
+    Para que haya más claridad hemos omitido aquellas clases destinadas exclusivamente a hacer pruebas:
+    \begin{itemize}
+        \item \textbf{Tests (\texttt{src/test}):} \\
+        \texttt{OrderedDoubleLinkedListTest}, \\
+        \texttt{UnorderedDoubleLinkedListTest}, \\
+        \texttt{LectorPeliculasActoresTest}.
+        \item \textbf{Ejecutables (\texttt{src/main}):} \\
+        \texttt{PruebaOrderedDoubleLinkedList}, \\
+        \texttt{PruebaUnorderedDoubleLinkedList}, \\
+        \texttt{PruebaPeliculasActoresLinkedList}.
+    \end{itemize}
+};
+
+% ==============================================================================
+% CLASES INTERNAS DE DoubleLinkedList
+% ==============================================================================
+
+\node[umlclass, below=1.5cm of DoubleLinkedList, text width=6.2cm] (NodeInternal) {
+    \centering \textbf{DoubleLinkedList\$Node\textless N\textgreater}
+    \nodepart{second}
+    $*$ data: N \\
+    $*$ prev: Node\textless N\textgreater \\
+    $*$ next: Node\textless N\textgreater
+    \nodepart{third}
+    $*$ Node(dd: N) \\
+    $+$ Node(dd: N, prev: Node\textless N\textgreater, next: Node\textless N\textgreater)
+};
+
+\node[umlclass, left=1.2cm of NodeInternal, text width=5.5cm] (ListIterator) {
+    \centering \textbf{DoubleLinkedList\$ListIterator}
+    \nodepart{second}
+    $-$ aux: Node\textless T\textgreater \\
+    $-$ contador: int
+    \nodepart{third}
+    $+$ hasNext(): boolean \\
+    $+$ next(): T
+};
+
+% ==============================================================================
+% MODELO DE DATOS: ACTOR Y PELÍCULA (Espacio ampliado)
+% ==============================================================================
+
+% Actor situado ligeramente desplazado a la izquierda respecto al centro
+\node[umlclass, below=1.8cm of NodeInternal, xshift=-4.8cm, text width=8.5cm] (Actor) {
+    \centering \textbf{Actor}
+    \nodepart{second}
+    $-$ id: String \\
+    $-$ name: String \\
+    $-$ anios: ArrayList\textless Integer\textgreater \\
+    $-$ peliculaLinkedList: UnorderedDoubleLinkedList\textless Pelicula\textgreater
+    \nodepart{third}
+    $+$ Actor(sId: String, sName: String, iAnio: int) \\
+    $+$ getId(): String \\
+    $+$ setId(sId: String): void \\
+    $+$ getName(): String \\
+    $+$ setName(name: String): void \\
+    $+$ addAnio(anio: int): void \\
+    $+$ getAnios(): ArrayList\textless Integer\textgreater \\
+    $+$ equals(obj: Object): boolean \\
+    $+$ hashCode(): int \\
+    $+$ compareTo(arg0: Actor): int \\
+    $+$ toString(): String \\
+    $+$ getPeliculaLinkedList(): UnorderedDoubleLinkedList\textless Pelicula\textgreater \\
+    $+$ setPeliculaLinkedList(lista: UnorderedDoubleLinkedList\textless Pelicula\textgreater): void \\
+    $+$ combinarCon(otro: Actor): void
+};
+
+% Película situada a la derecha con 3.5cm de separación
+\node[umlclass, right=3.5cm of Actor, text width=8.5cm] (Pelicula) {
+    \centering \textbf{Pelicula}
+    \nodepart{second}
+    $-$ id: String \\
+    $-$ name: String \\
+    $-$ anios: ArrayList\textless Integer\textgreater \\
+    $-$ actorLinkedList: UnorderedDoubleLinkedList\textless Actor\textgreater
+    \nodepart{third}
+    $+$ Pelicula(sId: String, sName: String, iAnio: int) \\
+    $+$ getId(): String \\
+    $+$ setId(sId: String): void \\
+    $+$ getName(): String \\
+    $+$ setName(name: String): void \\
+    $+$ addAnio(anio: int): void \\
+    $+$ getAnios(): ArrayList\textless Integer\textgreater \\
+    $+$ equals(obj: Object): boolean \\
+    $+$ hashCode(): int \\
+    $+$ compareTo(arg0: Pelicula): int \\
+    $+$ toString(): String \\
+    $+$ getActorLinkedList(): UnorderedDoubleLinkedList\textless Actor\textgreater \\
+    $+$ setActorLinkedList(lista: UnorderedDoubleLinkedList\textless Actor\textgreater): void \\
+    $+$ combinarCon(otra: Pelicula): void
+};
+
+% ==============================================================================
+% UTILIDADES / LECTOR
+% ==============================================================================
+
+\node[umlclass, below=1.5cm of $(Actor.south)!0.5!(Pelicula.south)$, text width=9.5cm] (LectorPeliculasActores) {
+    \centering \textbf{LectorPeliculasActores}
+    \nodepart{second}
+    \textit{(sin atributos)}
+    \nodepart{third}
+    $+$ leerCarpeta(ruta: String, listaA: OrderedDoubleLinkedList\textless Actor\textgreater, listaP: OrderedDoubleLinkedList\textless Pelicula\textgreater, lote: int): int \\
+    $-$ leerFichero(f: File, listaA: OrderedDoubleLinkedList\textless Actor\textgreater, listaP: OrderedDoubleLinkedList\textless Pelicula\textgreater, anio: int, lote: int): int \\
+    $-$ extraerId(texto: String): String
+};
+
+% ==============================================================================
+% RELACIONES / FLECHAS
+% ==============================================================================
+
+% Realizaciones (implementación de interfaces)
+\draw[realization] (DoubleLinkedList) -- (ListADT);
+\draw[realization] (UnorderedDoubleLinkedList) -- (UnorderedListADT);
+\draw[realization] (OrderedDoubleLinkedList) -- (OrderedListADT);
+
+% Herencia de interfaces
+\draw[generalization] (UnorderedListADT) |- (ListADT);
+\draw[generalization] (OrderedListADT) |- (ListADT);
+
+% Herencia entre clases: conectando al centro izquierdo y centro derecho de DoubleLinkedList
+\draw[generalization] (UnorderedDoubleLinkedList.east) |- (DoubleLinkedList.west);
+\draw[generalization] (OrderedDoubleLinkedList.west) |- (DoubleLinkedList.east);
+
+% Composición de clases internas
+\draw[composition] (DoubleLinkedList) -- (NodeInternal);
+\draw[composition] (DoubleLinkedList.south west) -- (ListIterator.north);
+
+% Asociación bidireccional entre Actor y Pelicula (doble rombo abierto)
+\draw[{Diamond[open, length=8pt, width=5pt]}-{Diamond[open, length=8pt, width=5pt]}, thick] (Actor.east) -- (Pelicula.west);
+
+\end{tikzpicture}%
+}
+\caption{Diagrama de clases.}
+\label{fig:diagramaClases}
 \end{figure}
 
 \chapter{Descripción de las estructuras de datos principales}
